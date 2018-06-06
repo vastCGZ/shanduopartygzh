@@ -1,0 +1,317 @@
+body,p,div{
+    word-wrap:break-word;
+    margin: 0;
+    font-size: 14px;
+}
+.play_flex{
+    display: flex;
+}
+.play_in_blk{
+    display: inline-block;
+}
+.col_hui{
+    color: #999;
+    font-size: 12px;
+}
+.col_lan{
+    color: #4963FF;
+    font-size: 12px;
+}
+.inline{
+    display: inline-block;
+}
+.disno{
+    display: none;
+}
+.block{
+    display: none;
+}
+/*页头*/
+header{
+    position: relative;
+    width: 100%;
+    height: 3rem;
+}
+header>div{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3rem;
+    background-color: #fff;
+    border-bottom: 1px solid #F4F4F4;
+}
+header>div>div{
+    align-items: center;
+    width: 25%;
+}
+/*返回,更多*/
+header>div>div.head_img>img, header>div>div.head_pic>img{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+/*页面标题*/
+header>div>div.head_txt{
+    width: 50%;
+    justify-content: center;
+}
+/*返回箭头*/
+header>div>div.head_pic{
+    justify-content: flex-end;
+}
+
+/*活动详情*/
+div.body>div.item-ans{
+    background-color: #fff;
+}
+div.body>div.item-ans>div.activity_block{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    padding: 10px 10px 0 10px;
+}
+/*发起人信息*/
+div.body>div.item-ans>div.activity_block:nth-child(1)>div{
+    display:flex;
+    width:45%;
+    line-height:100%;
+    align-self:center;
+}
+div.body>div.item-ans>div.activity_block>div.activity_people{
+    width: 55%;
+}
+/*发起人头像*/
+div.body>div.item-ans>div.activity_block>div.activity_people>img{
+    border-radius:50%;
+    margin-right:5px;
+    width:50px;
+    height:50px;
+}
+/*发起人详细信息*/
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo{
+    align-self:center;
+}
+/*发起人名称*/
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.name{
+    margin-bottom: 2px;
+}
+/*发起人*/
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.tag>span{
+    font-size: 12px;
+    border-radius: 20px;
+    text-align: center;
+    width: 2.5rem;
+    height: 16px;
+    line-height: 16px;
+    color: #ffffff;
+    vertical-align: top;
+}
+/*发起人特权*/
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.tag>span.my_VIP.level{
+    background-color: #FF6369;
+}
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.tag>span.level{
+    background-color: #FEC550;
+}
+/*发起人等级*/
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.tag>span.my_DJ{
+    background-color: #5E75FF;
+}
+/*发起人性别*/
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.tag>div{
+    height: 16px;
+    line-height: 16px;
+    width: 2.5rem;
+    border-radius: 20px;
+}
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.tag>div>div{
+    font-size: 12px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    background-color: #FF9BF0;
+}
+div.body>div.item-ans>div.activity_block>div.activity_people>div.expertInfo>div.tag>div>div>img{
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+}
+/*活动时间*/
+div.body>div.item-ans>div.activity_block>div.activity_time>div{
+    display: inline-block;
+    height: 33%;
+    width: 100%;
+    text-align: right;
+}
+div.body>div.item-ans>div.activity_block>div.activity_time>div>div{
+    width: 100%;
+    text-align: right;
+}
+/*活动信息*/
+div.body>div.item-ans>div.activity_block:nth-child(2){
+    padding: 0 10px 15px;
+}
+div.body>div.item-ans>div.activity_block:nth-child(2)>div{
+    width: 100%;
+}
+div.body>div.item-ans>div.activity_block:nth-child(2)>div:nth-child(2)>span{
+    vertical-align: middle;
+}
+/*主题占位*/
+div.body>div.item-ans>div.activity_block:nth-child(2)>div.activity_theme>span.text_koge{
+    width: 5px;
+}
+/*活动地点*/
+div.body>div.item-ans>div.activity_block:nth-child(2)>div.activity_place{
+    margin-top: 5px;
+}
+div.body>div.item-ans>div.activity_block:nth-child(2)>div.activity_place>img{
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+}
+div.body>div.item-ans>div.activity_block:nth-child(2)>div.activity_place>span:nth-child(2),
+div.body>div.item-ans>div.activity_block:nth-child(2)>div.activity_place>span:nth-child(3){
+    font-size: 12px;
+}
+/*活动内容*/
+div.body>div.item-ans>div.activity_block:nth-child(2)>div.activity_content>span:nth-child(1){
+    display: inline-block;
+    vertical-align: top;
+}
+div.body>div.item-ans>div.activity_block:nth-child(2)>div.activity_content>span:nth-child(2){
+    display: inline-block;
+    font-size: 12px;
+    width: 75%;
+}
+/*参与人数*/
+div.body>div.item-ans>div.activity_block:nth-child(3){
+    height: 35px;
+    padding: 0;
+    border-top:1px solid #f7f8ff;
+    border-bottom:3px solid #f7f8ff;
+}
+div.body>div.item-ans>div.activity_block:nth-child(3)>div{
+    line-height: 35px;
+}
+div.body>div.item-ans>div.activity_block:nth-child(3)>div:nth-child(1)>div{
+    margin-left: 0.5rem;
+}
+div.body>div.item-ans>div.activity_block:nth-child(3)>div:nth-child(1) img{
+    width: 20px;
+    height: 20px;
+    vertical-align: text-bottom;
+}
+div.body>div.item-ans>div.activity_block:nth-child(3)>div:nth-child(1) span{
+    color: #999;
+    font-size: 12px;
+}
+div.body>div.item-ans>div.activity_block:nth-child(3)>div:nth-child(2){
+    text-align: right;
+}
+div.body>div.item-ans>div.activity_block:nth-child(3)>div:nth-child(2)>img{
+    width: 20px;
+    height: 20px;
+    vertical-align: text-bottom;
+    margin-right: 10px;
+}
+/*报名成员*/
+div.body>span{
+    margin: 10px 0 10px 10px;
+}
+div.body>div.member_shell{
+    width: 100%;
+}
+div.body>div.member_shell>div.member_box{
+    overflow-y:auto;
+}
+div.body>div.member_shell>div.member_box::-webkit-scrollbar {
+    display:none
+}
+div.body>div.member_shell>div.member_box>div.member{
+    flex-shrink:0;
+    width: 20%;
+    flex-direction: column;
+    align-items: center;
+}
+div.body>div.member_shell>div.member_box>div.member>img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    border: 1px solid red;
+}
+footer>div.comment_speak{
+    position: relative;
+    height: 3rem;
+    width: 100%;
+}
+footer>div.comment_speak>div{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-top: 1px solid #F4F4F4;
+    background-color: #fff;
+}
+footer>div.comment_speak>div>a{
+    width: 50%;
+    text-decoration: none;
+}
+footer>div.comment_speak>div>a:last-child{
+    border-left: 1px solid #AFBBFF;
+}
+/*转发*/
+div.sare_frame{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51,51,51,.5);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+div.sare_frame>div.share{
+    width: 90%;
+    height: 22%;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    align-items: center;
+    background-color: #fff;
+    align-content:space-around;
+    border-radius: 10px;
+    position: relative;
+    z-index: 100;
+    margin-bottom: 3%;
+}
+div.sare_frame>div.share>div{
+    width: 20%;
+    height: 56px;
+    text-align: center;
+}
+div.sare_frame>div.share>div>img{
+    margin: 0 auto;
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+div.sare_frame>div.share>div>span{
+    font-size: 12px;
+    color: #999;
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+}

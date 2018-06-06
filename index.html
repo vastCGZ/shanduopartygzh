@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta content="telephone=no,email=no" name="format-detection">
+  <!--禁止自动识别电话号码和邮箱-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+  <link rel="apple-touch-icon" href="" />
+  <!--苹果手机：将应用添加到手机主屏幕，会有一个icon可以直接进入-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/banner.js"></script>
+  <title>首页</title>
+</head>
+<body>
+  <div>
+    <!--头部-->
+    <header>
+      <!--标签切换标题-->
+      <ul id="OneTab" class="nav_tag">
+        <!--活动标题-->
+        <li class="active">
+          <a href="#home" data-toggle="tab">活动</a>
+        </li>
+        <!--动态标题-->
+        <li>
+          <a href="#profile">动态</a>
+        </li>
+      </ul>
+      <!--放大镜-->
+      <img src="img/bitmap_copy.png" alt="">
+    </header>
+    <!--主体-->
+    <div class="body">
+      <!--活动，动态标签内容-->
+      <div class="tab-content">
+        <!--轮播图-->
+        <div class="banner">
+          <div class="b-img">
+            <a href="javascript:" style="background:url(img/bottom_img.png) center no-repeat;" class="img-responsive"></a>
+            <a href="javascript:" style="background:url(img/bottom_img.png) center no-repeat;" class="img-responsive"></a>
+            <a href="javascript:" style="background:url(img/bottom_img.png) center no-repeat;" class="img-responsive"></a>
+          </div>
+          <div class="b-list"></div>
+        </div>
+        <!--活动内容-->
+        <div class="tab-pane fade in active" id="home">
+          <section>
+            <!--活动分类切换-->
+            <ul id="TwoTab" class="nav_tag">
+              <!--热门-->
+              <li class="active">
+                <a href="#Onehot" data-toggle="tab">热门</a>
+              </li>
+              <!--附近-->
+              <li>
+                <a href="#Onenearby">附近</a>
+              </li>
+              <!--好友-->
+              <li>
+                <a href="#Onefriends">好友</a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <div class="tab-content">
+              <!--热门内容-->
+              <div class="tab-pane fade in active" id="Onehot">
+                热门内容
+              </div>
+              <!--附近内容-->
+              <div class="tab-pane fade" id="Onenearby">
+                附近内容
+              </div>
+              <!--好友内容-->
+              <div class="tab-pane fade" id="Onefriends">
+                好友内容
+              </div>
+            </div>
+          </section>
+        </div>
+        <!--动态内容-->
+        <div class="tab-pane fade" id="profile">
+          <section>
+            <!--活动分类切换-->
+            <ul id="ThreeTab" class="nav_tag">
+              <!--附近-->
+              <li class="active">
+                <a href="#Twonearby" data-toggle="tab">附近</a>
+              </li>
+              <!--好友-->
+              <li>
+                <a href="#Twofriends">好友</a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <div class="tab-content">
+              <!--热门内容-->
+              <div class="tab-pane fade in active" id="Twonearby">
+                附近内容
+              </div>
+              <!--好友内容-->
+              <div class="tab-pane fade" id="Twofriends">
+                好友内容
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!--尾部-->
+    <footer></footer>
+  </div>
+</body>
+<script type="text/javascript">
+  //活动，动态
+  $('#OneTab a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+  //活动类别切换
+  $('#TwoTab a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+  //动态类别切换
+  $('#ThreeTab a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+</script>
+</html>

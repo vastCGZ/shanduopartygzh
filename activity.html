@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 15px">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <title>活动详情</title>
+    <link rel="stylesheet" href="css/activity.css">
+</head>
+<body>
+    <header>
+        <div class="play_flex">
+            <div class="head_img play_flex">
+                <img src="img/return_1.png" alt="">
+            </div>
+            <div class="head_txt play_flex">
+                <span>报名</span>
+            </div>
+            <div class="head_pic play_flex">
+                <img src="img/copy.png" alt="">
+            </div>
+        </div>
+    </header>
+    <div class="body">
+        <div class="item-ans">
+            <div class='activity_block'>
+                <div class='activity_people'>
+                    <img class="img" src="img/portrait.png">
+                    <div class="expertInfo inline">
+                        <div class="name">小猪佩奇</div>
+                        <div class="tag">
+                            <!--判断男女是男加 sex_nan    加在sex 后面-->
+                                <div class="inline">
+                                    <div>
+                                        <img class='sex_on' src="img/nan.png">26
+                                    </div>
+                                </div>
+                            <!--判断是什么会员 VIP加 my_VIP-->
+                                <span class='level inline'>SVIP9</span>
+                                <span class='my_DJ inline'>LV90</span>
+                        </div>
+                    </div>
+                </div>
+                <div class='activity_time'>
+                    <div class=''>
+                        <div class='col_lan'>2018/4/24/14:03星期二</div>
+                        <div class='col_hui'>报名截止:18:00</div>
+                    </div>
+                </div>
+            </div>
+            <div class='activity_block'>
+                <div class='activity_theme'>
+                    <span>主题：</span>
+                    <span>一起吃火锅</span>
+                    <!--占位-->
+                    <span class='inline text_koge'></span>
+                    <span>AA制</span>
+                </div>
+                <div class='activity_place'>
+                    <span>活动地点：</span>
+                    <span>xx市xx区xx路xxx火锅店</span>
+                    <img src='img/location.png'>
+                    <span class='col_lan'>1.8km</span>
+                </div>
+                <div class='activity_content'>
+                    <span>活动内容：</span>
+                    <span>还等什么赶紧报名吧! 到了打电话1587324293</span>
+                </div>
+            </div>
+            <div class='activity_block'>
+                <div>
+                    <div class='inline'>
+                        <img src='img/nan_1.png'>
+                        <span>01/05</span>
+                    </div>
+                    <div class='inline'>
+                        <img src='img/nv_1.png'>
+                        <span>01/05</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="inline">报名成员</span>
+        <div class="member_shell">
+            <div class="member_box play_flex">
+                <div class="member play_flex">
+                    <img src="img/portrait.png " alt="">
+                    <span class="col_hui">胖虎</span>
+                </div>
+                <div class="member play_flex">
+                    <img src="img/portrait.png " alt="">
+                    <span class="col_hui">胖虎</span>
+                </div>
+                <div class="member play_flex">
+                    <img src="img/portrait.png " alt="">
+                    <span class="col_hui">胖虎</span>
+                </div>
+                <div class="member play_flex">
+                    <img src="img/portrait.png " alt="">
+                    <span class="col_hui">胖虎</span>
+                </div>
+                <div class="member play_flex">
+                    <img src="img/portrait.png " alt="">
+                    <span class="col_hui">胖虎</span>
+                </div>
+                <div class="member play_flex">
+                    <img src="img/portrait.png " alt="">
+                    <span class="col_hui">胖虎</span>
+                </div>
+            </div>
+        </div>
+        <!--判断当前弹出框是否隐藏  -->
+        <div class='sare_frame' style="display:none;">
+            <div class='share'>
+                <div class='inline'>
+                    <img src='img/copy_1.png'>
+                    <span>闪多好友</span>
+                </div>
+                <div class='inline'>
+                    <img src='img/copy_2.png'>
+                    <span>微信好友</span>
+                </div>
+                <div class='inline'>
+                    <img src='img/copy_3.png'>
+                    <span>朋友圈</span>
+                </div>
+                <div class='inline'>
+                    <img src='img/copy_4.png'>
+                    <span>QQ好友</span>
+                </div>
+                <div class='inline'>
+                    <img src='img/copy_5.png'>
+                    <span>QQ空间</span>
+                </div>
+                <div class='inline'>
+                    <img src='img/copy_6.png'>
+                    <span>微博</span>
+                </div>
+                <div class='inline'>
+                    <img src='img/copy_7.png'>
+                    <span>举报</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="comment_speak">
+            <div class="play_flex">
+                <a class="inline" href="javascript:">取消</a>
+                <a class="inline" href="javascript:">确认报名</a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".sare_frame").click(function(){
+                $(".sare_frame").hide();
+            });
+            $(".head_pic>img").click(function(){
+                $(".sare_frame").show();
+            });
+        });
+    </script>
+</body>
+</html>

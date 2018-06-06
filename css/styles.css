@@ -1,0 +1,9 @@
+/* CSS Document */
+*{ padding:0; margin:0;}
+body{ background:#CCC;font-size:0}
+.banner{ width:100%; height:750px; overflow:hidden; position:relative;font-size:0}
+.b-img{ height:500px;  position:absolute; left:0; top:0;}
+.b-img a{ display:block; height:750px; float:left;}
+.b-list{ height:50px; padding-top:700px; position:relative; margin:0 auto;z-index:1;}
+.b-list span{ display:block;cursor:pointer; width:10px; height:10px; border-radius:50%; border:3px solid #8191E3; background-color: #8191E3; float:left; margin:0 5px; margin:0 3px;}
+.b-list .spcss{width:40px;border:3px solid #4261FF;background-color:#4261FF;border-radius:20px;}

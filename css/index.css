@@ -1,0 +1,43 @@
+/*部分重置*/
+body {
+    word-wrap: break-word;
+    font: 16px/1.5 Helvetica, Arial;
+    /*这里是设置字体，Helvetica字体在移动端各系统都支持（都不支持微软雅黑）*/
+    color: #333;
+    -webkit-text-size-adjust: none;
+    /*设置文本不会放大，普通网页在移动端打开文本是会跟随网页结构缩放的*/
+}
+ul,li,p{
+    padding: 0;
+    margin: 0;
+    list-style-type:none;
+}
+body *{
+    -webkit-tap-highlight-color: transparent;
+    /*在一些手机上，如iphone，点击按钮等元素会出现点击态的背景色，设置为透明就看不出来了*/
+    -webkit-user-select:none;
+    /*设置元素内的文字及其子元素将不会被选中*/
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+ul.nav_tag{
+    display: flex;
+}
+header>ul.nav_tag>li>a{
+    color: #999999;
+    text-decoration: underline;
+}
+header>ul.nav_tag>li.active>a{
+    font-size: 18px;
+    color: #3D59FF;
+}
+header>ul.nav_tag>li:last-child{
+    margin-left: 20px;
+}
+header>img{
+    width: 25px;
+    height: 25px;
+}
