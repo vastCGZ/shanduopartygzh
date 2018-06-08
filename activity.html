@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="font-size: 15px">
+<html lang="en" style="font-size: 15px" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
@@ -7,74 +7,78 @@
     <link rel="stylesheet" href="css/activity.css">
 </head>
 <body>
-    <header>
-        <div class="play_flex">
-            <div class="head_img play_flex">
-                <img src="img/return_1.png" alt="">
-            </div>
-            <div class="head_txt play_flex">
-                <span>报名</span>
-            </div>
-            <div class="head_pic play_flex">
-                <img src="img/copy.png" alt="">
-            </div>
+<header>
+    <div class="play_flex">
+        <div class="head_img play_flex">
+            <img src="img/return_1.png" alt="">
         </div>
-    </header>
+        <div class="head_txt play_flex">
+            <span>报名</span>
+        </div>
+        <div class="head_pic play_flex">
+            <img src="img/copy.png" alt="">
+        </div>
+    </div>
+</header>
+<div id="vueData">
     <div class="body">
         <div class="item-ans">
             <div class='activity_block'>
                 <div class='activity_people'>
-                    <img class="img" src="img/portrait.png">
+                    <img class="img"
+                         :src="activityInfo.headPortraitId?imagePath+activityInfo.headPortraitId:'img/portrait.png'">
                     <div class="expertInfo inline">
-                        <div class="name">小猪佩奇</div>
+                        <div class="name">{{activityInfo.userName}}</div>
                         <div class="tag">
                             <!--判断男女是男加 sex_nan    加在sex 后面-->
-                                <div class="inline">
-                                    <div>
-                                        <img class='sex_on' src="img/nan.png">26
-                                    </div>
+                            <div class="inline">
+                                <div>
+                                    <img class='sex_on' :src="activityInfo.gender==1?'img/nan.png':'img/nv.png'">{{activityInfo.age}}
                                 </div>
+                            </div>
                             <!--判断是什么会员 VIP加 my_VIP-->
-                                <span class='level inline'>SVIP9</span>
-                                <span class='my_DJ inline'>LV90</span>
+                            <div v-if="activityInfo.vipGrade>0">
+                                <span v-if="activityInfo.vipGrade>8" class='level inline'>SVIP9</span>
+                                <span class='my_DJ inline'>{{activityInfo.vipGrade}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class='activity_time'>
                     <div class=''>
-                        <div class='col_lan'>2018/4/24/14:03星期二</div>
-                        <div class='col_hui'>报名截止:18:00</div>
+                        <div class='col_lan'>{{activityInfo.activityStartTime}}</div>
+                        <div class='col_hui'>报名截止:{{activityInfo.activityCutoffTime}}</div>
                     </div>
                 </div>
             </div>
             <div class='activity_block'>
                 <div class='activity_theme'>
                     <span>主题：</span>
-                    <span>一起吃火锅</span>
+                    <span>{{activityInfo.activityName}}</span>
                     <!--占位-->
                     <span class='inline text_koge'></span>
-                    <span>AA制</span>
+                    <span>{{activityInfo.mode}}</span>
                 </div>
                 <div class='activity_place'>
                     <span>活动地点：</span>
-                    <span>xx市xx区xx路xxx火锅店</span>
-                    <img src='img/location.png'>
-                    <span class='col_lan'>1.8km</span>
+                    <span>{{activityInfo.activityAddress}}</span>
+                    <!--<img src='img/location.png'>-->
+                    <!--<span class='col_lan'>1.8km</span>-->
                 </div>
                 <div class='activity_content'>
                     <span>活动内容：</span>
-                    <span>还等什么赶紧报名吧! 到了打电话1587324293</span>
+                    <span>{{activityInfo.remarks}}</span>
                 </div>
             </div>
             <div class='activity_block'>
                 <div>
                     <div class='inline'>
                         <img src='img/nan_1.png'>
-                        <span>01/05</span>
+                        <span>{{activityInfo.manNumber}}</span>
                     </div>
                     <div class='inline'>
                         <img src='img/nv_1.png'>
-                        <span>01/05</span>
+                        <span>{{activityInfo.womanNumber}}</span>
                     </div>
                 </div>
             </div>
@@ -82,29 +86,9 @@
         <span class="inline">报名成员</span>
         <div class="member_shell">
             <div class="member_box play_flex">
-                <div class="member play_flex">
-                    <img src="img/portrait.png " alt="">
-                    <span class="col_hui">胖虎</span>
-                </div>
-                <div class="member play_flex">
-                    <img src="img/portrait.png " alt="">
-                    <span class="col_hui">胖虎</span>
-                </div>
-                <div class="member play_flex">
-                    <img src="img/portrait.png " alt="">
-                    <span class="col_hui">胖虎</span>
-                </div>
-                <div class="member play_flex">
-                    <img src="img/portrait.png " alt="">
-                    <span class="col_hui">胖虎</span>
-                </div>
-                <div class="member play_flex">
-                    <img src="img/portrait.png " alt="">
-                    <span class="col_hui">胖虎</span>
-                </div>
-                <div class="member play_flex">
-                    <img src="img/portrait.png " alt="">
-                    <span class="col_hui">胖虎</span>
+                <div v-for="item in participant" class="member play_flex">
+                    <img :src="item.head_portrait_id?imagePath+item.head_portrait_id:'img/portrait.png'" alt="">
+                    <span class="col_hui">{{item.user_name}}</span>
                 </div>
             </div>
         </div>
@@ -146,20 +130,78 @@
         <div class="comment_speak">
             <div class="play_flex">
                 <a class="inline" href="javascript:">取消</a>
-                <a class="inline" href="javascript:">确认报名</a>
+                <a class="inline" href="javascript:" v-on:click="confirmation"><label
+                        v-if="joinActivity==0">确认报名</label><label v-else>取消报名</label></a>
             </div>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script>
-        $(document).ready(function(){
-            $(".sare_frame").click(function(){
-                $(".sare_frame").hide();
-            });
-            $(".head_pic>img").click(function(){
-                $(".sare_frame").show();
-            });
+</div>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="js/layer.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/service.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script>
+    let userInfo = localStorage.getItem('localUser');
+    if (userInfo) {
+        userInfo = JSON.parse(userInfo);
+    }
+    let activityId = GetQueryString('activityId');
+    // let activityId = 'b15d7ebfab514186a3c07c372b576aae';
+    let data = {
+        imagePath: null,
+        activityInfo: null,
+        participant: [],
+        joinActivity: 0
+    };
+    let vm = new Vue({
+        el: '#vueData',
+        data: data,
+        methods: {
+            confirmation() {
+                if(userInfo) {
+                    $.ajax({
+                        data: {
+                            token: userInfo.token,
+                            activityId: activityId,
+                            type: data.joinActivity === 1 ? 2 : 1
+                        },
+                        dataType: 'json',
+                        url: host + '/activity/joinActivities',
+                        success: (res) => {
+                            console.log(res);
+                            if (res.data.success) {
+                                toast(res.data.result);
+                                setTimeout(function () {
+                                    history.go(-1);
+                                }, 1000);
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+    $(function () {
+        if (activityId) {
+            data.imagePath = imagePath;
+            loadActivityDetail(activityId, function (res) {
+                data.activityInfo = res.activityInfo;
+                data.participant = res.resultList;
+                data.joinActivity = res.joinActivity;
+            })
+        }
+    });
+    $(document).ready(function () {
+        $(".sare_frame").click(function () {
+            $(".sare_frame").hide();
         });
-    </script>
+        $(".head_pic>img").click(function () {
+            $(".sare_frame").show();
+        });
+    });
+</script>
 </body>
 </html>
