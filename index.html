@@ -15,18 +15,19 @@
   <!--苹果手机：将应用添加到手机主屏幕，会有一个icon可以直接进入-->
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/swiper-4.3.2.min.css">
   <script src="js/jquery-3.3.1.js"></script>
   <script src="js/bootstrap.js"></script>
-  <script src="js/banner.js"></script>
+  <script src="js/swiper-4.3.2.min.js"></script>
   <title>首页</title>
 </head>
 <body>
   <div>
     <!--头部-->
-    <header>
+    <header class="dis_flex">
       <!--标签切换标题-->
-      <ul id="OneTab" class="nav_tag">
+      <ul id="OneTab" class="dis_flex">
         <!--活动标题-->
         <li class="active">
           <a href="#home" data-toggle="tab">活动</a>
@@ -44,86 +45,939 @@
       <!--活动，动态标签内容-->
       <div class="tab-content">
         <!--轮播图-->
-        <div class="banner">
-          <div class="b-img">
-            <a href="javascript:" style="background:url(img/bottom_img.png) center no-repeat;" class="img-responsive"></a>
-            <a href="javascript:" style="background:url(img/bottom_img.png) center no-repeat;" class="img-responsive"></a>
-            <a href="javascript:" style="background:url(img/bottom_img.png) center no-repeat;" class="img-responsive"></a>
+        <div class="swiper-container banner">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="img/lbt.png"></div>
+            <div class="swiper-slide"><img src="img/lbt.png"></div>
+            <div class="swiper-slide"><img src="img/lbt.png"></div>
           </div>
-          <div class="b-list"></div>
+          <!--分页器-->
+          <div class="swiper-pagination"></div>
         </div>
         <!--活动内容-->
-        <div class="tab-pane fade in active" id="home">
-          <section>
+        <div class="tab-pane fade in active content" id="home">
+          <section class="activity_class">
             <!--活动分类切换-->
-            <ul id="TwoTab" class="nav_tag">
+            <ul id="TwoTab" class="dis_flex">
               <!--热门-->
-              <li class="active">
-                <a href="#Onehot" data-toggle="tab">热门</a>
+              <li class="active dis_flex">
+                <a href="#Onehot" data-toggle="tab">热门活动</a>
               </li>
               <!--附近-->
-              <li>
-                <a href="#Onenearby">附近</a>
+              <li class="dis_flex">
+                <a href="#Onenearby">附近活动</a>
               </li>
               <!--好友-->
-              <li>
-                <a href="#Onefriends">好友</a>
+              <li class="dis_flex">
+                <a href="#Onefriends">好友活动</a>
               </li>
             </ul>
           </section>
-          <section>
+          <section  class="activity_content">
             <div class="tab-content">
               <!--热门内容-->
               <div class="tab-pane fade in active" id="Onehot">
-                热门内容
+                <div class="hot_ul">
+                  <!--没有活动时-->
+                  <!--<span class="dis_inli">没有活动</span>-->
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!--附近内容-->
               <div class="tab-pane fade" id="Onenearby">
-                附近内容
+                <div class="hot_ul">
+                  <!--没有活动时-->
+                  <!--<span class="dis_inli">没有活动</span>-->
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!--好友内容-->
               <div class="tab-pane fade" id="Onefriends">
-                好友内容
+                <div class="hot_ul">
+                  <!--没有活动时-->
+                  <!--<span class="dis_inli">没有活动</span>-->
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--活动时间-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan">2018/4/24/14:03星期二</p>
+                        <p class="col_hui">报名截止18:00</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--主题-->
+                      <div class="hot_ul_li_body_theme">
+                        <span class="col_hui">主题:</span>
+                        <span>一起吃火锅</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AA制</span>
+                      </div>
+                      <!--活动地点-->
+                      <div class="hot_ul_li_body_place">
+                        <span class="col_hui">活动地点:</span>
+                        <span>xx市xx区xx路xxx火锅店</span>
+                        <span class="bg_position col_lan">1.8km</span>
+                      </div>
+                      <!--活动内容-->
+                      <div class="hot_ul_li_body_content dis_flex">
+                        <span class="col_hui dis_inli">活动内容:</span>
+                        <span class="dis_inli">还等什么赶紧报名吧! 到了打电话15873024293。到了打电话15873024293。到了打电话15873024293。</span>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--参与人数-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/nan_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                        <div>
+                          <img src="img/nv_1.png" alt="">
+                          <span>01/05</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <div>
+                          <span>信用轨迹</span>
+                        </div>
+                        <div>
+                          <span>去报名</span>
+                          <img src="img/icon-2.png" alt="">
+                        </div>
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
         </div>
         <!--动态内容-->
-        <div class="tab-pane fade" id="profile">
-          <section>
+        <div class="tab-pane fade content" id="profile">
+          <section class="dynamic_class">
             <!--活动分类切换-->
-            <ul id="ThreeTab" class="nav_tag">
+            <ul id="ThreeTab" class="dis_flex">
               <!--附近-->
-              <li class="active">
-                <a href="#Twonearby" data-toggle="tab">附近</a>
+              <li class="active dis_flex">
+                <a href="#Twonearby" data-toggle="tab">附近动态</a>
               </li>
               <!--好友-->
-              <li>
-                <a href="#Twofriends">好友</a>
+              <li class="dis_flex">
+                <a href="#Twofriends">好友动态</a>
               </li>
             </ul>
           </section>
-          <section>
+          <section class="dynamic_content">
             <div class="tab-content">
               <!--热门内容-->
               <div class="tab-pane fade in active" id="Twonearby">
-                附近内容
+                <div class="hot_ul">
+                  <!--没有活动时-->
+                  <!--<span class="dis_inli">没有动态</span>-->
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--位置-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan bg_position">1.6km</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--动态内容-->
+                      <p class="dynamic_speak">最近动不太想动，五毛请以上的活动都不要叫我。叫我叫我叫我叫我叫我叫我叫我叫我</p>
+                      <div class="dynamic_pic">
+                        <!--大于二张class里加  dynamic_pic_div -->
+                        <div class="dis_inli">
+                          <div style="background-image: url('img/lbt.png')"></div>
+                          <img src="img/lbt.png">
+                        </div>
+                        <div class="dis_inli">
+                          <div style="background-image: url('img/nan_1.png')"></div>
+                          <img src="img/nan_1.png">
+                        </div>
+                      </div>
+                      <span class="col_hui">刚刚</span>
+                      <span class="col_hui">180浏览</span>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--评论，点赞数量-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/comment_1.png" alt="">
+                          <span>863</span>
+                        </div>
+                        <div>
+                          <img src="img/fabulous_1.png" alt="">
+                          <span>134</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!--好友内容-->
               <div class="tab-pane fade" id="Twofriends">
-                好友内容
+                <div class="hot_ul">
+                  <!--没有活动时-->
+                  <!--<span class="dis_inli">没有动态</span>-->
+                  <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                      <!--活动发起人信息-->
+                      <div class="hot_ul_li_header_title dis_flex">
+                        <img src="img/portrait.png" alt="">
+                        <div class="dis_flex">
+                          <span>小猪佩奇</span>
+                          <div class="dis_flex">
+                            <div class="dis_inli text_sex">
+                              <img src="img/nv.png" alt="">
+                              <span>26</span>
+                            </div>
+                            <div class="dis_inli text_svip">
+                              <span>SVIP8</span>
+                            </div>
+                            <div class="dis_inli text_vip">
+                              <span>VIP5</span>
+                            </div>
+                            <div class="dis_inli text_level">
+                              <span>LV89</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--位置-->
+                      <div class="hot_ul_li_header_time dis_flex">
+                        <p class="col_lan bg_position">1.6km</p>
+                      </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                      <!--动态内容-->
+                      <p class="dynamic_speak">最近动不太想动，五毛请以上的活动都不要叫我。叫我叫我叫我叫我叫我叫我叫我叫我</p>
+                      <div class="dynamic_pic">
+                        <!--大于二张class里加  dynamic_pic_div -->
+                        <div class="dis_inli dynamic_pic_div">
+                          <div style="background-image: url('img/lbt.png')"></div>
+                          <img src="img/lbt.png">
+                        </div>
+                        <div class="dis_inli dynamic_pic_div">
+                          <div style="background-image: url('img/nan_1.png')"></div>
+                          <img src="img/nan_1.png">
+                        </div>
+                        <div class="dis_inli dynamic_pic_div">
+                          <div style="background-image: url('img/bottom_img.png')"></div>
+                          <img src="img/bottom_img.png">
+                        </div>
+                      </div>
+                      <span class="col_hui">刚刚</span>
+                      <span class="col_hui">180浏览</span>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                      <!--评论，点赞数量-->
+                      <div class="dis_flex">
+                        <div>
+                          <img src="img/comment_1.png" alt="">
+                          <span>863</span>
+                        </div>
+                        <div>
+                          <img src="img/fabulous_1.png" alt="">
+                          <span>134</span>
+                        </div>
+                      </div>
+                      <!--其他-->
+                      <div class="dis_flex">
+                        <img src="img/copy.png" alt="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+            <!--点击放大-->
+            <div id="outerdiv">
+              <img id="bigimg" src="" />
             </div>
           </section>
         </div>
       </div>
     </div>
     <!--尾部-->
-    <footer></footer>
+    <footer>
+      <div class="foot_div">
+        <div class="foot_ul dis_flex">
+          <!--首页-->
+          <a href="#" class="foot_li dis_flex">
+            <img id="pic" src="img/index.png" alt="">
+            <span class="dis_inli col_hui">首页</span>
+          </a>
+          <!--聊天-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/chat.png" alt="">
+            <span class="dis_inli col_hui">聊天</span>
+          </a>
+          <!--发布-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/activity.png" alt="">
+            <span class="dis_inli col_hui">发布</span>
+          </a>
+          <!--好友-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/friends.png" alt="">
+            <span class="dis_inli col_hui">好友</span>
+          </a>
+          <!--我的-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/personal.png" alt="">
+            <span class="dis_inli col_hui">我的</span>
+          </a>
+        </div>
+      </div>
+    </footer>
   </div>
 </body>
 <script type="text/javascript">
-  //活动，动态
+  //底部当前的图片更换和文字变色
+  $(document).ready(function () {
+    $(".foot_li:nth-child(1)>img").attr('src','img/index_1.png');
+    $(".foot_li:nth-child(1)>span").css('color','#5970FF');
+  });
+  //活动，动态切换
   $('#OneTab a').click(function (e) {
     e.preventDefault();
     $(this).tab('show');
@@ -137,6 +991,39 @@
   $('#ThreeTab a').click(function (e) {
     e.preventDefault();
     $(this).tab('show');
+  })
+  //轮播图
+  var mySwiper = new Swiper(".swiper-container",{
+    direction:"horizontal",/*横向滑动*/
+    loop:true,/*形成环路（即：可以从最后一张图跳转到第一张图*/
+    pagination:{
+      el: '.swiper-pagination',
+      clickable :true,/*点击切换图*/
+    },/*分页器*/
+    autoplay:{ delay: 10000}//3秒切换一次
+  })
+  //图片放大
+  $("#outerdiv").hide();
+  $(function(){
+    $("img").mouseover(function(){
+      $(this).css("cursor","pointer");
+    });
+
+    $("div.dynamic_pic>div>div").click(function(){
+      var _this = $(this);//将当前的pimg元素作为_this传入函数
+      imgShow("#outerdiv", "#bigimg", _this);
+    });
   });
+
+  function imgShow(outerdiv, bigimg, _this) {
+    var src = _this.next().attr("src");//获取当前点击的pimg元素中的src属性
+    $('#outerdiv').attr('display', 'block');
+    $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+    $(outerdiv).fadeIn("fast");
+
+    $(outerdiv).click(function () {//再次点击淡出消失弹出层
+      $(this).fadeOut("fast");
+    });
+  }
 </script>
 </html>

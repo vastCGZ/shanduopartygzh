@@ -1,43 +1,89 @@
-/*部分重置*/
-body {
-    word-wrap: break-word;
-    font: 16px/1.5 Helvetica, Arial;
-    /*这里是设置字体，Helvetica字体在移动端各系统都支持（都不支持微软雅黑）*/
-    color: #333;
-    -webkit-text-size-adjust: none;
-    /*设置文本不会放大，普通网页在移动端打开文本是会跟随网页结构缩放的*/
-}
-ul,li,p{
-    padding: 0;
-    margin: 0;
-    list-style-type:none;
-}
-body *{
-    -webkit-tap-highlight-color: transparent;
-    /*在一些手机上，如iphone，点击按钮等元素会出现点击态的背景色，设置为透明就看不出来了*/
-    -webkit-user-select:none;
-    /*设置元素内的文字及其子元素将不会被选中*/
+body>div{
+    background: #F7F8FF;
 }
 header{
-    display: flex;
     justify-content: space-between;
     padding: 10px;
+    background-color: #ffffff;
 }
-ul.nav_tag{
-    display: flex;
-}
-header>ul.nav_tag>li>a{
+header>ul.dis_flex>li>a{
     color: #999999;
     text-decoration: underline;
+    font-size: 16px;
 }
-header>ul.nav_tag>li.active>a{
+header>ul.dis_flex>li.active>a{
     font-size: 18px;
     color: #3D59FF;
 }
-header>ul.nav_tag>li:last-child{
-    margin-left: 20px;
+header>ul.dis_flex>li:last-child{
+    margin-left: 2rem;
 }
 header>img{
-    width: 25px;
-    height: 25px;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+/*轮播图*/
+.swiper-pagination-bullet{
+    width: 5px!important;
+    height: 5px!important;
+    background: #3D59FF!important;
+}
+.swiper-pagination-bullet-active{
+    width: 12% !important;
+    height: 5px!important;
+    border-radius: 20px !important;
+    opacity: .5!important;
+}
+.banner{
+    width: 100%;
+    background: #F7F8FF;
+}
+.banner>div:last-child{
+    width: 100%;
+}
+.banner>div>div{
+    border-radius: 1rem;
+    width: 37.5rem;
+    padding: 10px 10px 30px 10px;
+}
+.banner>div>div>img{
+    width: 100%;
+    border-radius: 1rem;
+}
+/*活动类别*/
+section.activity_class,section.dynamic_class{
+    border-bottom: 1px solid #F7F8FF;
+    background: #F7F8FF;
+}
+section.activity_class>ul, section.dynamic_class>ul{
+    justify-content: center;
+    background: #ffffff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+section.activity_class>ul>li{
+    flex-grow:1;
+    justify-content: center;
+    padding: 8px 5px 0 5px;
+}
+section.activity_class>ul>li>a, section.dynamic_class>ul>li>a{
+    color: #999999;
+    font-size: 1.4rem;
+    width: 60px;
+}
+section.activity_class>ul>li.active>a, section.dynamic_class>ul>li.active>a{
+    padding-bottom: 5px;
+    border-bottom: 3px solid #3D59FF;
+    color: #333333;
+}
+/*类别内容*/
+section.activity_content{
+    background-color: #ffffff;
+}
+/*动态*/
+section.dynamic_class>ul>li{
+    width: 35%;
+    text-align: center;
+    justify-content: center;
+    padding: 8px 5px 0 5px;
 }
