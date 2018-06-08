@@ -16,7 +16,7 @@ ul,li,p{
   margin: 0;
   list-style-type:none;
 }
-a:focus, a:active, a:focus-within, a:visited{
+a:focus, a:active, a:focus-within, a:visited, a:hover{
   text-decoration: none;
 }
 body *{
@@ -35,6 +35,12 @@ body{
 }
 .dis_inli{
   display: inline-block;
+}
+.dis_none{
+  display: none;
+}
+.dis_block{
+  display: block;
 }
 .text_sex, .text_svip, .text_vip, .text_level{
   border-radius: 2rem;
@@ -93,7 +99,7 @@ div.hot_ul{
 /*iphone6 plus*/
 @media (min-width: 376px) and (max-width: 415px){
   div.hot_ul{
-    height:679px;
+    height:629px;
   }
 }
 /*iphone6*/
@@ -335,6 +341,7 @@ div.dynamic_pic>div>div{
 /*底部*/
 div.foot_div{
   position: relative;
+  height: 80px;
 }
 div.foot_div>div.foot_ul{
   position: fixed;
@@ -358,13 +365,47 @@ div.foot_div>div.foot_ul>a.foot_li>span{
 div.foot_div>div.foot_ul>a.foot_li:nth-child(3)>span{
   padding-left: 0;
 }
+/*发布*/
+div.foot_div_ul{
+  text-align: center;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(51,51,51,.4);
+}
+div.foot_div_ul>div{
+  border: 0;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 40px;
+  justify-content: center;
+}
+div.foot_div_ul>div>a{
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+div.foot_div_ul>div>a:first-child{
+  margin-right: 7.5px;
+}
+div.foot_div_ul>div>a:last-child{
+  margin-left: 7.5px;
+}
 /*iphone6 plus*/
 @media (min-width: 376px) and (max-width: 415px){
   div.foot_div>div.foot_ul>a.foot_li>img{
     width: 35px;
     height: 35px;
   }
-  div.foot_div>div.foot_ul>a.foot_li>span{
+  div.foot_div>div.foot_ul>a.foot_li>span,
+  div.foot_div_ul>div>a>span{
     font-size: 16px;
   }
   div.foot_div{
@@ -373,6 +414,20 @@ div.foot_div>div.foot_ul>a.foot_li:nth-child(3)>span{
   div.foot_div>div.foot_ul{
      height: 70px;
   }
+  div.foot_div_ul{
+    height: 90.557%;
+  }
+  div.foot_div_ul>div>a>img{
+    width: 35px;
+    height: 35px;
+  }
+  div.foot_div_ul>div{
+    bottom: 50px;
+  }
+  div.foot_div_ul>div>a{
+    width: 80px;
+    height: 80px;
+  }
 }
 /*iphone6*/
 @media (min-width: 321px) and (max-width: 376px){
@@ -380,7 +435,8 @@ div.foot_div>div.foot_ul>a.foot_li:nth-child(3)>span{
     width: 30px;
     height: 30px;
   }
-  div.foot_div>div.foot_ul>a.foot_li>span{
+  div.foot_div>div.foot_ul>a.foot_li>span,
+  div.foot_div_ul>div>a>span{
     font-size: 14px;
   }
   div.foot_div{
@@ -389,6 +445,20 @@ div.foot_div>div.foot_ul>a.foot_li:nth-child(3)>span{
   div.foot_div>div.foot_ul{
     height: 60px;
   }
+  div.foot_div_ul{
+    height: 91%;
+  }
+  div.foot_div_ul>div>a>img{
+    width: 30px;
+    height: 30px;
+  }
+  div.foot_div_ul>div{
+    bottom: 40px;
+  }
+  div.foot_div_ul>div>a{
+    width: 70px;
+    height: 70px;
+  }
 }
 /*iphone5*/
 @media (max-width: 321px){
@@ -396,7 +466,8 @@ div.foot_div>div.foot_ul>a.foot_li:nth-child(3)>span{
     width: 25px;
     height: 25px;
   }
-  div.foot_div>div.foot_ul>a.foot_li>span{
+  div.foot_div>div.foot_ul>a.foot_li>span,
+  div.foot_div_ul>div>a>span{
     font-size: 12px;
   }
   div.foot_div{
@@ -404,6 +475,20 @@ div.foot_div>div.foot_ul>a.foot_li:nth-child(3)>span{
   }
   div.foot_div>div.foot_ul{
     height: 50px;
+  }
+  div.foot_div_ul{
+    height: 91.2%;
+  }
+  div.foot_div_ul>div>a>img{
+    width: 25px;
+    height: 25px;
+  }
+  div.foot_div_ul>div{
+    bottom: 30px;
+  }
+  div.foot_div_ul>div>a{
+    width: 60px;
+    height: 60px;
   }
 }
 /*--------------------------------底部↑---------------------------------------*/

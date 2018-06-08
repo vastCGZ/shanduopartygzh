@@ -967,15 +967,31 @@
             <span class="dis_inli col_hui">我的</span>
           </a>
         </div>
+        <div class="dis_none foot_div_ul">
+          <div class="dis_flex">
+            <a href="#" class="dis_flex">
+              <img src="img/activity_1.png" alt="">
+              <span class="col_hui">发活动</span>
+            </a>
+            <a href="#" class="dis_flex">
+              <img src="img/dynamic.png" alt="">
+              <span class="col_hui">发动态</span>
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   </div>
 </body>
 <script type="text/javascript">
-  //底部当前的图片更换和文字变色
   $(document).ready(function () {
+    //底部当前的图片更换和文字变色
     $(".foot_li:nth-child(1)>img").attr('src','img/index_1.png');
     $(".foot_li:nth-child(1)>span").css('color','#5970FF');
+    //点击活动显示/隐藏
+    $('.foot_li:nth-child(3)').click(function (){
+      $('.foot_div_ul').toggle()
+    })
   });
   //活动，动态切换
   $('#OneTab a').click(function (e) {
