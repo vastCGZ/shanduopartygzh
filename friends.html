@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta content="telephone=no,email=no" name="format-detection">
+  <!--禁止自动识别电话号码和邮箱-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/friends.css">
+  <link rel="stylesheet" href="css/common.css">
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <title>好友</title>
+</head>
+<body>
+  <div id="vueData">
+    <header>
+      <!--添加-->
+      <div class="title_header dis_flex">
+        <div></div>
+        <div>
+          <span>通讯录</span>
+        </div>
+        <div>
+          <img src="img/activity_2.png" alt="">
+        </div>
+      </div>
+      <!--搜索-->
+      <div class="title_header_input dis_flex" >
+        <input type="text" placeholder="搜索好友">
+      </div>
+      <!--好友，群组-->
+      <div class="title_header_Tag">
+        <ul id="OneTab" class="dis_flex">
+          <!--好友-->
+          <li class="active dis_flex">
+            <a href="#Onenearby" data-toggle="tab">我的好友</a>
+          </li>
+          <!--群组-->
+          <li class="dis_flex">
+            <a href="#Onefriends">我的群组</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <div class="body">
+      <div class="tab-content">
+        <!--好友内容-->
+        <div class="tab-pane fade in active" id="Onenearby">
+          <div class="container">
+            <div class="city">
+              <div class="city-list">
+                <!--遍历A开头的好友-->
+                <span class="city-letter" id="A1">A</span>
+                <div class="dis_flex city_list_div">
+                  <div>
+                    <img src="img/portrait.png" alt="">
+                  </div>
+                  <div class="dis_flex">
+                    <div>
+                      <!--不是SVIP 去掉text_SVIP-->
+                      <span class="text_SVIP">乔治弟弟</span>
+                      <!--性别为男 text_sex_off 变成 text_sex_on-->
+                      <div class="dis_inli text_sex_off">
+                        <span>26</span>
+                      </div>
+                      <!--性别为男 text_svip 变成 text_vip-->
+                      <span class="text_svip">SVIP</span>
+                    </div>
+                    <div class="col_hui">
+                      <span>[WiFi在线]</span>
+                      <span>这是一段哈哈哈哈哈</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="city-list">
+                <!--遍历B开头的好友-->
+                <span class="city-letter" id="B1">B</span>
+                <div class="dis_flex city_list_div">
+                  <div>
+                    <img src="img/portrait.png" alt="">
+                  </div>
+                  <div class="dis_flex">
+                    <div>
+                      <!--不是SVIP 去掉text_SVIP-->
+                      <span class="text_SVIP">乔治弟弟</span>
+                      <!--性别为男 text_sex_off 变成 text_sex_on-->
+                      <div class="dis_inli text_sex_off">
+                        <span>26</span>
+                      </div>
+                      <!--性别为男 text_svip 变成 text_vip-->
+                      <span class="text_svip">SVIP</span>
+                    </div>
+                    <div class="col_hui">
+                      <span>[WiFi在线]</span>
+                      <span>这是一段哈哈哈哈哈</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="letter">
+              <ul>
+                <li><a href="javascript:;">A</a></li>
+                <li><a href="javascript:;">B</a></li>
+                <li><a href="javascript:;">C</a></li>
+                <li><a href="javascript:;">D</a></li>
+                <li><a href="javascript:;">E</a></li>
+                <li><a href="javascript:;">F</a></li>
+                <li><a href="javascript:;">G</a></li>
+                <li><a href="javascript:;">H</a></li>
+                <li><a href="javascript:;">J</a></li>
+                <li><a href="javascript:;">K</a></li>
+                <li><a href="javascript:;">L</a></li>
+                <li><a href="javascript:;">M</a></li>
+                <li><a href="javascript:;">N</a></li>
+                <li><a href="javascript:;">P</a></li>
+                <li><a href="javascript:;">Q</a></li>
+                <li><a href="javascript:;">R</a></li>
+                <li><a href="javascript:;">S</a></li>
+                <li><a href="javascript:;">T</a></li>
+                <li><a href="javascript:;">W</a></li>
+                <li><a href="javascript:;">X</a></li>
+                <li><a href="javascript:;">Y</a></li>
+                <li><a href="javascript:;">Z</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--群组内容-->
+        <div class="tab-pane fade" id="Onefriends">
+          群组
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="foot_div">
+        <div class="foot_ul dis_flex">
+          <!--首页-->
+          <a href="#" class="foot_li dis_flex">
+            <img id="pic" src="img/index.png" alt="">
+            <span class="dis_inli col_hui">首页</span>
+          </a>
+          <!--聊天-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/chat.png" alt="">
+            <span class="dis_inli col_hui">聊天</span>
+          </a>
+          <!--发布-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/activity.png" alt="">
+            <span class="dis_inli col_hui">发布</span>
+          </a>
+          <!--好友-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/friends.png" alt="">
+            <span class="dis_inli col_hui">好友</span>
+          </a>
+          <!--我的-->
+          <a href="#" class="foot_li dis_flex">
+            <img src="img/personal.png" alt="">
+            <span class="dis_inli col_hui">我的</span>
+          </a>
+        </div>
+        <div class="dis_none foot_div_ul">
+          <div class="dis_flex">
+            <a href="#" class="dis_flex">
+              <img src="img/activity_1.png" alt="">
+              <span class="col_hui">发活动</span>
+            </a>
+            <a href="#" class="dis_flex">
+              <img src="img/dynamic.png" alt="">
+              <span class="col_hui">发动态</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el:'#vueData',
+      data:{},
+      methods: {}
+    })
+    $(document).ready(function () {
+      //底部当前的图片更换和文字变色
+      $(".foot_li:nth-child(4)>img").attr('src','img/friends_1.png');
+      $(".foot_li:nth-child(4)>span").css('color','#5970FF');
+      //点击活动显示/隐藏
+      $('.foot_li:nth-child(3)').click(function (){
+        $('.foot_div_ul').toggle()
+      })
+    });
+    //好友，群组切换
+    $('#OneTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+    /*点击字母跳转顶部*/
+    $('body').on('click', '.letter a', function () {
+      var s = $(this).html();
+      $(window).scrollTop($('#' + s + '1').offset().top-140);
+    });
+  </script>
+</body>
+</html>
