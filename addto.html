@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta content="telephone=no,email=no" name="format-detection">
+  <!--禁止自动识别电话号码和邮箱-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/addto.css">
+  <link rel="stylesheet" href="css/common.css">
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <title>添加</title>
+</head>
+<body>
+  <div id="vueData">
+    <header :class="{ head_hei: !show }">
+      <!--添加-->
+      <div class="title_header dis_flex" v-show="show">
+        <div>
+          <img src="img/return_1.png" alt="">
+        </div>
+        <div>
+          <span>添加</span>
+        </div>
+        <div></div>
+      </div>
+      <!--找人，找群-->
+      <div class="title_header_Tag" v-show="show">
+        <ul id="OneTab" class="dis_flex">
+          <!--好友-->
+          <li class="active dis_flex">
+            <a href="#Onenearby">我的好友</a>
+          </li>
+          <!--群组-->
+          <li class="dis_flex">
+            <a href="#Onefriends">我的群组</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <div class="body">
+      <div class="tab-content">
+        <!--找人内容-->
+        <div class="tab-pane fade in active" id="Onenearby">
+          <!--搜索-->
+          <div class="title_header_input dis_flex" :class="{ head_inp: !show }">
+            <input type="text" placeholder="搜索闪多号/用户名" @focus="handleinput()" @blur="handleinput()">
+          </div>
+          <div class="dis_flex div_UL" v-if="show">
+            <div class="dis_flex">
+              <img src="img/copy_10_3.png" alt="">
+              <span>添加通讯录好友</span>
+            </div>
+            <div class="dis_flex">
+              <img src="img/copy_2.png" alt="">
+              <span>添加微信好友</span>
+            </div>
+            <div class="dis_flex">
+              <img src="img/copy_4.png" alt="">
+              <span>添加QQ好友</span>
+            </div>
+          </div>
+          <div class="dis_flex div_UL" v-else>
+            <div class="dis_flex">
+              <img src="img/copy_10_3.png" alt="">
+              <span>搜索通讯录好友</span>
+            </div>
+            <div class="dis_flex">
+              <img src="img/copy_2.png" alt="">
+              <span>搜索微信好友</span>
+            </div>
+            <div class="dis_flex">
+              <img src="img/copy_4.png" alt="">
+              <span>搜索QQ好友</span>
+            </div>
+          </div>
+          <div class="dis_flex city_list_div">
+            <div>
+              <img src="img/portrait.png" alt="">
+            </div>
+            <div class="dis_flex">
+              <div>
+                <!--不是SVIP 去掉text_SVIP-->
+                <span class="text_SVIP">乔治弟弟</span>
+                <!--性别为男 text_sex_off 变成 text_sex_on-->
+                <div class="dis_inli text_sex_off bg_red_vip">
+                  <span>26</span>
+                </div>
+                <!--性别为男 text_svip 变成 text_vip-->
+                <span class="text_svip">SVIP</span>
+              </div>
+              <div class="col_hui">
+                <span>[WiFi在线]</span>
+                <span>这是一段哈哈哈</span>
+              </div>
+            </div>
+            <div class="">
+              <span>关注</span>
+            </div>
+          </div>
+        </div>
+        <!--找群内容-->
+        <div class="tab-pane fade" id="Onefriends">
+          <!--搜索-->
+          <div class="title_header_input dis_flex" :class="{ head_inp: !show }" >
+            <input type="text" placeholder="搜索群组名字/群号" @focus="handleinput()" @blur="handleinput()">
+          </div>
+          <div class="dis_flex div_UL" v-if="show">
+            <div class="dis_flex">
+              <img src="img/copy_11_2.png" alt="">
+              <span>创建群组</span>
+            </div>
+            <div class="dis_flex">
+              <img src="img/copy_2_2.png" alt="">
+              <span>创建多人聊天</span>
+            </div>
+          </div>
+          <div class="dis_flex div_UL" v-else>
+            <div class="dis_flex">
+              <img src="img/copy_11_1.png" alt="">
+              <span>搜索用户</span>
+            </div>
+            <div class="dis_flex">
+              <img src="img/copy_11_2.png" alt="">
+              <span>搜索群组</span>
+            </div>
+            <div class="dis_flex">
+              <img src="img/copy_2_2.png" alt="">
+              <span>搜索多人聊天</span>
+            </div>
+          </div>
+          <div class="dis_flex city_list_div">
+            <div>
+              <img src="img/portrait.png" alt="">
+            </div>
+            <div class="dis_flex">
+              <div>
+                <!--不是SVIP 去掉text_SVIP-->
+                <span class="">长沙UI设计师交流总群</span>
+              </div>
+              <div class="col_hui">
+                <span>群成员—共1048人</span>
+              </div>
+            </div>
+            <div class="">
+              <span>关注</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el:'#vueData',
+      data:{
+        show:true
+      },
+      methods:{
+        handleinput(){
+          this.show=!this.show
+        },
+      }
+    })
+    //找人，找群切换
+    $('#OneTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+  </script>
+</body>
+</html>

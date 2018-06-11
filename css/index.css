@@ -34,6 +34,36 @@ header>img{
     border-radius: 20px !important;
     opacity: .5!important;
 }
+
+/*iphone6 plus*/
+@media (min-width: 376px) and (max-width: 415px){
+    .swiper-container{
+        height: 214.14px;
+    }
+    .banner>div>div>img{
+        height: 100%;
+    }
+}
+
+/*iphone6*/
+@media (min-width: 321px) and (max-width: 376px){
+    .swiper-container{
+        height: 205.91px;
+    }
+    .banner>div>div>img{
+        height: 100%;
+    }
+}
+
+/*iphone5*/
+@media (max-width: 321px){
+    .swiper-container{
+        height: 172.56px;
+    }
+    .banner>div>div>img{
+        height: 100%;
+    }
+}
 .banner{
     width: 100%;
     background: #F7F8FF;
