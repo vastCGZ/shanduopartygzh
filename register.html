@@ -45,7 +45,9 @@
 <script>
     let aging = 60;
     let interval = null;
-    let tmpUser = {};
+    let tmpUser = {
+        unionId:localStorage.getItem('unionid')
+    };
     let data = {
         phone: '', auth_code: '', pwd: '', hint: '发送验证码', disabled: false
     };
@@ -58,7 +60,7 @@
                     return;
                 }
                 $.ajax({
-                    url: host + '/juser/saveuser',
+                    url: host + '/wx/bindingUser',
                     data: tmpUser,
                     dataType: 'json',
                     type: 'POST',

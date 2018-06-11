@@ -43,6 +43,7 @@
 <script src="../js/utils.js"></script>
 <script src="js/service.js"></script>
 <script>
+    let unionid = localStorage.getItem('unionid');
     let data = {
         username: '', password: ''
     };
@@ -55,7 +56,7 @@
                     toast('登录名或密码非法');
                     return;
                 }
-                login(data.username, data.password, function (res) {
+                login(unionid, data.username, data.password, function (res) {
                     localStorage.localUser = JSON.stringify(res);
                     toast('登陆成功');
                     setTimeout(function () {

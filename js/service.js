@@ -39,11 +39,11 @@ function loadCommentList(dynamicId, pageIndex, pageSize, cbOk, cbErr) {
     });
 }
 
-function login(username, password, cbOk, cbErr) {
+function login(unionId, username, password, cbOk, cbErr) {
     $.ajax({
-        url: host + '/juser/loginuser',
+        url: host + '/wx/binding',
         data: {
-            username: username, password: password
+            unionId: unionId, username: username, password: password
         },
         type: 'POST',
         header: {
@@ -57,5 +57,45 @@ function login(username, password, cbOk, cbErr) {
                 cbErr && cbErr();
             }
         }
+    });
+}
+
+//远程获取活动数据
+function getActivityData(req, cbOk, cbErr, done) {
+    $.ajax({
+        url: host + '/activity/showHotActivity',
+        data: req,
+        dataType: 'json',
+        success: (res) => {
+            if (res.success) {
+                cbOk && cbOk(res.result);
+            } else {
+                cbErr && cbErr();
+            }
+        }, error: function () {
+            cbErr && cbErr();
+        }, complete: function () {
+            done && done();
+        }, type: 'GET'
+    });
+}
+
+//远程获取动态数据
+function getDynamicData(req, cbOk, cbErr, done) {
+    $.ajax({
+        url: host + '/jdynamic/dynamicList',
+        data: req,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success) {
+                cbOk && cbOk(res.result);
+            } else {
+                cbErr && cbErr();
+            }
+        }, error: function () {
+            cbErr && cbErr();
+        }, complete: function () {
+            done && done();
+        }, type: 'GET'
     });
 }

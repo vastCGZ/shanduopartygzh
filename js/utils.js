@@ -1,5 +1,6 @@
 //获取指定参数的值
 var openid = localStorage.getItem('openid');
+
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
@@ -16,9 +17,9 @@ function toast(msg) {
     });
 }
 
-function getOpenid(code) {
+function gzhLonin(code) {
     $.ajax({
-        url: "/yapingzh/getOpenid.do",
+        url: "/yapingzh/gzhLonin.do",
         data: {
             "code": code
         },
@@ -26,19 +27,36 @@ function getOpenid(code) {
         dataType: "json",
         success: function (result) {
             if (result.success) {
-                localStorage.setItem('openid', result.openid);
+                if (result.onbind) {
+                    localStorage.localUser = JSON.stringify(result.userInfo);
+                } else {
+                    localStorage.setItem('openid', result.openid);
+                    localStorage.setItem('unionid', result.unionid);
+                }
             }
         }
     });
 }
 
+function init_wx_js_sdk(pageUrl, cbOK) {
+    $.getJSON("/yapingzh/initJS_SDK.do", {
+        "pageUrl": pageUrl
+    }, function (result) {
+        if (result.success) {
+            cbOK && cbOK(result);
+        }
+    }, function (res) {
+        toast(res.errMsg);
+    });
+}
+
 // base64编码开始
 function encode64(input) {
-    var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    var output = '';
-    var chr1, chr2, chr3 = '';
-    var enc1, enc2, enc3, enc4 = '';
-    var i = 0;
+    let keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    let output = '';
+    let chr1, chr2, chr3 = '';
+    let enc1, enc2, enc3, enc4 = '';
+    let i = 0;
     do {
         chr1 = input.charCodeAt(i++);
         chr2 = input.charCodeAt(i++);
@@ -69,24 +87,26 @@ function checkInput(input) {
     input = input.replace(/\s/g, '');
     return input.length !== 0;
 }
+
 /*验证手机号*/
 function checkPhone(str) {
     let myreg = /^(((13[0-9])|(15[0-9])|16[678]|17[0135678]|(18[0-9]))+\d{8})$/;
     return checkInput(str) && myreg.test(str);
 }
-function formatMsgTime(timespan) {
-    var dateTime = new Date(timespan);
-    var year = dateTime.getFullYear();
-    var month = dateTime.getMonth() + 1;
-    var day = dateTime.getDate();
-    var hour = dateTime.getHours();
-    var minute = dateTime.getMinutes();
-    var second = dateTime.getSeconds();
-    var now = new Date();
-    var now_new = Date.parse(now.toDateString());  //typescript转换写法
 
-    var milliseconds = 0;
-    var timeSpanStr;
+function formatMsgTime(timespan) {
+    let dateTime = new Date(timespan);
+    let year = dateTime.getFullYear();
+    let month = dateTime.getMonth() + 1;
+    let day = dateTime.getDate();
+    let hour = dateTime.getHours();
+    let minute = dateTime.getMinutes();
+    let second = dateTime.getSeconds();
+    let now = new Date();
+    let now_new = Date.parse(now.toDateString());  //typescript转换写法
+
+    let milliseconds = 0;
+    let timeSpanStr;
 
     milliseconds = now_new - timespan;
 
