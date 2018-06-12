@@ -1,0 +1,28 @@
+header{
+  height: 51px;
+  border-bottom: 1px solid #eaeaea;
+}
+.city_list_div{
+  position: relative;
+  border-bottom: 1px solid #eaeaea;
+}
+.city_list_div>div:nth-child(3){
+  flex-direction: column;
+  font-size: 12px;
+  justify-content: center;
+  align-items: flex-end;
+  color: #999999;
+}
+.text_left_div{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  line-height: 16px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 12px;
+  background-color: #ff0000;
+}

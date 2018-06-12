@@ -563,16 +563,20 @@ div.title_header>div:last-child>img{
 /*好友*/
 .city_list_div{
   border-top: 0!important;
+  height: 75px;
+}
+.city_list_div>div:first-child{
+  padding: 10px;
 }
 .city_list_div>div:first-child>img{
-  height: 75px;
-  width: 75px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
 }
 .city_list_div>div:nth-child(2){
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  width: 65%;
 }
 .city_list_div>div:nth-child(2)>div:last-child{
   font-size: 12px;

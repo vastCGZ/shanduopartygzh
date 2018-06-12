@@ -12,109 +12,109 @@
   <meta name="apple-touch-fullscreen" content="yes" />
   <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
   <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/myde.css">
+  <link rel="stylesheet" href="css/chat.css">
   <link rel="stylesheet" href="css/common.css">
   <script src="js/jquery-3.3.1.js"></script>
   <script src="js/bootstrap.js"></script>
-  <title>我的</title>
+  <title>聊天</title>
 </head>
 <body>
   <div id="vueData">
     <!--头部-->
     <header>
-      <div class="my_head_ul dis_flex" style="background-image: url('img/nan_2.png')">
-        <div class="my_head_li">
-          <img src="img/portrait.png" alt="">
+      <!--添加-->
+      <div class="title_header dis_flex">
+        <div></div>
+        <div>
+          <span>聊天</span>
         </div>
-        <div class="my_head_li">
-          <span>小猪佩奇</span>
-          <!--性别为男 text_sex_on 变成 text_sex_off-->
-          <div class="dis_inli text_sex_on">
-            <span>26</span>
-          </div>
-        </div>
-        <div class="my_head_li">
-          <span>闪多号:</span>
-          <span>10007</span>
-        </div>
-        <div class="my_head_li">
-          <div class="dis_inli text_svip">
-            <span>SVIP7</span>
-          </div>
-          <div class="dis_inli text_level">
-            <span>LV89</span>
-          </div>
-        </div>
-        <div class="my_head_li dis_flex">
-          <div>
-            <span>1</span>
-            <span>好友</span>
-          </div>
-          <div>
-            <span>5</span>
-            <span>活动</span>
-          </div>
-          <div>
-            <span>10</span>
-            <span>动态</span>
-          </div>
+        <div>
+          <img src="img/activity_2.png" alt="">
         </div>
       </div>
     </header>
     <!--主体-->
     <div class="body">
-      <div class="dis_flex">
+      <div class="dis_flex city_list_div">
         <div>
-          <img src="img/icon-3.png" alt="">
-          <span>我的动态</span>
-        </div>
-        <div>
-          <img src="img/icon-1.png" alt="">
-        </div>
-      </div>
-      <div class="dis_flex">
-        <div class="dis_flex">
-          <img src="img/icon-4.png" alt="">
-          <span>我的活动</span>
+          <img src="img/portrait.png" alt="">
         </div>
         <div class="dis_flex">
-          <img src="img/icon-1.png" alt="">
+          <div>
+            <!--不是SVIP 去掉text_SVIP-->
+            <span class="text_SVIP">乔治弟弟</span>
+            <!--性别为男 text_sex_off 变成 text_sex_on-->
+            <div class="dis_inli text_sex_off bg_red_vip">
+              <span>26</span>
+            </div>
+            <!--性别为男 text_svip 变成 text_vip-->
+            <span class="text_svip">SVIP</span>
+          </div>
+          <div class="col_hui">
+            <span>[WiFi在线]</span>
+            <span>这是一段哈哈哈</span>
+          </div>
+        </div>
+        <div class="dis_flex">
+            <span>上午12:00</span>
+        </div>
+        <div class="text_left_div">
+          <span>5</span>
         </div>
       </div>
-      <div class="dis_flex">
+      <div class="dis_flex city_list_div">
         <div>
-          <img src="img/icon-5.png" alt="">
-          <span>信用中心</span>
+          <img src="img/portrait.png" alt="">
         </div>
-        <div>
-          <img src="img/icon-1.png" alt="">
+        <div class="dis_flex">
+          <div>
+            <!--不是SVIP 去掉text_SVIP-->
+            <span class="text_SVIP">乔治弟弟</span>
+            <!--性别为男 text_sex_off 变成 text_sex_on-->
+            <div class="dis_inli text_sex_off bg_red_vip">
+              <span>26</span>
+            </div>
+            <!--性别为男 text_svip 变成 text_vip-->
+            <span class="text_svip">SVIP</span>
+          </div>
+          <div class="col_hui">
+            <span>[WiFi在线]</span>
+            <span>这是一段哈哈哈</span>
+          </div>
+        </div>
+        <div class="dis_flex">
+          <span>上午12:00</span>
+        </div>
+        <div class="text_left_div">
+          <span>5</span>
         </div>
       </div>
-      <div class="dis_flex">
+      <div class="dis_flex city_list_div">
         <div>
-          <img src="img/icon-6.png" alt="">
-          <span>我的钱包</span>
+          <img src="img/bottom_img.png" alt="">
         </div>
-        <div>
-          <img src="img/icon-1.png" alt="">
+        <div class="dis_flex">
+          <div>
+            <!--不是SVIP 去掉text_SVIP-->
+            <span class="text_SVIP">乔治弟弟</span>
+            <!--性别为男 text_sex_off 变成 text_sex_on-->
+            <div class="dis_inli text_sex_off bg_red_vip">
+              <span>26</span>
+            </div>
+            <!--特权为vip text_svip 变成 text_vip-->
+            <!--没有隐藏-->
+            <span class="text_svip">SVIP</span>
+          </div>
+          <div class="col_hui">
+            <span>[WiFi在线]</span>
+            <span>这是一段哈哈哈</span>
+          </div>
         </div>
-      </div>
-      <div class="dis_flex">
-        <div>
-          <img src="img/icon-7.png" alt="">
-          <span>会员中心</span>
+        <div class="dis_flex">
+          <span>上午12:00</span>
         </div>
-        <div>
-          <img src="img/icon-1.png" alt="">
-        </div>
-      </div>
-      <div class="dis_flex">
-        <div>
-          <img src="img/icon-8.png" alt="">
-          <span>设置</span>
-        </div>
-        <div>
-          <img src="img/icon-1.png" alt="">
+        <div class="text_left_div">
+          <span>1</span>
         </div>
       </div>
     </div>
@@ -172,8 +172,8 @@
     })
     $(document).ready(function () {
       //底部当前的图片更换和文字变色
-      $(".foot_li:nth-child(5)>img").attr('src','img/personal_1.png');
-      $(".foot_li:nth-child(5)>span").css('color','#5970FF');
+      $(".foot_li:nth-child(2)>img").attr('src','img/personal_1.png');
+      $(".foot_li:nth-child(2)>span").css('color','#5970FF');
       //点击活动显示/隐藏
       $('.foot_li:nth-child(3)').click(function (){
         $('.foot_div_ul').toggle()
