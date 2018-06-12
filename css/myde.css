@@ -1,0 +1,16 @@
+.body>div{
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+.body>div>div:first-child>img{
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+}
+.body>div>div:first-child>span{
+  margin-left: 10px;
+}
+.body>div>div:last-child>img{
+  margin-right: 10px;
+}

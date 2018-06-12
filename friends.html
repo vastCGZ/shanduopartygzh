@@ -1,215 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/friends.css">
-  <link rel="stylesheet" href="css/common.css">
-  <script src="js/jquery-3.3.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <title>好友</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/friends.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/unicode_util.js"></script>
+    <title>好友</title>
 </head>
 <body>
-  <div id="vueData">
+<div id="vueData">
     <header>
-      <!--添加-->
-      <div class="title_header dis_flex">
-        <div></div>
-        <div>
-          <span>通讯录</span>
+        <!--添加-->
+        <div class="title_header dis_flex">
+            <div></div>
+            <div>
+                <span>通讯录</span>
+            </div>
+            <div @click="gotoAddFriendView">
+                <img src="img/activity_2.png" alt="">
+            </div>
         </div>
-        <div>
-          <img src="img/activity_2.png" alt="">
+        <!--搜索-->
+        <div class="title_header_input dis_flex">
+            <input type="text" placeholder="搜索好友">
         </div>
-      </div>
-      <!--搜索-->
-      <div class="title_header_input dis_flex" >
-        <input type="text" placeholder="搜索好友">
-      </div>
-      <!--好友，群组-->
-      <div class="title_header_Tag">
-        <ul id="OneTab" class="dis_flex">
-          <!--好友-->
-          <li class="active dis_flex">
-            <a href="#Onenearby" data-toggle="tab">我的好友</a>
-          </li>
-          <!--群组-->
-          <li class="dis_flex">
-            <a href="#Onefriends">我的群组</a>
-          </li>
-        </ul>
-      </div>
+        <!--好友，群组-->
+        <div class="title_header_Tag">
+            <ul id="OneTab" class="dis_flex">
+                <!--好友-->
+                <li class="active dis_flex">
+                    <a href="#Onenearby" data-toggle="tab">我的好友</a>
+                </li>
+                <!--群组-->
+                <li class="dis_flex">
+                    <a href="#Onefriends">我的群组</a>
+                </li>
+            </ul>
+        </div>
     </header>
     <div class="body">
-      <div class="tab-content">
-        <!--好友内容-->
-        <div class="tab-pane fade in active" id="Onenearby">
-          <div class="container">
-            <div class="city">
-              <div class="city-list">
-                <!--遍历A开头的好友-->
-                <span class="city-letter" id="A1">A</span>
-                <div class="dis_flex city_list_div">
-                  <div>
-                    <img src="img/portrait.png" alt="">
-                  </div>
-                  <div class="dis_flex">
-                    <div>
-                      <!--不是SVIP 去掉text_SVIP-->
-                      <span class="text_SVIP">乔治弟弟</span>
-                      <!--性别为男 text_sex_off 变成 text_sex_on-->
-                      <div class="dis_inli text_sex_off">
-                        <span>26</span>
-                      </div>
-                      <!--性别为男 text_svip 变成 text_vip-->
-                      <span class="text_svip">SVIP</span>
+        <div class="tab-content">
+            <!--好友内容-->
+            <div class="tab-pane fade in active" id="Onenearby">
+                <div class="container">
+                    <div class="city">
+                        <div v-for="group in groups" class="city-list">
+                            <!--遍历A开头的好友-->
+                            <span class="city-letter" id="A1">{{group.groupName}}</span>
+                            <div v-for="userinfo in group.users" class="dis_flex city_list_div">
+                                <div>
+                                    <img :src="userinfo.picture?imagePath+userinfo.picture:'img/portrait.png'" alt="">
+                                </div>
+                                <div class="dis_flex">
+                                    <div>
+                                        <!--不是SVIP 去掉text_SVIP-->
+                                        <span class="text_SVIP">{{userinfo.name}}</span>
+                                        <!--性别为男 text_sex_off 变成 text_sex_on-->
+                                        <div class="dis_inli text_sex_off">
+                                            <span>{{userinfo.age}}</span>
+                                        </div>
+                                        <!--特权为vip text_svip 变成 text_vip-->
+                                        <!--没有隐藏-->
+                                        <span class="text_svip">SVIP</span>
+                                    </div>
+                                    <div class="col_hui">
+                                        <span>[WiFi在线]</span>
+                                        <span>{{userinfo.signature}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col_hui">
-                      <span>[WiFi在线]</span>
-                      <span>这是一段哈哈哈哈哈</span>
+                    <div class="letter">
+                        <ul>
+                            <li v-for="dictionary in letters"><a href="javascript:">{{dictionary}}</a></li>
+                        </ul>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="city-list">
-                <!--遍历B开头的好友-->
-                <span class="city-letter" id="B1">B</span>
-                <div class="dis_flex city_list_div">
-                  <div>
-                    <img src="img/portrait.png" alt="">
-                  </div>
-                  <div class="dis_flex">
-                    <div>
-                      <!--不是SVIP 去掉text_SVIP-->
-                      <span class="text_SVIP">乔治弟弟</span>
-                      <!--性别为男 text_sex_off 变成 text_sex_on-->
-                      <div class="dis_inli text_sex_off">
-                        <span>26</span>
-                      </div>
-                      <!--性别为男 text_svip 变成 text_vip-->
-                      <span class="text_svip">SVIP</span>
-                    </div>
-                    <div class="col_hui">
-                      <span>[WiFi在线]</span>
-                      <span>这是一段哈哈哈哈哈</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-            <div class="letter">
-              <ul>
-                <li><a href="javascript:;">A</a></li>
-                <li><a href="javascript:;">B</a></li>
-                <li><a href="javascript:;">C</a></li>
-                <li><a href="javascript:;">D</a></li>
-                <li><a href="javascript:;">E</a></li>
-                <li><a href="javascript:;">F</a></li>
-                <li><a href="javascript:;">G</a></li>
-                <li><a href="javascript:;">H</a></li>
-                <li><a href="javascript:;">J</a></li>
-                <li><a href="javascript:;">K</a></li>
-                <li><a href="javascript:;">L</a></li>
-                <li><a href="javascript:;">M</a></li>
-                <li><a href="javascript:;">N</a></li>
-                <li><a href="javascript:;">P</a></li>
-                <li><a href="javascript:;">Q</a></li>
-                <li><a href="javascript:;">R</a></li>
-                <li><a href="javascript:;">S</a></li>
-                <li><a href="javascript:;">T</a></li>
-                <li><a href="javascript:;">W</a></li>
-                <li><a href="javascript:;">X</a></li>
-                <li><a href="javascript:;">Y</a></li>
-                <li><a href="javascript:;">Z</a></li>
-              </ul>
+            <!--群组内容-->
+            <div class="tab-pane fade" id="Onefriends">
+                群组
             </div>
-          </div>
         </div>
-        <!--群组内容-->
-        <div class="tab-pane fade" id="Onefriends">
-          群组
-        </div>
-      </div>
     </div>
     <footer>
-      <div class="foot_div">
-        <div class="foot_ul dis_flex">
-          <!--首页-->
-          <a href="index.html" class="foot_li dis_flex">
-            <img id="pic" src="img/index.png" alt="">
-            <span class="dis_inli col_hui">首页</span>
-          </a>
-          <!--聊天-->
-          <a href="#" class="foot_li dis_flex">
-            <img src="img/chat.png" alt="">
-            <span class="dis_inli col_hui">聊天</span>
-          </a>
-          <!--发布-->
-          <a href="#" class="foot_li dis_flex">
-            <img src="img/activity.png" alt="">
-            <span class="dis_inli col_hui">发布</span>
-          </a>
-          <!--好友-->
-          <a href="#" class="foot_li dis_flex">
-            <img src="img/friends.png" alt="">
-            <span class="dis_inli col_hui">好友</span>
-          </a>
-          <!--我的-->
-          <a href="myde.html" class="foot_li dis_flex">
-            <img src="img/personal.png" alt="">
-            <span class="dis_inli col_hui">我的</span>
-          </a>
+        <div class="foot_div">
+            <div class="foot_ul dis_flex">
+                <!--首页-->
+                <a href="index.html" class="foot_li dis_flex">
+                    <img id="pic" src="img/index.png" alt="">
+                    <span class="dis_inli col_hui">首页</span>
+                </a>
+                <!--聊天-->
+                <a href="chat.html" class="foot_li dis_flex">
+                    <img src="img/chat.png" alt="">
+                    <span class="dis_inli col_hui">聊天</span>
+                </a>
+                <!--发布-->
+                <a href="#" class="foot_li dis_flex">
+                    <img src="img/activity.png" alt="">
+                    <span class="dis_inli col_hui">发布</span>
+                </a>
+                <!--好友-->
+                <a href="#" class="foot_li dis_flex">
+                    <img src="img/friends.png" alt="">
+                    <span class="dis_inli col_hui">好友</span>
+                </a>
+                <!--我的-->
+                <a href="personal.html" class="foot_li dis_flex">
+                    <img src="img/personal.png" alt="">
+                    <span class="dis_inli col_hui">我的</span>
+                </a>
+            </div>
+            <div class="dis_none foot_div_ul">
+                <div class="dis_flex">
+                    <a href="#" class="dis_flex">
+                        <img src="img/activity_1.png" alt="">
+                        <span class="col_hui">发活动</span>
+                    </a>
+                    <a href="#" class="dis_flex">
+                        <img src="img/dynamic.png" alt="">
+                        <span class="col_hui">发动态</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="dis_none foot_div_ul">
-          <div class="dis_flex">
-            <a href="#" class="dis_flex">
-              <img src="img/activity_1.png" alt="">
-              <span class="col_hui">发活动</span>
-            </a>
-            <a href="#" class="dis_flex">
-              <img src="img/dynamic.png" alt="">
-              <span class="col_hui">发动态</span>
-            </a>
-          </div>
-        </div>
-      </div>
     </footer>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script type="text/javascript">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    let userInfo = localStorage.getItem('localUser');
     var vm = new Vue({
-      el:'#vueData',
-      data:{},
-      methods: {}
-    })
-    $(document).ready(function () {
-      //底部当前的图片更换和文字变色
-      $(".foot_li:nth-child(4)>img").attr('src','img/friends_1.png');
-      $(".foot_li:nth-child(4)>span").css('color','#5970FF');
-      //点击活动显示/隐藏
-      $('.foot_li:nth-child(3)').click(function (){
-        $('.foot_div_ul').toggle()
-      })
+        el: '#vueData',
+        data: {
+            //
+            currentTab: 0,
+            // 导航字母
+            letters: [],
+            groups: [],
+            imagePath: imagePath
+        },
+        methods: {
+            gotoAddFriendView() {
+                location.href = 'addFriendView.html'
+            }
+        }
+    });
+    $(function () {
+        //底部当前的图片更换和文字变色
+        $(".foot_li:nth-child(4)>img").attr('src', 'img/friends_1.png');
+        $(".foot_li:nth-child(4)>span").css('color', '#5970FF');
+        //点击活动显示/隐藏
+        $('.foot_li:nth-child(3)').click(function () {
+            $('.foot_div_ul').toggle()
+        });
+        loadFriends();
     });
     //好友，群组切换
     $('#OneTab a').click(function (e) {
-      e.preventDefault();
-      $(this).tab('show');
+        e.preventDefault();
+        $(this).tab('show');
     });
     /*点击字母跳转顶部*/
     $('body').on('click', '.letter a', function () {
-      var s = $(this).html();
-      $(window).scrollTop($('#' + s + '1').offset().top-140);
+        var s = $(this).html();
+        $(window).scrollTop($('#' + s + '1').offset().top - 140);
     });
-  </script>
+
+    function loadFriends() {
+        let token = "";
+        if (userInfo) {
+            token = userInfo.token
+        }
+        wx.request({
+            url: host + '/jattention/attentionList',
+            data: {
+                token: token, typeId: 1
+            },
+            dataType: 'json',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            }, method: 'POST',
+            success: (res) => {
+                if (res.success) {
+                    let array = res.result;
+                    let groups = [];
+                    let letters = [];
+                    for (let i in array) {
+                        let item = array[i];
+                        let tag = makePy(item.name.substr(0, 1))[0];
+                        if (/^[0-9]$/.test(tag)) {
+                            tag = '#';
+                        }
+                        let atGroup = false;
+                        for (let j in groups) {
+                            let foundGroup = groups[j];
+                            if (foundGroup.groupName === tag) {
+                                atGroup = true;
+                                foundGroup.users.push(item);
+                                break;
+                            }
+                        }
+                        if (!atGroup) {
+                            let group = {};
+                            let users = [];
+                            group.groupName = tag;
+                            users.push(item);
+                            group.users = users;
+                            groups.push(group);
+                            letters.push(tag);
+                        }
+                    }
+                    this.groups = this.groups.concat(groups);
+                    this.letters = this.letters.concat(letters);
+                }
+            }
+        });
+    }
+
+    function openSession(e) {
+        let data = e.currentTarget.dataset.current.split(',');
+        wx.navigateTo({
+            url: '/pages/interface/interface?toUserId=' + data[0] + '&toUserName=' + data[1] + ''
+        })
+    }
+</script>
 </body>
 </html>

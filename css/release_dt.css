@@ -1,0 +1,26 @@
+header{
+  height: 50px;
+}
+.title_header{
+  border-bottom: 1px solid #eaeaea;
+}
+.title_header>div>a{
+  color: #999999;
+}
+.title_header>div:last-child>a{
+  color: #4660FF;
+  text-decoration: underline;
+}
+.dt_hade{
+  padding: 10px;
+}
+.dt_hade>div:first-child>textarea{
+  width: 100%;
+  border: 0px;
+  outline:none;
+  cursor: pointer;
+}
+.dt_hade>div:last-child>img{
+  width: 120px;
+  height: 120px;
+}
