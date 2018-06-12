@@ -11,10 +11,10 @@
 <body>
 <div class="tbody" id="vueData">
     <section class="return">
-        <a href="javascript:">
+        <a href="javascript:" @click="goBack">
             <img src="img/return_1_1.png" alt="">
         </a>
-        <a href="javascript:">注册</a>
+        <a href="javascript:" @click="gotoRegisterView">注册</a>
     </section>
     <section class="image_pic">
         <img src="img/portrait.png" alt="">
@@ -60,11 +60,15 @@
                     localStorage.localUser = JSON.stringify(res);
                     toast('登陆成功');
                     setTimeout(function () {
-                        //todo
+                        location.href='index.html';
                     }, 1000);
                 }, function () {
                     toast('登陆错误');
                 })
+            },goBack(){
+                history.go(-1);
+            },gotoRegisterView(){
+                location.href='register.html';
             }
         }
     });

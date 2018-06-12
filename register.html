@@ -10,7 +10,7 @@
 <body>
 <div class="tbody" id="vueData">
     <section class="return">
-        <a href="javascript:">
+        <a href="javascript:" @click="goBack">
             <img src="img/return_1_1.png" alt="">
         </a>
     </section>
@@ -70,10 +70,10 @@
                     success: function (res) {
                         console.log(res);
                         if (res.success) {
-                            localStorage.localUser = res.data.result;
+                            localStorage.localUser = JSON.stringify(res.result);
                             toast('注册成功');
                             setTimeout(function () {
-                                //todo
+                                location.href='index.html';
                             }, 1000);
                         } else {
                             toast(res.errCodeDes);
@@ -101,6 +101,8 @@
                 } else {
                     toast('请输入手机号')
                 }
+            },goBack(){
+                history.go(-1);
             }
         }
     });

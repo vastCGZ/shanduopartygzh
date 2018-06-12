@@ -19,12 +19,6 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/swiper-4.3.2.min.css">
     <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/swiper-4.3.2.min.js"></script>
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
-    <script src="js/service.js"></script>
-    <script src="js/layer.js"></script>
-    <script src="js/utils.js"></script>
     <title>首页</title>
 </head>
 <body>
@@ -566,6 +560,12 @@
     </footer>
 </div>
 </body>
+<script src="js/bootstrap.js"></script>
+<script src="js/swiper-4.3.2.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script src="js/service.js"></script>
+<script src="js/layer.js"></script>
+<script src="js/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
     let code = GetQueryString('code');
@@ -613,6 +613,12 @@
     if (userInfo) {
         userInfo = JSON.parse(userInfo);
         data.isLogin = true;
+    } else {
+        if (code) {
+            gzhLonin(code);
+        } else {
+            location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe9811ac767f05237&redirect_uri=http://lixinrong.free.ngrok.cc/yapingzh/shanduoWeb/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect';
+        }
     }
     let vm = new Vue({
         el: '#vueData',
@@ -698,7 +704,7 @@
             var _this = $(this);//将当前的pimg元素作为_this传入函数
             imgShow("#outerdiv", "#bigimg", _this);
         });
-        gzhLonin(code);
+
         init_wx_js_sdk(href, function (result) {
             //初始化接口环境
             wx.config({
@@ -707,7 +713,11 @@
                 timestamp: result.timestamp,
                 nonceStr: result.noncestr,
                 signature: result.signature,
-                jsApiList: ['getLocation']
+                jsApiList: ['getLocation', 'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'onMenuShareQZone', 'hideMenuItems']
             });
             wx.ready(function () {
                 wx.getLocation({
@@ -717,6 +727,23 @@
                         loadActivityData();
                     }
                 });
+                wx.hideMenuItems({
+                    menuList: ['menuItem:copyUrl','menuItem:share:qq','menuItem:share:QZone','menuItem:openWithQQBrowser','menuItem:openWithSafari','menuItem:share:email','menuItem:readMode']
+                });
+                let shareBoay = {
+                    title: '吃喝玩乐上闪多！', // 分享标题
+                    desc: '一个和附近人交友拼团的神奇应用！', // 分享描述
+                    link: 'https://yapinkeji.com/yapingzh/shanduoWeb/index.html', // 分享链接
+                    imgUrl: 'https://yapinkeji.com/logo.png', // 分享图标
+                    success: function () {
+                        toast('分享成功')
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                };
+                wx.onMenuShareTimeline(shareBoay);
+                wx.onMenuShareAppMessage(shareBoay);
             });
         });
     });

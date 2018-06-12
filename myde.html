@@ -1,123 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/myde.css">
-  <link rel="stylesheet" href="css/common.css">
-  <script src="js/jquery-3.3.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <title>我的</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/myde.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <title>我的</title>
 </head>
 <body>
-  <div id="vueData">
+<div id="vueData">
     <!--头部-->
     <header>
-      <div class="my_head_ul dis_flex" style="background-image: url('img/nan_2.png')">
-        <div class="my_head_li">
-          <img src="img/portrait.png" alt="">
+        <div class="my_head_ul dis_flex" style="background-image: url('img/nan_2.png')">
+            <div class="my_head_li">
+                <img :src="userInfo.picture?imagePath+userInfo.picture:'img/portrait.png'" alt="">
+            </div>
+            <div class="my_head_li">
+                <span>{{userInfo.name}}</span>
+                <!--性别为男 text_sex_on 变成 text_sex_off-->
+                <div :class="userInfo.gender==1?'dis_inli text_sex_on':'dis_inli text_sex_off'">
+                    <span>{{userInfo.age}}</span>
+                </div>
+            </div>
+            <div class="my_head_li">
+                <span>闪多号:</span>
+                <span>{{userInfo.userId}}</span>
+            </div>
+            <div v-if="userInfo.vip>0" class="my_head_li">
+                <div v-if="userInfo.vip>8" class="dis_inli text_svip">
+                    <span>SVIP7</span>
+                </div>
+                <div class="dis_inli text_level">
+                    <span>LV{{userInfo.level}}</span>
+                </div>
+            </div>
+            <div class="my_head_li dis_flex">
+                <div>
+                    <span>0</span>
+                    <span>好友</span>
+                </div>
+                <div>
+                    <span>0</span>
+                    <span>活动</span>
+                </div>
+                <div>
+                    <span>0</span>
+                    <span>动态</span>
+                </div>
+            </div>
         </div>
-        <div class="my_head_li">
-          <span>小猪佩奇</span>
-          <!--性别为男 text_sex_on 变成 text_sex_off-->
-          <div class="dis_inli text_sex_on">
-            <span>26</span>
-          </div>
-        </div>
-        <div class="my_head_li">
-          <span>闪多号:</span>
-          <span>10007</span>
-        </div>
-        <div class="my_head_li">
-          <div class="dis_inli text_svip">
-            <span>SVIP7</span>
-          </div>
-          <div class="dis_inli text_level">
-            <span>LV89</span>
-          </div>
-        </div>
-        <div class="my_head_li dis_flex">
-          <div>
-            <span>1</span>
-            <span>好友</span>
-          </div>
-          <div>
-            <span>5</span>
-            <span>活动</span>
-          </div>
-          <div>
-            <span>10</span>
-            <span>动态</span>
-          </div>
-        </div>
-      </div>
     </header>
     <!--主体-->
     <div class="body"></div>
     <!--尾部-->
     <footer>
-      <div class="foot_div">
-        <div class="foot_ul dis_flex">
-          <!--首页-->
-          <a href="#" class="foot_li dis_flex">
-            <img id="pic" src="img/index.png" alt="">
-            <span class="dis_inli col_hui">首页</span>
-          </a>
-          <!--聊天-->
-          <a href="#" class="foot_li dis_flex">
-            <img src="img/chat.png" alt="">
-            <span class="dis_inli col_hui">聊天</span>
-          </a>
-          <!--发布-->
-          <a href="#" class="foot_li dis_flex">
-            <img src="img/activity.png" alt="">
-            <span class="dis_inli col_hui">发布</span>
-          </a>
-          <!--好友-->
-          <a href="#" class="foot_li dis_flex">
-            <img src="img/friends.png" alt="">
-            <span class="dis_inli col_hui">好友</span>
-          </a>
-          <!--我的-->
-          <a href="#" class="foot_li dis_flex">
-            <img src="img/personal.png" alt="">
-            <span class="dis_inli col_hui">我的</span>
-          </a>
+        <div class="foot_div">
+            <div class="foot_ul dis_flex">
+                <!--首页-->
+                <a href="index.html" class="foot_li dis_flex">
+                    <img id="pic" src="img/index.png" alt="">
+                    <span class="dis_inli col_hui">首页</span>
+                </a>
+                <!--聊天-->
+                <a href="#" class="foot_li dis_flex">
+                    <img src="img/chat.png" alt="">
+                    <span class="dis_inli col_hui">聊天</span>
+                </a>
+                <!--发布-->
+                <a href="#" class="foot_li dis_flex">
+                    <img src="img/activity.png" alt="">
+                    <span class="dis_inli col_hui">发布</span>
+                </a>
+                <!--好友-->
+                <a href="friends.html" class="foot_li dis_flex">
+                    <img src="img/friends.png" alt="">
+                    <span class="dis_inli col_hui">好友</span>
+                </a>
+                <!--我的-->
+                <a href="#" class="foot_li dis_flex">
+                    <img src="img/personal.png" alt="">
+                    <span class="dis_inli col_hui">我的</span>
+                </a>
+            </div>
+            <div class="dis_none foot_div_ul">
+                <div class="dis_flex">
+                    <a href="#" class="dis_flex">
+                        <img src="img/activity_1.png" alt="">
+                        <span class="col_hui">发活动</span>
+                    </a>
+                    <a href="#" class="dis_flex">
+                        <img src="img/dynamic.png" alt="">
+                        <span class="col_hui">发动态</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="dis_none foot_div_ul">
-          <div class="dis_flex">
-            <a href="#" class="dis_flex">
-              <img src="img/activity_1.png" alt="">
-              <span class="col_hui">发活动</span>
-            </a>
-            <a href="#" class="dis_flex">
-              <img src="img/dynamic.png" alt="">
-              <span class="col_hui">发动态</span>
-            </a>
-          </div>
-        </div>
-      </div>
     </footer>
-  </div>
-  <script>
-    $(document).ready(function () {
-      //底部当前的图片更换和文字变色
-      $(".foot_li:nth-child(5)>img").attr('src','img/personal_1.png');
-      $(".foot_li:nth-child(5)>span").css('color','#5970FF');
-      //点击活动显示/隐藏
-      $('.foot_li:nth-child(3)').click(function (){
-        $('.foot_div_ul').toggle()
-      })
-    });
-  </script>
+</div>
 </body>
+<script src="js/service.js"></script>
+<script src="js/layer.js"></script>
+<script src="js/utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    let localUser = localStorage.getItem('localUser');
+    $(function () {
+        if(!localUser){
+            location.href='login.html';
+            return;
+        }
+        //底部当前的图片更换和文字变色
+        $(".foot_li:nth-child(5)>img").attr('src', 'img/personal_1.png');
+        $(".foot_li:nth-child(5)>span").css('color', '#5970FF');
+        //点击活动显示/隐藏
+        $('.foot_li:nth-child(3)').click(function () {
+            $('.foot_div_ul').toggle()
+        });
+        let vm = new Vue({
+            el: '#vueData',
+            data: {
+                userInfo:JSON.parse(localUser),
+                imagePath:imagePath
+            },
+            methods: {
+
+            }
+        });
+    });
+</script>
 </html>

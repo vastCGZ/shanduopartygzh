@@ -26,12 +26,13 @@ function gzhLonin(code) {
         type: "POST",
         dataType: "json",
         success: function (result) {
+            console.log(result);
             if (result.success) {
                 if (result.onbind) {
                     localStorage.localUser = JSON.stringify(result.userInfo);
                 } else {
-                    localStorage.setItem('openid', result.openid);
-                    localStorage.setItem('unionid', result.unionid);
+                    localStorage.openid = result.openid;
+                    localStorage.unionid = result.unionid;
                 }
             }
         }
