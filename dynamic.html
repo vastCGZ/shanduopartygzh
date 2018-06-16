@@ -1,147 +1,231 @@
 <!DOCTYPE html>
-<html lang="en" style="font-size: 15px">
+<html lang="en" style="font-size: 15px" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,user-scale=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <title>动态详情</title>
     <link rel="stylesheet" href="css/dynamic.css">
 </head>
 <body>
-    <header>
-        <div class="play_flex">
-            <div class="head_img play_flex">
-                <img src="img/return_1.png" alt="">
-            </div>
-            <div class="head_txt play_flex">
-                <span>动态详情</span>
-            </div>
-            <!--占位-->
-            <div class="play_flex"></div>
+<header>
+    <div class="play_flex">
+        <div class="head_img play_flex">
+            <img src="img/return_1.png" alt="">
         </div>
-    </header>
-    <div class="body">
-        <!--发起人-->
-        <div class="landlord play_flex">
-            <div class="play_flex">
-                <!--发起人头像-->
-                <img src="img/portrait.png" alt="">
-                <!--发起人信息-->
-                <div class="play_flex">
-                    <!--名字-->
-                    <div>小猪佩奇</div>
-                    <div class="play_flex">
-                        <div class="play_flex age_sex">
-                            <!--性别-->
-                            <img src="img/nv.png" alt="">
-                            <!--年龄-->
-                            <span>26</span>
-                        </div>
-                        <!--等级-->
-                        <span class="txt_svip play_in_blk">SVIP9</span>
-                    </div>
-                </div>
-            </div>
-            <!--发起人地理位置-->
-            <div class="play_flex">
-                <img src="img/location.png" alt="">
-                <span>1.6km</span>
-            </div>
+        <div class="head_txt play_flex">
+            <span>动态详情</span>
         </div>
-        <!--动态信息-->
-        <div class="information">
-            <!--动态文字-->
-            <div class="">
-                <p>最近都不太想动，五毛钱以上的活动不要叫我。最近都不太想动，五毛钱以上的活动不要叫我。最近都不太想动，五毛钱以上的活动不要叫我。</p>
-            </div>
-            <!--动态图片-->
-            <div class="">
-                <!--3张图片缩小 pic_suoxiao-->
-                <img class="" src="img/bitmap_1.png" alt="">
-            </div>
-            <!--动态其他-->
-            <div>
-                <span class="col_hui">刚刚发布</span>
-                <span class="col_hui">180浏览</span>
-            </div>
-        </div>
-        <!--其他信息-->
-        <div class="other">
-            <div class="play_in_blk">
-                <!--评论-->
-                <div class="play_in_blk">
-                    <img src="img/comment_1.png" alt="">
-                    <span>863</span>
-                </div>
-                <!--点赞-->
-                <div class="play_in_blk">
-                    <img src="img/fabulous_1.png" alt="">
-                    <span>134</span>
-                </div>
-            </div>
-            <!--更多-->
-            <div class="play_in_blk">
-                <img src="img/zhuan.png" alt="">
-            </div>
-        </div>
+        <!--占位-->
+        <div class="play_flex"></div>
     </div>
-    <footer>
-        <!--标题评论区-->
-        <div class="comment_area">
-            <span>评论区(</span>
-            <span>134</span>
-            <span>)</span>
-        </div>
-        <!--评论楼层-->
-        <div class="comment_floor">
-            <!--评论楼-->
-            <div class="layer_floor play_flex">
-                <div class="play_flex">
-                    <!--评论楼楼主头像-->
-                    <img src="img/portrait.png" alt="">
-                </div>
-                <!--评论楼楼主信息-->
-                <div>
+</header>
+<div id="vueData">
+    <!--<template>-->
+        <pull-to :top-load-method="refresh" :bottom-load-method="upLoad">
+            <div class="body">
+                <!--发起人-->
+                <div class="landlord play_flex">
                     <div class="play_flex">
-                        <!--评论楼楼主名称-->
-                        <span class="col_hui">方威</span>
-                        <div class="age_sex play_flex nan">
-                            <!--评论楼楼主性别-->
-                            <img src="img/nan.png" alt="">
-                            <!--评论楼楼主年龄-->
-                            <span>23</span>
+                        <!--发起人头像-->
+                        <img :src="dynamic.portraitId?imagePath+dynamic.portraitId:'img/portrait.png'" alt="">
+                        <!--发起人信息-->
+                        <div class="play_flex">
+                            <!--名字-->
+                            <div>{{dynamic.name}}</div>
+                            <div class="play_flex">
+                                <div class="play_flex age_sex">
+                                    <!--性别-->
+                                    <img :src="dynamic.gender==1?'img/nan.png':'img/nv.png'" alt="">
+                                    <!--年龄-->
+                                    <span>{{dynamic.age}}</span>
+                                </div>
+                                <!--等级-->
+                                <div v-if="dynamic.vip>0">
+                                    <span v-if="dynamic.vip>8" class="txt_svip play_in_blk">SVIP9</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!--评论楼楼主发言-->
-                    <div>
-                        <span>皮!</span>
+                    <!--发起人地理位置-->
+                    <!--<div class="play_flex">
+                        <img src="img/location.png" alt="">
+                        <span>1.6km</span>
+                    </div>-->
+                </div>
+                <!--动态信息-->
+                <div class="information">
+                    <!--动态文字-->
+                    <div class="">
+                        <p>{{dynamic.content}}</p>
                     </div>
-                    <!--评论楼楼主沙发-->
+                    <!--动态图片-->
+                    <div class="">
+                        <!--3张图片缩小 pic_suoxiao-->
+                        <img v-for="img in dynamic.picture" :src="imagePath+img" alt="">
+                    </div>
+                    <!--动态其他-->
                     <div>
-                        <div>
-                            <span class="col_lan">来自火星的:</span>
-                            <span class="col_hui">66666666666666666666</span>
+                        <span class="col_hui">{{dynamic.createDate}}</span>
+                        <!--<span class="col_hui">180浏览</span>-->
+                    </div>
+                </div>
+                <!--其他信息-->
+                <div class="other">
+                    <div class="play_in_blk">
+                        <!--评论-->
+                        <div class="play_in_blk">
+                            <img src="img/comment_1.png" alt="">
+                            <span>{{dynamic.dynamicCount}}</span>
                         </div>
-                        <div>
-                            <span class="col_lan">来自火星的:</span>
-                            <span class="col_hui">6666666666666666666666666666666666666666</span>
-                        </div>
-                        <div>
-                            <span class="col_lan">回复量2条></span>
+                        <!--点赞-->
+                        <div class="play_in_blk">
+                            <img src="img/fabulous_1.png" alt="">
+                            <span>{{dynamic.praise}}</span>
                         </div>
                     </div>
-                    <!--评论楼楼主发言时间-->
-                    <div>
-                        <span class="col_hui">刚刚</span>
+                    <!--更多-->
+                    <div class="play_in_blk">
+                        <img src="img/zhuan.png" alt="">
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="comment_speak">
-            <div class="play_flex">
-                <input type="text" placeholder="说点啥...">
-                <img src="img/laugh.png" alt="">
-            </div>
-        </div>
-    </footer>
+            <footer>
+                <!--标题评论区-->
+                <div class="comment_area">
+                    <span>评论区(</span>
+                    <span>{{commentList.length}}</span>
+                    <span>)</span>
+                </div>
+                <!--评论楼层-->
+                <div class="comment_floor">
+                    <!--评论楼-->
+                    <div v-for="comm in commentList" class="layer_floor play_flex">
+                        <div class="play_flex">
+                            <!--评论楼楼主头像-->
+                            <img :src="comm.portraitId?imagePath+comm.portraitId:'img/portrait.png'" alt="">
+                        </div>
+                        <!--评论楼楼主信息-->
+                        <div>
+                            <div class="play_flex">
+                                <!--评论楼楼主名称-->
+                                <span class="col_hui">{{comm.name}}</span>
+                                <div class="age_sex play_flex nan">
+                                    <!--评论楼楼主性别-->
+                                    <img :src="comm.gender==1?'img/nan.png':'img/nv.png'" alt="">
+                                    <!--评论楼楼主年龄-->
+                                    <span>{{comm.age}}</span>
+                                </div>
+                            </div>
+                            <!--评论楼楼主发言-->
+                            <div>
+                                <span>{{comm.comment}}</span>
+                            </div>
+                            <!--评论楼楼主沙发-->
+                            <div>
+                                <div v-for="secondComm in comm.comments">
+                                    <span class="col_lan">{{secondComm.userName}}@{{secondComm.replyName}}</span>
+                                    <span class="col_hui">{{secondComm.comment}}</span>
+                                </div>
+                                <div v-on:click="seeComments(comm.dynamicId,comm.id,comm.userId,comm.name)">
+                                    <span class="col_lan">回复量{{comm.count}}条></span>
+                                </div>
+                            </div>
+                            <!--评论楼楼主发言时间-->
+                            <div>
+                                <span class="col_hui">{{comm.createDate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment_speak">
+                    <div class="play_flex">
+                        <input type="text" placeholder="说点啥...">
+                        <img src="img/laugh.png" alt="">
+                    </div>
+                </div>
+            </footer>
+        </pull-to>
+    <!--</template>-->
+</div>
+
 </body>
+<script src="js/jquery-3.3.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/layer.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/service.js"></script>
+<script src="js/vue-pull-to.min.js"></script>
+<script>
+    let data = {
+        imagePath: null,
+        dynamic: null,
+        commentList: [],
+        pageIndex: 1,
+        pageSize: 20,
+        totalPage: 0,
+        comments: '',
+        createDate: null
+    };
+    let vm = new Vue({
+        el: '#vueData',
+        data: data,
+        components: {
+            PullTo: VuePullTo
+        },
+        methods: {
+            refresh(loaded) {
+                localLoadCommentList(true, loaded);
+            },
+            upLoad(loaded) {
+                if (data.totalPage > data.pageIndex) {
+                    localLoadCommentList(false, loaded);
+                }else {
+                    toast('没有更多');
+                    loaded('done');
+                }
+            },seeComments(dynamicId,commentId,respondent,replyName){
+
+            }
+        }
+    });
+     let dynamicId = GetQueryString('dynamicId');
+    // letlocalUser dynamicId = 'f2dc7c9dd4eb40169606c063565793b8';
+    $(function () {
+        if (dynamicId) {
+            data.imagePath = imagePath;
+            loadDynamicDetails(dynamicId, function (res) {
+                res.createDate = formatMsgTime(res.createDate);
+                data.dynamic = res;
+            });
+            localLoadCommentList();
+        }
+    });
+
+    function localLoadCommentList(refresh, loaded) {
+        if (refresh) {
+            emptyData();
+        }
+        loadCommentList(dynamicId, data.pageIndex, data.pageSize, function (res) {
+            if (res.success && res.result.list.length > 0) {
+                let oldData = data.commentList;
+                let newData = res.result.list;
+                for (const i in newData) {
+                    newData[i].createDate = formatMsgTime(newData[i].createDate);
+                }
+                data.commentList = oldData.concat(newData);
+                data.totalPage = res.result.totalPage;
+            }
+            loaded && loaded('done');
+        }, function () {
+            loaded && loaded('fail');
+        })
+    }
+
+    function emptyData() {
+        let ary = data.commentList;
+        ary.splice(0, ary.length);
+        data.commentList = ary;
+    }
+</script>
 </html>

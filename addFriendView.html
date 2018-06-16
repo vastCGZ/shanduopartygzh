@@ -23,7 +23,7 @@
     <header :class="{ head_hei: !show }">
       <!--添加-->
       <div class="title_header dis_flex" v-show="show">
-        <div>
+        <div @click="goBack">
           <img src="img/return_1.png" alt="">
         </div>
         <div>
@@ -169,7 +169,9 @@
       methods:{
         handleinput(){
           this.show=!this.show
-        },
+        },goBack(){
+            history.go(-1);
+          }
       }
     })
     //找人，找群切换

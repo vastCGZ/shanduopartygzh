@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" style="font-size: 15px">
+<html lang="en" style="font-size: 15px" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,user-scale=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <title>注册</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <div class="tbody">
+<div class="tbody" id="vueData">
     <section class="return">
-        <a href="javascript:">
+        <a href="javascript:" @click="goBack">
             <img src="img/return_1_1.png" alt="">
         </a>
     </section>
@@ -19,21 +20,124 @@
     <section class="input_class">
         <div>
             <img src="img/icon_name_checked.png" alt="">
-            <input class="user_ipt" type="text" placeholder="手机号或闪多号" name="user">
-            <a href="javascript:">发送验证码</a>
+            <input class="user_ipt" type="number" maxlength="11" placeholder="手机号" name="user" v-model="phone">
+            <a href="javascript:" :disabled="disabled" v-on:click="sendMSM">{{hint}}</a>
         </div>
         <div>
             <img src="img/icon_code_checked.png" alt="">
-            <input type="text" placeholder="请输入六位验证码" name="code">
+            <input type="text" placeholder="请输入六位验证码" name="code" v-model="auth_code">
         </div>
         <div>
             <img src="img/icon_pwd_checked.png" alt="">
-            <input type="password" placeholder="请输入登录密码" name="pwd">
+            <input type="password" placeholder="请输入登录密码" name="pwd" v-model="pwd">
         </div>
     </section>
     <section class="submission">
-        <a href="javascript:">立即注册</a>
+        <a href="javascript:" v-on:click="register">立即注册</a>
     </section>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="../js/layer.js"></script>
+<script src="../js/utils.js"></script>
+<script src="js/service.js"></script>
+<script>
+    let aging = 60;
+    let interval = null;
+    let tmpUser = {
+        unionId:localStorage.getItem('unionid')
+    };
+    let data = {
+        phone: '', auth_code: '', pwd: '', hint: '发送验证码', disabled: false
+    };
+    new Vue({
+        el: '#vueData',
+        data: data,
+        methods: {
+            register() {
+                if (!checkRegisterInput()) {
+                    return;
+                }
+                $.ajax({
+                    url: host + '/wx/bindingUser',
+                    data: tmpUser,
+                    dataType: 'json',
+                    type: 'POST',
+                    header: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        if (res.success) {
+                            localStorage.localUser = JSON.stringify(res.result);
+                            toast('注册成功');
+                            setTimeout(function () {
+                                location.href='index.html';
+                            }, 1000);
+                        } else {
+                            toast(res.errCodeDes);
+                        }
+                    }
+                })
+            }, sendMSM() {
+                if (checkPhone(data.phone)) {
+                    $.ajax({
+                        url: host + '/sms/envoyer',
+                        data: {phone: data.phone, typeId: 1},
+                        dataType: 'json',
+                        type: 'POST',
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded'
+                        },
+                        success: function (res) {
+                            if (res.success) {
+                                data.disabled = true;
+                                countDown();
+                                toast(res.result);
+                            }
+                        }
+                    })
+                } else {
+                    toast('请输入手机号')
+                }
+            },goBack(){
+                history.go(-1);
+            }
+        }
+    });
+
+    function countDown() {
+        interval = setInterval(function () {
+            aging--;
+            data.hint = aging + '秒';
+            if (aging <= 0) {
+                clearInterval(interval);
+                data.hint = '重新发送';
+                aging = 60;
+                data.disabled = false;
+            }
+        }, 1000)
+    }
+
+    function checkRegisterInput() {
+        //!phone || !auth_code || !pwd
+        if (!checkPhone(data.phone)) {
+            toast('手机号格式不对');
+            return false;
+        }
+        tmpUser.phone = data.phone;
+        if (!checkInput(data.auth_code)) {
+            toast('验证码没填');
+            return false;
+        }
+        tmpUser.code = data.auth_code;
+        if (!checkInput(data.pwd) || data.pwd.length < 8) {
+            toast('密码没填或长度不够');
+            return false;
+        }
+        tmpUser.password = data.pwd;
+        return true;
+    }
+</script>
 </html>
