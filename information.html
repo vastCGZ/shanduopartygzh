@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta content="telephone=no,email=no" name="format-detection">
+  <!--禁止自动识别电话号码和邮箱-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/information.css">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/swiper-4.3.2.min.css">
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <title>消息</title>
+</head>
+<body>
+<div class="main" id="vueData">
+  <div class="main_inner clearfix">
+    <div id="chatArea" class="box chat">
+      <div class="box_hd">
+        <!--添加-->
+        <div class="title_header dis_flex">
+          <div>
+            <img src="img/return_1.png" alt="">
+          </div>
+          <div class="dis_flex">
+            <!--是svip加class： hd_svip-->
+            <span>方西涯</span>
+            <span>WiFi在线</span>
+          </div>
+          <div>
+            <img src="img/copy_1_1.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="box_bd" id="messageList">
+        <!--自己发-->
+        <div class="message me">
+          <!--头像-->
+          <img class="avatar" src="img/nan_2.png" />
+          <div class="content">
+            <!--时间-->
+            <div class="nickname"><span class="time">10:10:08</span></div>
+            <div class="bubble bubble_primary right">
+              <div class="bubble_cont">
+                <div class="plain">
+                  <!--聊天信息-->
+                  <pre>你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--别人发-->
+        <div class="message">
+          <!--头像-->
+          <img class="avatar" src="img/nv_2.png" />
+          <div class="content">
+            <!--时间-->
+            <div class="nickname"><span class="time">10:12:20</span></div>
+            <div class="bubble bubble_default left">
+              <div class="bubble_cont">
+                <div class="plain">
+                  <!--聊天信息-->
+                  <pre>(⊙o⊙)…好吧</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--别人发-->
+        <div class="message">
+          <!--头像-->
+          <img class="avatar" src="img/nv_2.png" />
+          <div class="content">
+            <!--时间-->
+            <div class="nickname"><span class="time">10:12:20</span></div>
+            <div class="bubble bubble_default left">
+              <div class="bubble_cont">
+                <div class="plain">
+                  <!--聊天信息-->
+                  <pre>请你吃一个月大餐！</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box_ft">
+        <div class="box_ft_hd">
+          <div class="eaitWrap">
+            <input id="editArea" class="editArea" contenteditable="true" placeholder="请输入消息">
+          </div>
+          <a href="javascript:;" class="btn1 dis_inli" id="btn_send">发送</a>
+        </div>
+        <div class="web_wechat_div dis_flex">
+          <a href="javascript:;" class="web_wechat web_wechat_audio"></a>
+          <a href="javascript:;" class="web_wechat web_wechat_pic"></a>
+          <a href="javascript:;" class="web_wechat web_wechat_photograph"></a>
+          <a href="javascript:;" class="web_wechat web_wechat_video"></a>
+          <a href="javascript:;" class="web_wechat web_wechat_face"></a>
+          <a href="javascript:;" class="web_wechat web_wechat_location"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+  $(function () {
+    // //显示隐藏表情栏
+    // $('.web_wechat_face').click(function () {
+    //   $('.box_ft_bd').toggleClass('hide');
+    //   resetMessageArea();
+    // });
+    // //切换表情主题
+    // $('.exp_hd_item').click(function () {
+    //   var _this = $(this), i = _this.data('i');
+    //   $('.exp_hd_item,.exp_cont').removeClass('active');
+    //   _this.addClass('active');
+    //   $('.exp_cont').eq(i).addClass('active');
+    //   resetMessageArea();
+    // });
+    // var _editArea = $('#editArea');
+    // //选中表情
+    // $('.exp_cont a').click(function () {
+    //   var _this = $(this);
+    //   var html = '<span class="' + _this[0].className + '" title="' + _this.html() + '"></span>';
+    //   _editArea.html(_editArea.html() + html);
+    //   $('#btn_send').show();
+    // });
+    /*跳转到最新的消息*/
+    resetMessageArea();
+    function resetMessageArea() {
+      $('#messageList').animate({ 'scrollTop': 999 }, 500);
+    }
+  });
+</script>
+</html>

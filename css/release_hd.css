@@ -1,0 +1,124 @@
+header {
+  height: 50px;
+}
+header a{
+  color: #999999;
+}
+.body>form>div{
+  border-top: 1px solid #eaeaea;
+}
+.body>form>div:nth-child(1){
+  height: 50px;
+}
+input {
+  outline:none;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  background-color: #ffffff;
+}
+input::-webkit-input-placeholder {
+  color: #999999;
+}
+.body>form>div:nth-child(2){
+  height: 150px;
+}
+textarea {
+  outline:none;
+  resize:none;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+}
+textarea::-webkit-input-placeholder {
+  color: #999999;
+}
+.body>form>div:nth-child(3){
+  height: 50px;
+}
+.body>form>div:nth-child(3)>div{
+  height: 100%;
+  align-items: center;
+  width: 90px;
+  margin-left: 10px;
+}
+.body>form>div:nth-child(3)>div>img{
+  width: 20px;
+  height: 20px;
+}
+.form-control{
+  border: 0!important;
+  outline:none!important;
+  box-shadow:none!important;
+  appearance:none!important;
+  -moz-appearance:none!important;
+  -webkit-appearance:none!important;
+  color: #999999;
+  height: 100%;
+  width: 100%;
+}
+.body>form>div:nth-child(4)>div:last-child,
+.body>form>div:nth-child(5)>div:last-child{
+  width: 63%;
+}
+.body>form>div:nth-child(4)>div:last-child>input,
+.body>form>div:nth-child(5)>div:last-child>input{
+  height: 100%;
+  width: 100%;
+}
+.body>form>div:nth-child(6)>div:last-child,
+.body>form>div:nth-child(7)>div:last-child{
+  width: 63%;
+}
+.body>form>div:nth-child(7)>div:last-child{
+  padding-left: 10px;
+  justify-content: space-between;
+}
+.body>form>div:nth-child(6)>div:last-child>img,
+.body>form>div:nth-child(7)>div:last-child>img{
+  width: 14px;
+  height: 14px;
+  margin: 0 10px 0 5px;
+}
+.body>form>div:nth-child(8){
+  height: 70px;
+}
+.he_list_li{
+  height: 50px;
+  justify-content: space-between;
+}
+.he_list_li>div{
+  align-items: center;
+  color: #999999;
+}
+.he_list_li>div:last-child{
+  width: 70%;
+}
+.he_list_li>div>img{
+  width: 20px;
+  height: 20px;
+  margin: 0px 10px;
+}
+footer{
+  border-top: 3px solid #eaeaea;
+  height: 97px;
+  justify-content: center;
+  align-items: center;
+}
+footer>div{
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 20px;
+  background-color: #4660FF;
+  color: #ffffff;
+  text-align: center;
+}
+footer>div:first-child{
+  margin-right: 10px;
+}
+footer>div:last-child{
+  margin-left: 10px;
+}
