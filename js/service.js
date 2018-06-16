@@ -38,7 +38,6 @@ function loadCommentList(dynamicId, pageIndex, pageSize, cbOk, cbErr) {
         }
     });
 }
-
 function login(unionId, username, password, cbOk, cbErr) {
     $.ajax({
         url: host + '/wx/binding',

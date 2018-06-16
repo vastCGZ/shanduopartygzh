@@ -434,7 +434,7 @@
                                 <!--没有活动时-->
                                 <!--<span class="dis_inli">没有动态</span>-->
                                 <span v-if="dynamics[currentTab2].arrayResult.length==0" class="dis_inli">没有动态</span>
-                                <div v-for="dynamicInfo in dynamics[currentTab2].arrayResult"
+                                <div v-for="(dynamicInfo,key) in dynamics[currentTab2].arrayResult"
                                      class="hot_ul_li">
                                     <div class="hot_ul_li_header dis_flex">
                                         <!--活动发起人信息-->
@@ -473,9 +473,9 @@
                                         <p class="dynamic_speak">{{dynamicInfo.content}}</p>
                                         <div class="dynamic_pic">
                                             <!--大于二张class里加  dynamic_pic_div -->
-                                            <div v-for="img in dynamicInfo.picture"
+                                            <div v-for="(img,index) in dynamicInfo.picture"
                                                  :class="dynamicInfo.picture.length>2?'dynamic_pic_div':'dis_inli'">
-                                                <div :style="img.myStyle"></div>
+                                                <div :style="img.myStyle" @click="imgShow(index)"></div>
                                                 <img :src="img.imgPath">
                                             </div>
                                         </div>
@@ -578,6 +578,7 @@
         currentTab1: 0,
         // 动态内的切换
         currentTab2: 0,
+        currentImg: '',
         //定义活动数组
         activitys: [{
             currentPage: 1,
@@ -616,9 +617,10 @@
     } else {
         if (code) {
             gzhLonin(code);
-        } else {
-            // location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe9811ac767f05237&redirect_uri=http://yapingzh.vipgz1.idcfengye.com/yapingzh/shanduoWeb/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect';
         }
+        // else {
+        //     location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe9811ac767f05237&redirect_uri=http://yapin.free.ngrok.cc/yapingzh/shanduoWeb/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect';
+        // }
     }
     let vm = new Vue({
         el: '#vueData',
@@ -634,12 +636,12 @@
                     }, /*分页器*/
                     autoplay: {delay: 3000}//3秒切换一次
                 })
-            }
+            },
+            imgShow(index) {
+                $('#outerdiv').fadeIn("fast");
+            },
         }
     });
-    //执行轮播图方法
-    vm.adAutoplay();
-
     $(document).ready(function () {
         //底部当前的图片更换和文字变色
         $(".foot_li:nth-child(1)>img").attr('src', 'img/index_1.png');
@@ -649,6 +651,8 @@
             $('.foot_div_ul').toggle()
         })
     });
+    //执行轮播图方法
+    vm.adAutoplay();
     //活动，动态切换
     $('#OneTab a').click(function (e) {
         let selectTab = $(this).parent().index();
@@ -728,7 +732,7 @@
                     }
                 });
                 wx.hideMenuItems({
-                    menuList: ['menuItem:copyUrl','menuItem:share:qq','menuItem:share:QZone','menuItem:openWithQQBrowser','menuItem:openWithSafari','menuItem:share:email','menuItem:readMode']
+                    menuList: ['menuItem:copyUrl', 'menuItem:share:qq', 'menuItem:share:QZone', 'menuItem:openWithQQBrowser', 'menuItem:openWithSafari', 'menuItem:share:email', 'menuItem:readMode']
                 });
                 let shareBoay = {
                     title: '吃喝玩乐上闪多！', // 分享标题
@@ -821,12 +825,10 @@
                     let imgItme = newData[i].picture;
                     let newItem = [];
                     for (let j in imgItme) {
-                        let myStyle = {
+                        newItem.push({
                             myStyle: {backgroundImage: "url('" + data.imagePath + imgItme[j] + "')"},
                             imgPath: data.imagePath + imgItme[j]
-                        };
-                        newItem.push(myStyle);
-
+                        });
                     }
                     newData[i].picture = newItem;
                 }

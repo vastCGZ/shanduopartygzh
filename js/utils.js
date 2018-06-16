@@ -1,9 +1,12 @@
 //获取指定参数的值
 var openid = localStorage.getItem('openid');
 
+/**
+ * @return {string}
+ */
 function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-    var r = window.location.search.substr(1).match(reg);
+    let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    let r = window.location.search.substr(1).match(reg);
     if (r != null)
         return (r[2]);
     return null;
@@ -28,10 +31,10 @@ function gzhLonin(code) {
         success: function (result) {
             console.log(result);
             if (result.success) {
+                localStorage.openid = result.openid;
                 if (result.onbind) {
                     localStorage.localUser = JSON.stringify(result.userInfo);
                 } else {
-                    localStorage.openid = result.openid;
                     localStorage.unionid = result.unionid;
                 }
             }
@@ -93,6 +96,15 @@ function checkInput(input) {
 function checkPhone(str) {
     let myreg = /^(((13[0-9])|(15[0-9])|16[678]|17[0135678]|(18[0-9]))+\d{8})$/;
     return checkInput(str) && myreg.test(str);
+}
+
+//时间戳转本地时间
+function getLocalTime(nS) {
+    let now = new Date(parseInt(nS) * 1000),
+        y = now.getFullYear(),
+        m = now.getMonth() + 1,
+        d = now.getDate();
+    return y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + now.toTimeString().substr(0, 8);
 }
 
 function formatMsgTime(timespan) {

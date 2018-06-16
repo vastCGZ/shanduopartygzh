@@ -16,9 +16,6 @@
     <link rel="stylesheet" href="css/friends.css">
     <link rel="stylesheet" href="css/common.css">
     <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/service.js"></script>
-    <script src="js/unicode_util.js"></script>
     <title>好友</title>
 </head>
 <body>
@@ -68,17 +65,17 @@
                                 <div class="dis_flex">
                                     <div>
                                         <!--不是SVIP 去掉text_SVIP-->
-                                        <span class="text_SVIP">{{userinfo.name}}</span>
+                                        <span :class="userinfo.vip>8?'text_SVIP':''">{{userinfo.name}}</span>
                                         <!--性别为男 text_sex_off 变成 text_sex_on-->
                                         <div class="dis_inli text_sex_off">
                                             <span>{{userinfo.age}}</span>
                                         </div>
                                         <!--特权为vip text_svip 变成 text_vip-->
                                         <!--没有隐藏-->
-                                        <span class="text_svip">SVIP</span>
+                                        <span v-if="userinfo.vip>8" class="text_svip">SVIP</span>
                                     </div>
                                     <div class="col_hui">
-                                        <span>[WiFi在线]</span>
+                                        <span></span>
                                         <span>{{userinfo.signature}}</span>
                                     </div>
                                 </div>
@@ -142,19 +139,25 @@
         </div>
     </footer>
 </div>
+<script src="js/bootstrap.js"></script>
+<script src="js/service.js"></script>
+<script src="js/unicode_util.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
-    let userInfo = localStorage.getItem('localUser');
-    var vm = new Vue({
+    let userInfo = localStorage.getItem('localUser')
+    if (userInfo) {
+        userInfo = JSON.parse(userInfo);
+    }
+    let data = {
+        currentTab: 0,
+        // 导航字母
+        letters: [],
+        groups: [],
+        imagePath: imagePath
+    };
+    new Vue({
         el: '#vueData',
-        data: {
-            //
-            currentTab: 0,
-            // 导航字母
-            letters: [],
-            groups: [],
-            imagePath: imagePath
-        },
+        data: data,
         methods: {
             gotoAddFriendView() {
                 location.href = 'addFriendView.html'
@@ -187,7 +190,7 @@
         if (userInfo) {
             token = userInfo.token
         }
-        wx.request({
+        $.ajax({
             url: host + '/jattention/attentionList',
             data: {
                 token: token, typeId: 1
@@ -197,37 +200,40 @@
                 'content-type': 'application/x-www-form-urlencoded'
             }, method: 'POST',
             success: (res) => {
+                console.log(res);
                 if (res.success) {
-                    let array = res.result;
-                    let groups = [];
-                    let letters = [];
-                    for (let i in array) {
-                        let item = array[i];
-                        let tag = makePy(item.name.substr(0, 1))[0];
-                        if (/^[0-9]$/.test(tag)) {
-                            tag = '#';
-                        }
-                        let atGroup = false;
-                        for (let j in groups) {
-                            let foundGroup = groups[j];
-                            if (foundGroup.groupName === tag) {
-                                atGroup = true;
-                                foundGroup.users.push(item);
-                                break;
+                    if (res.result.length > 0) {
+                        let array = res.result;
+                        let groups = [];
+                        let letters = [];
+                        for (let i in array) {
+                            let item = array[i];
+                            let tag = makePy(item.name.substr(0, 1))[0];
+                            if (/^[0-9]$/.test(tag)) {
+                                tag = '#';
+                            }
+                            let atGroup = false;
+                            for (let j in groups) {
+                                let foundGroup = groups[j];
+                                if (foundGroup.groupName === tag) {
+                                    atGroup = true;
+                                    foundGroup.users.push(item);
+                                    break;
+                                }
+                            }
+                            if (!atGroup) {
+                                let group = {};
+                                let users = [];
+                                group.groupName = tag;
+                                users.push(item);
+                                group.users = users;
+                                groups.push(group);
+                                letters.push(tag);
                             }
                         }
-                        if (!atGroup) {
-                            let group = {};
-                            let users = [];
-                            group.groupName = tag;
-                            users.push(item);
-                            group.users = users;
-                            groups.push(group);
-                            letters.push(tag);
-                        }
+                        data.groups = data.groups.concat(groups);
+                        data.letters = data.letters.concat(letters);
                     }
-                    this.groups = this.groups.concat(groups);
-                    this.letters = this.letters.concat(letters);
                 }
             }
         });
