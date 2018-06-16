@@ -19,6 +19,109 @@
   <title>活动发布</title>
 </head>
 <body>
-
+ <div id="vueData">
+   <header>
+     <!--添加-->
+     <div class="title_header dis_flex">
+       <div>
+         <a href="#">取消</a>
+       </div>
+       <div>
+         <span>活动发布</span>
+       </div>
+       <div></div>
+     </div>
+   </header>
+   <div class="body">
+     <form action="">
+       <!--活动主题-->
+       <div>
+         <input type="text" placeholder="请输入活动主题(最多输入20字符)">
+       </div>
+       <!--活动内容-->
+       <div>
+         <textarea placeholder="请输入活动内容(禁止发布违禁文字)"></textarea>
+       </div>
+       <!--活动人数-->
+       <div class="dis_flex">
+         <!--男-->
+         <div class="dis_flex">
+           <img src="img/nan_1.png" alt="">
+           <select class="form-control">
+            <option>10人</option>
+           </select>
+         </div>
+         <!--女-->
+         <div class="dis_flex">
+           <img src="img/nv_1.png" alt="">
+           <select class="form-control">
+             <option>10人</option>
+           </select>
+         </div>
+       </div>
+       <!--活动开始时间-->
+       <div class="dis_flex he_list_li">
+         <div class="dis_flex">
+           <img src="img/time.png" alt="">
+           <span>活动开始时间：</span>
+         </div>
+         <div>
+           <input type='datetime-local'/>
+         </div>
+       </div>
+       <!--活动结束时间-->
+       <div class="dis_flex he_list_li">
+         <div class="dis_flex">
+           <img src="img/time.png" alt="">
+           <span>活动结束时间：</span>
+         </div>
+         <div>
+           <input type='datetime-local'/>
+         </div>
+       </div>
+       <!--付款方式-->
+       <div class="dis_flex he_list_li">
+         <div class="dis_flex">
+           <img src="img/money.png" alt="">
+           <span>付款方式：</span>
+         </div>
+         <div class="dis_flex">
+           <select class="form-control">
+             <option>请选择付款方式</option>
+             <option>AA制</option>
+           </select>
+         </div>
+       </div>
+       <!--活动地点-->
+       <div class="dis_flex he_list_li">
+         <div class="dis_flex">
+           <img src="img/position.png" alt="">
+           <span>活动地点：</span>
+         </div>
+         <div class="dis_flex">
+           <span>小区/写字楼/商城</span>
+           <img src="img/return_2_1.png" alt="">
+         </div>
+       </div>
+       <!--备注详细地址-->
+       <div>
+         <textarea placeholder="请输入详细地址"></textarea>
+       </div>
+     </form>
+   </div>
+   <footer class="dis_flex">
+     <div>活动置顶</div>
+     <div>活动发布</div>
+   </footer>
+ </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  var vm = new Vue({
+    el:'#vueData',
+    data:{},
+    methods: {}
+  })
+  
+</script>
 </html>

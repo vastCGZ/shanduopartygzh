@@ -7,20 +7,134 @@ header{
 .title_header>div>a{
   color: #999999;
 }
+.title_header>div:first-child>a{
+  margin-left: 10px;
+}
 .title_header>div:last-child>a{
   color: #4660FF;
+  margin-right: 10px;
   text-decoration: underline;
 }
 .dt_hade{
   padding: 10px;
+  border-bottom: 1px solid #eaeaea;
 }
 .dt_hade>div:first-child>textarea{
   width: 100%;
   border: 0px;
   outline:none;
   cursor: pointer;
+  resize:none;
 }
-.dt_hade>div:last-child>img{
-  width: 120px;
-  height: 120px;
+.dt_hade>div.dt_pic{
+  overflow: hidden;
+}
+.dt_hade>div.dt_pic>div{
+  position: relative;
+  border-radius: 10px;
+}
+.dt_hade>div.dt_pic>div>div{
+  width:100%;
+  height:0;
+  padding-bottom: 100%;
+  overflow:hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  background-size:cover;
+  border-radius: 10px;
+}
+.dt_hade>div.dt_pic>div:nth-child(9){
+  font-size: 32px;
+  color: #fff;
+  text-align: center;
+}
+.dt_hade>div.dt_pic>div:nth-child(9)>a{
+  font-size: 14px;
+}
+.dt_hade>div.dt_pic>div>a{
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  color: #000;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+/*iphone6 plus*/
+@media (min-width: 376px) and (max-width: 415px){
+  .dt_hade>div.dt_pic>div{
+    width: 128px;
+    height: 128px;
+  }
+  .dt_hade>div.dt_pic{
+    width: 399px;
+  }
+  .dt_hade>div.dt_pic>div:nth-child(9){
+    line-height: 128px;
+  }
+}
+
+/*iphone6*/
+@media (min-width: 321px) and (max-width: 376px){
+  .dt_hade>div.dt_pic>div{
+    width: 115px;
+    height: 115px;
+  }
+  .dt_hade>div.dt_pic{
+    width: 360px;
+  }
+  .dt_hade>div.dt_pic>div:nth-child(9){
+    line-height: 115px;
+  }
+}
+
+/*iphone5*/
+@media (max-width: 321px){
+  .dt_hade>div.dt_pic>div{
+    width: 97px;
+    height: 97px;
+  }
+  .dt_hade>div.dt_pic{
+    width: 306px;
+  }
+  .dt_hade>div.dt_pic>div:nth-child(9){
+    line-height: 99px;
+  }
+}
+.dt_hade>div:last-child{
+  padding: 5px 0 0;
+}
+.body>div:last-child>img{
+  width: 27.5px;
+  height: 27.5px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+.body>div:last-child>img:first-child{
+  width: 25px;
+  height: 25px;
+}
+footer{
+  height: 50px;
+  width: 100%;
+  position: relative;
+}
+footer>div{
+  display: flex;
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #eaeaea;
+}
+footer>div>img{
+  width: 25px;
+  height: 25px;
 }
