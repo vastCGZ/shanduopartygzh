@@ -1,0 +1,23 @@
+header>div:first-child{
+  height: 50px;
+}
+header>div:last-child{
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+}
+header>div:last-child>div{
+  width: 30%;
+  line-height: 40px;
+  text-align: center;
+}
+header>div:last-child>div>a{
+  height: 40px;
+  width: 48px;
+  color: #999999;
+}
+header>div:last-child>div>a.active{
+  border-bottom: 3px solid #5E75FF;
+  color: #333333;
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta content="telephone=no,email=no" name="format-detection">
+  <!--禁止自动识别电话号码和邮箱-->
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/myactivity.css">
+  <link rel="stylesheet" href="css/common.css">
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <title>我的活动</title>
+</head>
+<body>
+  <div id="vueData">
+    <header>
+      <div>
+        <div class="title_header dis_flex">
+          <div>
+            <img src="img/return_1.png" alt="">
+          </div>
+          <div>
+            <span>我的活动</span>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div class="dis_flex">
+        <div>
+          <a @click.prevent="changer(0)" class="dis_inli active" href="javascript:;">已参加</a>
+        </div>
+        <div>
+          <a @click.prevent="changer(1)" class="dis_inli" href="javascript:;">已报名</a>
+        </div>
+        <div>
+          <a @click.prevent="changer(2)" class="dis_inli" href="javascript:;">我的</a>
+        </div>
+      </div>
+    </header>
+    <div class="body">
+      <div v-if="show == 0" :style="{maxHeight: winHeight+'px'}">
+
+        <div class="hot_ul">
+          <div class="hot_ul_li">
+            <div class="hot_ul_li_header dis_flex">
+              <!--活动发起人信息-->
+              <div class="hot_ul_li_header_title dis_flex">
+                <img src="img/portrait.png">
+                <div class="dis_flex">
+                  <span>activityInfo.userName</span>
+                  <div class="dis_flex">
+                    <div class="dis_inli text_sex">
+                      <img src="img/nv.png">
+                      <span>26</span>
+                    </div>
+                    <div>
+                      <div class="dis_inli text_svip">
+                        <span>SVIP8</span>
+                      </div>
+                      <div class="dis_inli text_vip">
+                        <span>VIP5</span>
+                      </div>
+
+                      <div class="dis_inli text_level">
+                        <span>LV activityInfo.vipGrade</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--活动时间-->
+              <div class="hot_ul_li_header_time dis_flex">
+                <p class="col_lan">activityInfo.activityStartTime</p>
+                <p class="col_hui">报名截止 activityInfo.activityCutoffTime</p>
+              </div>
+            </div>
+            <div class="hot_ul_li_body">
+              <!--主题-->
+              <div class="hot_ul_li_body_theme">
+                <span class="col_hui">主题:</span>
+                <span>activityInfo.activityName</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activityInfo.mode</span>
+              </div>
+              <!--活动地点-->
+              <div class="hot_ul_li_body_place">
+                <span class="col_hui">活动地点:</span>
+                <span>activityInfo.activityAddress</span>
+                <span class="bg_position col_lan">activityInfo.location km</span>
+              </div>
+              <!--活动内容-->
+              <div class="hot_ul_li_body_content dis_flex">
+                <span class="col_hui dis_inli">活动内容:</span>
+                <span class="dis_inli">activityInfo.remarks</span>
+              </div>
+            </div>
+            <div class="hot_ul_li_footer dis_flex">
+              <!--参与人数-->
+              <div class="dis_flex">
+                <div>
+                  <img src="img/nan_1.png" alt="">
+                  <span>activityInfo.manNumber</span>
+                </div>
+                <div>
+                  <img src="img/nv_1.png" alt="">
+                  <span>activityInfo.womanNumber</span>
+                </div>
+              </div>
+              <!--其他-->
+              <div class="dis_flex">
+                <div>
+                  <span>信用轨迹</span>
+                </div>
+                <div>
+                  <span>去报名</span>
+                  <img src="img/icon-2.png" alt="">
+                </div>
+                <img src="img/copy.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="show == 1" :style="{maxHeight: winHeight+'px'}">
+        已报名
+      </div>
+      <div v-if="show == 2" :style="{maxHeight: winHeight+'px'}">
+        我的
+      </div>
+    </div>
+    <footer></footer>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  var vm = new Vue({
+    el: '#vueData',
+    data: {
+      //判断显示已参加和已报名或者我的
+      show:0,
+      //获取屏幕分辨率高度
+      winHeight:null
+    },
+    mounted: function () {
+      //获取屏幕分辨率高度
+      this.winHeight = window.screen.height-90;
+    },
+    methods: {
+      // 类别切换
+      changer(classifyId) {
+        let selectId = $(event.currentTarget).parent().index();
+        if (classifyId === selectId) {
+          $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
+          this.show = classifyId;
+        }
+      }
+    }
+  })
+</script>
+</html>

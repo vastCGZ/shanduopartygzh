@@ -11,11 +11,23 @@ html{
   -webkit-text-size-adjust:none;
   font-size: 62.5%;
 }
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, fieldset, textarea {
+  margin: 0;
+}
 ul,li,p{
   padding: 0;
   margin: 0;
   list-style-type:none;
 }
+img{
+  vertical-align: middle;
+}
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  resize: none;
+}
+
 a:focus, a:active, a:focus-within, a:visited, a:hover{
   text-decoration: none;
 }
@@ -68,7 +80,7 @@ body{
 }
 /*性别，年龄*//*新*/
 .text_sex_off, .text_sex_on{
-  width:40px;
+  width: 40px;
   height: 16px;
   background-size: 13px;
   padding-left: 20px;
@@ -154,40 +166,40 @@ div.hot_ul>div.hot_ul_li{
 div.hot_ul>div.hot_ul_li:first-child{
   border-top: 0;
 }
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header{
+div.hot_ul_li_header{
   padding: 10px 10px 5px 10px;
 }
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header>div{
+div.hot_ul_li_header>div{
   width: 50%;
 }
 /*头像*/
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header>div.hot_ul_li_header_title>img{
+div.hot_ul_li_header_title>img{
   width: 60px;
   height: 60px;
   border-radius: 50%;
   margin-right: 5px;
 }
 /*铭牌*/
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header>div.hot_ul_li_header_title>div{
+div.hot_ul_li_header_title>div{
   font-size: 1.4rem;
   flex-direction: column;
   justify-content: center;
 }
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header>div.hot_ul_li_header_title>div>div>div{
+div.hot_ul_li_header_title>div>div>div{
   margin-right: 0.5rem;
 }
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header>div.hot_ul_li_header_title>div>span{
+div.hot_ul_li_header_title>div>span{
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header>div.hot_ul_li_header_time{
+div.hot_ul_li_header_time{
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
 }
-div.hot_ul>div.hot_ul_li>div.hot_ul_li_header>div.hot_ul_li_header_time>p:last-child{
+div.hot_ul_li_header_time>p:last-child{
   font-size: 1.2rem;
 }
 /**/

@@ -1,0 +1,30 @@
+body{
+  background-color: #F7F8FF;
+}
+header{
+  height: 50px;
+}
+.body>div.nav{
+  justify-content: space-between;
+  padding: 0 10px;
+  border-top: 1px solid #F7F8FF;
+  background-color: #FFFFFF;
+}
+.body>div.nav:first-child{
+  border-top: 2px solid #F7F8FF;
+}
+.body>div.nav:nth-child(3){
+  border-top: 5px solid #F7F8FF;
+}
+.body>div.nav>div{
+  width: 50%;
+  height: 48px;
+  align-items: center;
+}
+.body>div.nav>div:last-child{
+  justify-content: flex-end;
+}
+.body>div.nav>div:last-child>img{
+  width: 15px;
+  height: 15px;
+}
