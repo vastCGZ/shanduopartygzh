@@ -63,6 +63,7 @@ body{
   line-height: 16px;
   text-align: center;
   color: #ffffff;
+  vertical-align: top;
 }
 /*性别，年龄*//*旧*/
 .text_sex{
@@ -169,8 +170,11 @@ div.hot_ul>div.hot_ul_li:first-child{
 div.hot_ul_li_header{
   padding: 10px 10px 5px 10px;
 }
-div.hot_ul_li_header>div{
-  width: 50%;
+div.hot_ul_li_header>div:first-child{
+  width: 55%;
+}
+div.hot_ul_li_header>div:last-child{
+  width: 45%;
 }
 /*头像*/
 div.hot_ul_li_header_title>img{
@@ -185,8 +189,8 @@ div.hot_ul_li_header_title>div{
   flex-direction: column;
   justify-content: center;
 }
-div.hot_ul_li_header_title>div>div>div{
-  margin-right: 0.5rem;
+div.hot_ul_li_header_title>div>div>div:last-child{
+  margin-left: 0.5rem;
 }
 div.hot_ul_li_header_title>div>span{
   width: 100%;

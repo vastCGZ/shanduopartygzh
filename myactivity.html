@@ -46,7 +46,8 @@
     </header>
     <div class="body">
       <div v-if="show == 0" :style="{maxHeight: winHeight+'px'}">
-
+        <!--没有数据显示-->
+        <span v-if="false" class="dis_inli">没有数据</span>
         <div class="hot_ul">
           <div class="hot_ul_li">
             <div class="hot_ul_li_header dis_flex">
@@ -54,14 +55,11 @@
               <div class="hot_ul_li_header_title dis_flex">
                 <img src="img/portrait.png">
                 <div class="dis_flex">
-                  <span>activityInfo.userName</span>
+                  <span>小猪佩奇</span>
                   <div class="dis_flex">
-                    <div class="dis_inli text_sex">
-                      <img src="img/nv.png">
-                      <span>26</span>
-                    </div>
+                    <div class="text_sex_off">26</div>
                     <div>
-                      <div class="dis_inli text_svip">
+                      <div class="dis_inli text_svip" v-if="false">
                         <span>SVIP8</span>
                       </div>
                       <div class="dis_inli text_vip">
@@ -69,7 +67,7 @@
                       </div>
 
                       <div class="dis_inli text_level">
-                        <span>LV activityInfo.vipGrade</span>
+                        <span>LV96</span>
                       </div>
                     </div>
                   </div>
@@ -77,8 +75,8 @@
               </div>
               <!--活动时间-->
               <div class="hot_ul_li_header_time dis_flex">
-                <p class="col_lan">activityInfo.activityStartTime</p>
-                <p class="col_hui">报名截止 activityInfo.activityCutoffTime</p>
+                <p class="col_lan">2018/4/24/14:04星期二</p>
+                <p class="col_hui">报名截止2018/4/26/18:00</p>
               </div>
             </div>
             <div class="hot_ul_li_body">
@@ -92,7 +90,7 @@
               <div class="hot_ul_li_body_place">
                 <span class="col_hui">活动地点:</span>
                 <span>activityInfo.activityAddress</span>
-                <span class="bg_position col_lan">activityInfo.location km</span>
+                <span class="bg_position col_lan">1.6666 km</span>
               </div>
               <!--活动内容-->
               <div class="hot_ul_li_body_content dis_flex">
@@ -105,11 +103,11 @@
               <div class="dis_flex">
                 <div>
                   <img src="img/nan_1.png" alt="">
-                  <span>activityInfo.manNumber</span>
+                  <span>01/10</span>
                 </div>
                 <div>
                   <img src="img/nv_1.png" alt="">
-                  <span>activityInfo.womanNumber</span>
+                  <span>01/10</span>
                 </div>
               </div>
               <!--其他-->
@@ -118,8 +116,7 @@
                   <span>信用轨迹</span>
                 </div>
                 <div>
-                  <span>去报名</span>
-                  <img src="img/icon-2.png" alt="">
+                  <span>删除</span>
                 </div>
                 <img src="img/copy.png" alt="">
               </div>
@@ -128,10 +125,248 @@
         </div>
       </div>
       <div v-if="show == 1" :style="{maxHeight: winHeight+'px'}">
-        已报名
+        <!--没有数据显示-->
+        <span v-if="false" class="dis_inli">没有数据</span>
+        <div class="hot_ul">
+          <div class="hot_ul_li">
+            <div class="hot_ul_li_header dis_flex">
+              <!--活动发起人信息-->
+              <div class="hot_ul_li_header_title dis_flex">
+                <img src="img/portrait.png">
+                <div class="dis_flex">
+                  <span>小猪佩奇</span>
+                  <div class="dis_flex">
+                    <div class="text_sex_off">26</div>
+                    <div>
+                      <div class="dis_inli text_svip" v-if="false">
+                        <span>SVIP8</span>
+                      </div>
+                      <div class="dis_inli text_vip">
+                        <span>VIP5</span>
+                      </div>
+
+                      <div class="dis_inli text_level">
+                        <span>LV96</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--活动时间-->
+              <div class="hot_ul_li_header_time dis_flex">
+                <p class="col_lan">2018/4/24/14:04星期二</p>
+                <p class="col_hui">报名截止2018/4/26/18:00</p>
+              </div>
+            </div>
+            <div class="hot_ul_li_body">
+              <!--主题-->
+              <div class="hot_ul_li_body_theme">
+                <span class="col_hui">主题:</span>
+                <span>activityInfo.activityName</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activityInfo.mode</span>
+              </div>
+              <!--活动地点-->
+              <div class="hot_ul_li_body_place">
+                <span class="col_hui">活动地点:</span>
+                <span>activityInfo.activityAddress</span>
+                <span class="bg_position col_lan">1.6666 km</span>
+              </div>
+              <!--活动内容-->
+              <div class="hot_ul_li_body_content dis_flex">
+                <span class="col_hui dis_inli">活动内容:</span>
+                <span class="dis_inli">activityInfo.remarks</span>
+              </div>
+            </div>
+            <div class="hot_ul_li_footer dis_flex">
+              <!--参与人数-->
+              <div class="dis_flex">
+                <div>
+                  <img src="img/nan_1.png" alt="">
+                  <span>01/10</span>
+                </div>
+                <div>
+                  <img src="img/nv_1.png" alt="">
+                  <span>01/10</span>
+                </div>
+              </div>
+              <!--其他-->
+              <div class="dis_flex">
+                <div>
+                  <span>信用轨迹</span>
+                </div>
+                <div>
+                  <span>取消报名</span>
+                </div>
+                <img src="img/copy.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div v-if="show == 2" :style="{maxHeight: winHeight+'px'}">
-        我的
+        <!--没有数据显示-->
+        <span v-if="false" class="dis_inli">没有数据</span>
+        <div class="hot_ul">
+          <div class="hot_ul_li">
+            <div class="hot_ul_li_header dis_flex">
+              <!--活动发起人信息-->
+              <div class="hot_ul_li_header_title dis_flex">
+                <img src="img/portrait.png">
+                <div class="dis_flex">
+                  <span>小猪佩奇</span>
+                  <div class="dis_flex">
+                    <div class="text_sex_off">26</div>
+                    <div>
+                      <div class="dis_inli text_svip" v-if="false">
+                        <span>SVIP8</span>
+                      </div>
+                      <div class="dis_inli text_vip">
+                        <span>VIP5</span>
+                      </div>
+                      <div class="dis_inli text_level">
+                        <span>LV96</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--活动时间-->
+              <div class="hot_ul_li_header_time dis_flex">
+                <p class="col_lan">2018/4/24/14:04星期二</p>
+                <p class="col_hui">报名截止2018/4/26/18:00</p>
+              </div>
+            </div>
+            <div class="hot_ul_li_body">
+              <!--主题-->
+              <div class="hot_ul_li_body_theme">
+                <span class="col_hui">主题:</span>
+                <span>activityInfo.activityName</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activityInfo.mode</span>
+              </div>
+              <!--活动地点-->
+              <div class="hot_ul_li_body_place">
+                <span class="col_hui">活动地点:</span>
+                <span>activityInfo.activityAddress</span>
+                <span class="bg_position col_lan">1.6666 km</span>
+              </div>
+              <!--活动内容-->
+              <div class="hot_ul_li_body_content dis_flex">
+                <span class="col_hui dis_inli">活动内容:</span>
+                <span class="dis_inli">activityInfo.remarks</span>
+              </div>
+            </div>
+            <div class="hot_ul_li_footer dis_flex">
+              <!--参与人数-->
+              <div class="dis_flex">
+                <div>
+                  <img src="img/nan_1.png" alt="">
+                  <span>01/10</span>
+                </div>
+                <div>
+                  <img src="img/nv_1.png" alt="">
+                  <span>01/10</span>
+                </div>
+              </div>
+              <!--其他-->
+              <div class="dis_flex">
+                <div>
+                  <span>信用轨迹</span>
+                </div>
+                <div>
+                  <span @click="imgShow">置顶</span>
+                </div>
+                <img src="img/copy.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--置顶信息-->
+        <div v-if="isShowOne" class="dis_flex outerdiv" style="display: none;">
+          <div class="dis_flex">
+            <div>
+              <div class="title_header dis_flex">
+                <div class="dis_flex">
+                  <img src="img/off_1.png" alt="" @click="closeDiglog">
+                </div>
+                <div class="dis_flex">
+                  <span>普通置顶</span>
+                </div>
+                <div class="dis_flex"></div>
+              </div>
+            </div>
+            <div class="dis_flex">
+              <div>
+                <span>2</span>
+                <span>元</span>
+                <span>/12小时</span>
+              </div>
+              <div>
+                <img src="img/copy_10.png" alt="">
+                <span>余额支付</span>
+              </div>
+              <div>
+                <img src="img/copy_10.png" alt="">
+                <span>余额支付</span>
+              </div>
+              <div>
+                <div>
+                  <img src="img/copy_2_1.png" alt="">
+                  <span>微信支付</span>
+                </div>
+                <div>
+                  <img src="img/copy_9.png" alt="">
+                  <span>支付宝支付</span>
+                </div>
+              </div>
+              <div>
+                <span>开通VIP置顶费用低至1.5元!</span>
+                <span>去开通>></span>
+              </div>
+            </div>
+            <div class="dis_flex">
+              <div class="dis_flex">取消</div>
+              <div class="dis_flex" @click="isShow">确认支付</div>
+            </div>
+          </div>
+        </div>
+        <!--支付信息-->
+        <div v-else class="dis_flex outerdiv" style="display: none;">
+          <div class="dis_flex">
+            <div>
+              <div class="title_header dis_flex">
+                <div class="dis_flex">
+                  <img src="img/off_1.png" alt="" @click="closeDiglog">
+                </div>
+                <div class="dis_flex">
+                  <span>支付密码</span>
+                </div>
+                <div class="dis_flex"></div>
+              </div>
+            </div>
+            <div class="dis_flex" @click="onClck">
+              <div>
+                <span>请输入六位支付密码</span>
+              </div>
+              <div class="passwordDiv dis_flex">
+                <label class="passwordLabel">
+                  <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                </label>
+                <input type="tal" class="password" name="password1" maxlength="6" @input="onIpt">
+              </div>
+            </div>
+            <div class="dis_flex">
+              <div class="dis_flex">取消</div>
+              <div class="dis_flex">确认</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <footer></footer>
@@ -145,13 +380,23 @@
       //判断显示已参加和已报名或者我的
       show:0,
       //获取屏幕分辨率高度
-      winHeight:null
+      winHeight:null,
+      isShowOne:true
     },
     mounted: function () {
       //获取屏幕分辨率高度
       this.winHeight = window.screen.height-90;
     },
     methods: {
+      imgShow() {
+        $('.outerdiv').fadeIn("fast");
+      },
+      closeDiglog() {
+        $('.outerdiv').fadeOut("fast");
+      },
+      isShow() {
+        this.isShowOne = false
+      },
       // 类别切换
       changer(classifyId) {
         let selectId = $(event.currentTarget).parent().index();
@@ -159,7 +404,27 @@
           $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
           this.show = classifyId;
         }
-      }
+      },
+      //点击密码框清除密码
+      onClck(){
+        $('.password').focus();
+      },
+      //密码框输入事件
+      onIpt(event){
+        var num = new RegExp(/[0-9.]/);
+        let list = event.target.previousElementSibling.children[0].children;
+        for(let k=0;k<list.length;k++){
+          list[k].innerText = '';
+        }
+        for(let i=0;i<event.target.value.length;i++){
+          if(!num.test(event.target.value[i])){
+            event.target.value = event.target.value.substr(0,i);
+            return false;
+          }
+          //input输入一个就改变一个li为•
+          list[i].innerText =  '•';
+        }
+      },
     }
   })
 </script>
