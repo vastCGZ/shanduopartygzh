@@ -1,6 +1,29 @@
 const host = 'https://yapinkeji.com/shanduoparty';
 const imagePath = host + '/picture/';
 
+/*公众号登陆*/
+function gzhLonin(code, cbOK) {
+    $.ajax({
+        url: "/yapingzh/gzhLonin.do",
+        data: {
+            "code": code
+        },
+        type: "POST",
+        dataType: "json",
+        success: function (result) {
+            if (result.success) {
+                localStorage.openid = result.openid;
+                if (result.onbind) {
+                    localStorage.localUser = JSON.stringify(result.userInfo);
+                    cbOK && cbOK();
+                } else {
+                    localStorage.unionid = result.unionid;
+                }
+            }
+        }
+    });
+}
+
 /*加载活动内容*/
 function loadActivityDetail(activityId, cbOk) {
     $.getJSON(host + '/activity/oneActivity', {activityId: activityId}, function (res) {
@@ -38,6 +61,7 @@ function loadCommentList(dynamicId, pageIndex, pageSize, cbOk, cbErr) {
         }
     });
 }
+
 function login(unionId, username, password, cbOk, cbErr) {
     $.ajax({
         url: host + '/wx/binding',
