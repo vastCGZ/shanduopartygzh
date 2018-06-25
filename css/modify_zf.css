@@ -1,0 +1,61 @@
+header{
+  height: 50px;
+}
+
+.body>div{
+  border-top: 3px solid #F7F8FF;
+}
+
+.body>div>div {
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  font-size: 15px;
+}
+
+.body>div>div:nth-child(2) {
+  padding-top: 10px;
+}
+
+.body>div>div:nth-child(3) {
+  padding-top: 30px;
+  margin-bottom: 50px;
+}
+
+.body>div>div:nth-child(4) {
+  width: 205px;
+  height: 40px;
+  background-color: #5E75FF;
+  padding: 0;
+  margin: 0 auto;
+  border-radius: 50px;
+}
+
+.body>div>div:nth-child(4)>a {
+  color: #FFFFFF;
+}
+
+.passwordDiv>input {
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  border: 0;
+}
+
+.passwordLabel {
+  height: 30px;
+  clear: both;
+}
+.passwordLabel>ul>li {
+  float: left;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px solid #dedede;
+  margin-left: 5px;
+}
+
+.passwordLabel ul li:first-child {
+  margin-left: 0;
+}

@@ -1,0 +1,90 @@
+header>div:first-child{
+  height: 50px;
+}
+/**/
+header>div:last-child>div:first-child{
+  flex-direction: column;
+  align-items: center;
+}
+header>div:last-child>div:first-child>img{
+  width: 80px;
+  height: 80px;
+  border: 5px solid #96ACFF;
+  border-radius: 50%;
+}
+header>div:last-child>div:first-child>h4{
+  margin-top: 5px;
+}
+header>div:last-child>div:first-child>span{
+  margin-top: 9px;
+  margin-bottom: 40px;
+}
+/**/
+header>div:last-child>div:last-child{
+  border-top: 1px solid #F7F8FF;
+  border-bottom: 3px solid #F7F8FF;
+}
+header>div:last-child>div:last-child>div{
+  width: 50%;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+header>div:last-child>div:last-child>div>a{
+  width: 65px;
+  color: #999999;
+  height: 40px;
+}
+header>div:last-child>div:last-child>div>a.active{
+  border-bottom: 3px solid #5E75FF;
+  color: #333333;
+}
+.body>div{
+  overflow-y: scroll;
+}
+div.hot_ul_li_header{
+  border-bottom: 1px solid #F7F8FF;
+  padding: 10px!important;
+}
+div.hot_ul_li_header div.hot_ul_li_header_title>img{
+  width: 70px;
+  height: 70px;
+}
+.text_sex, .text_svip, .text_vip, .text_level{
+  vertical-align: top;
+}
+div.hot_ul_li_header_title .pj_aix{
+  width: 16.25px;
+  height: 14.325px;
+}
+div.body_li{
+  padding: 10px 0 10px 10px;
+  flex-direction: column;
+}
+div.body_li>div.hot_ul_li_header_title>div{
+  justify-content: flex-end;
+}
+div.body_li>div.hot_ul_li_header_title>div>div{
+  margin-bottom: 4px;
+}
+div.body_li>div.hot_ul_li_header_title>div>div:first-child{
+  align-items: center;
+  margin-bottom: 8px;
+}
+div.body_li>div.hot_ul_li_header_title>div>div:first-child>span{
+  margin-right: 5px;
+}
+div.body_li>div.hot_ul_li_header_title>div>div:first-child>img{
+  margin-right: 2px;
+}
+div.body_li>div:last-child{
+}
+div.body_li>div:last-child>p:first-child{
+  min-width: 65px;
+  height: 100%;
+}
+div.body_li>div:last-child>p:last-child{
+  width: 100%;
+  padding: 0 10px 10px 0;
+  border-bottom: 1px solid #F7F8FF;
+}

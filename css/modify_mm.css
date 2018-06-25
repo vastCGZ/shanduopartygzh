@@ -1,0 +1,40 @@
+header{
+  height: 50px;
+}
+div.nav{
+  height: 50px;
+  line-height: 50px;
+  border-top: 1px solid #F7F8FF;
+}
+div.nav:first-child{
+  border-top: 2px solid #F7F8FF;
+}
+div.nav>span{
+  margin-left: 10px;
+}
+footer{
+  justify-content: center;
+  border-top: 5px solid #F7F8FF;
+}
+footer>div{
+  margin-top: 30px;
+  width: 80%;
+  height: 40px;
+  background-color: #5E75FF;
+  color: #FFFFFF;
+  font-size: 16px;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+}
+div.nav input{
+  width: 280px;
+  height: 70%;
+  border: 0px;
+  outline:none;
+  cursor: pointer;
+  padding-left: 5px;
+}
+div.nav input::-webkit-input-placeholder{
+  color: #999999;
+}

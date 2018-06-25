@@ -1,0 +1,32 @@
+header{
+  height: 50px;
+}
+div.nav{
+  height: 50px;
+  line-height: 50px;
+  border-top: 1px solid #F7F8FF;
+  border-bottom: 1px solid #F7F8FF;
+}
+div.nav:first-child{
+  border-bottom: 2px solid #F7F8FF;
+}
+div.nav:last-child{
+  border-top: 2px solid #F7F8FF;
+}
+div.nav>span{
+  margin-left: 10px;
+}
+footer{
+  justify-content: center;
+}
+footer>div{
+  margin-top: 30px;
+  width: 80%;
+  height: 40px;
+  background-color: #5E75FF;
+  color: #FFFFFF;
+  font-size: 16px;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+}

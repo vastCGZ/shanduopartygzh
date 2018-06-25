@@ -1,0 +1,18 @@
+header{
+  height: 50px;
+}
+body{
+  background-color: #F7F8FF;
+}
+.hot_ul_li_header{
+  padding: 10px!important;
+  border-top: 1px solid #eaeaea;
+  background-color: #FFFFFF;
+}
+.hot_ul_li_header_title>img{
+  width: 50px!important;
+  height: 50px!important;
+}
+.hot_ul_li_header_title>div>div>span {
+  font-size: 12px;
+}
