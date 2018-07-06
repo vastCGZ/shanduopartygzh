@@ -15,29 +15,15 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="../css/mescroll.min.css">
     <link rel="stylesheet" href="css/swiper-4.3.2.min.css">
     <script src="../js/jquery-3.3.1.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/swiper-4.3.2.min.js"></script>
-    <title>首页</title>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
-    <meta content="telephone=no,email=no" name="format-detection">
-    <!--禁止自动识别电话号码和邮箱-->
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-    <meta name="apple-touch-fullscreen" content="yes"/>
-    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-    <link rel="apple-touch-icon" href=""/>
-    <!--苹果手机：将应用添加到手机主屏幕，会有一个icon可以直接进入-->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/swiper-4.3.2.min.css">
-    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
     <title>首页</title>
 </head>
 <body>
@@ -59,7 +45,7 @@
         <img src="img/bitmap_copy.png" alt="">
     </header>
     <!--主体-->
-    <div class="body">
+    <div id="mescroll" class="body mescroll">
         <!--活动，动态标签内容-->
         <div class="tab-content">
             <!--轮播图-->
@@ -166,11 +152,11 @@
                                         </div>
                                         <!--其他-->
                                         <div class="dis_flex">
-                                            <div>
+                                            <div @click="gotoCreditCenterView(activityInfo.userId)">
                                                 <span>信用轨迹</span>
                                             </div>
-                                            <div>
-                                                <span>去报名</span>
+                                            <div @click="gotoApplyView(activityInfo.id)">
+                                                <span>查看详情</span>
                                                 <img src="img/icon-2.png" alt="">
                                             </div>
                                             <img src="img/copy.png" alt="">
@@ -196,7 +182,7 @@
                                                     <div class="dis_inli text_sex">
                                                         <img :src="activityInfo.gender==1?'img/nan.png':'img/nv.png'"
                                                              alt="">
-                                                        <span>26</span>
+                                                        <span>{{activityInfo.age}}</span>
                                                     </div>
                                                     <div v-if="activityInfo.vipGrade>0">
                                                         <div v-if="activityInfo.vipGrade>8" class="dis_inli text_svip">
@@ -252,10 +238,10 @@
                                         </div>
                                         <!--其他-->
                                         <div class="dis_flex">
-                                            <div>
+                                            <div @click="gotoCreditCenterView(activityInfo.userId)">
                                                 <span>信用轨迹</span>
                                             </div>
-                                            <div>
+                                            <div @click="gotoApplyView(activityInfo.id)">
                                                 <span>去报名</span>
                                                 <img src="img/icon-2.png" alt="">
                                             </div>
@@ -338,10 +324,10 @@
                                         </div>
                                         <!--其他-->
                                         <div class="dis_flex">
-                                            <div>
+                                            <div @click="gotoCreditCenterView(activityInfo.userId)">
                                                 <span>信用轨迹</span>
                                             </div>
-                                            <div>
+                                            <div @click="gotoApplyView(activityInfo.id)">
                                                 <span>去报名</span>
                                                 <img src="img/icon-2.png" alt="">
                                             </div>
@@ -413,14 +399,14 @@
                                             <p class="col_lan bg_position">{{dynamicInfo.distance}}km</p>
                                         </div>
                                     </div>
-                                    <div class="hot_ul_li_body">
+                                    <div class="hot_ul_li_body" @click="gotoDynamicDetails(key)">
                                         <!--动态内容-->
                                         <p class="dynamic_speak">{{dynamicInfo.content}}</p>
                                         <div class="dynamic_pic">
                                             <!--大于二张class里加  dynamic_pic_div -->
                                             <div v-for="(img,index) in dynamicInfo.picture"
                                                  :class="dynamicInfo.picture.length>2?'dynamic_pic_div':'dis_inli'">
-                                                <div :style="img.myStyle" @click="imgShow(key,index)"></div>
+                                                <div :style="img.myStyle" @click.stop="imgShow(key,index)"></div>
                                                 <img :src="img.imgPath">
                                             </div>
                                         </div>
@@ -430,7 +416,7 @@
                                     <div class="hot_ul_li_footer dis_flex">
                                         <!--评论，点赞数量-->
                                         <div class="dis_flex">
-                                            <div>
+                                            <div @click="gotoDynamicDetails(key)">
                                                 <img src="img/comment_1.png" alt="">
                                                 <span>{{dynamicInfo.dynamicCount}}</span>
                                             </div>
@@ -487,14 +473,14 @@
                                             <p class="col_lan bg_position">{{dynamicInfo.distance}}km</p>
                                         </div>
                                     </div>
-                                    <div class="hot_ul_li_body">
+                                    <div class="hot_ul_li_body" @click="gotoDynamicDetails(key)">
                                         <!--动态内容-->
                                         <p class="dynamic_speak">{{dynamicInfo.content}}</p>
                                         <div class="dynamic_pic">
                                             <!--大于二张class里加  dynamic_pic_div -->
                                             <div v-for="(img,index) in dynamicInfo.picture"
                                                  :class="dynamicInfo.picture.length>2?'dynamic_pic_div':'dis_inli'">
-                                                <div :style="img.myStyle" @click="imgShow(index)"></div>
+                                                <div :style="img.myStyle" @click.stop="imgShow(key,index)"></div>
                                                 <img :src="img.imgPath">
                                             </div>
                                         </div>
@@ -565,11 +551,11 @@
             </div>
             <div class="dis_none foot_div_ul">
                 <div class="dis_flex">
-                    <a href="release_hd.html" class="dis_flex">
+                    <a href="javascript:" @click="forward('release_hd.html')" class="dis_flex">
                         <img src="img/activity_1.png" alt="">
                         <span class="col_hui">发活动</span>
                     </a>
-                    <a href="release_dt.html" class="dis_flex">
+                    <a href="javascript:" @click="forward('release_dt.html')" class="dis_flex">
                         <img src="img/dynamic.png" alt="">
                         <span class="col_hui">发动态</span>
                     </a>
@@ -579,13 +565,8 @@
     </footer>
 </div>
 </body>
-<script src="js/bootstrap.js"></script>
-<script src="js/swiper-4.3.2.min.js"></script>
-<script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
-<script src="js/service.js"></script>
-<script src="../js/layer.js"></script>
-<script src="../js/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../js/mescroll.min.js"></script>
 <script type="text/javascript">
     let code = GetQueryString('code');
     let href = location.href.split('#')[0];
@@ -622,12 +603,13 @@
             totalpage: 0,
             arrayResult: []
         }],
-        lat: 28.24595,
-        lon: 113.08093,
+        lat: null,
+        lon: null,
         host: null,
         pageSize: 20,
         advertise: null,
-        isLogin: false
+        isLogin: false,
+        mescroll: null
     };
     let userInfo = localStorage.getItem('localUser');
     if (userInfo) {
@@ -639,13 +621,77 @@
                 data.isLogin = true;
             });
         } else {
-            location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe9811ac767f05237&redirect_uri=http://yapin.free.ngrok.cc/yapingzh/shanduoWeb/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect';
+            location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe9811ac767f05237&redirect_uri=http://lixinrong.vicp.io/yapingzh/shanduoWeb/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect';
         }
     }
     let vm = new Vue({
         el: '#vueData',
         data: data,
+        mounted: function () {
+            let that = this;
+            data.mescroll = new MeScroll("mescroll", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
+                up: {
+                    callback: that.upCallback,
+                    auto: false,
+                    noMoreSize: 10,
+                    toTop: {
+                        warpId: 'mescroll',
+                        src: 'img/totop.png',
+                        html: null,
+                        offset: 1000,
+                        warpClass: "mescroll-totop",
+                        showClass: "mescroll-fade-in",
+                        hideClass: "mescroll-fade-out",
+                        duration: 300,
+                        supportTap: false
+                    }
+                }, down: {
+                    auto: false,
+                    callback: that.downCallback
+                }
+            });
+        },
         methods: {
+            upCallback() {
+                if (data.currentTab === 0) {
+                    if (data.activitys[data.currentTab1].totalpage > data.activitys[data.currentTab1].currentPage) {
+                        data.activitys[data.currentTab1].currentPage += 1;
+                        loadActivityData(function () {
+                            data.mescroll.endByPage(data.pageSize, data.activitys[data.currentTab1].totalpage)
+                        }, function () {
+                            data.mescroll.endErr();
+                        });
+                    } else {
+                        data.mescroll.endErr();
+                    }
+                } else {
+                    if (data.dynamics[data.currentTab2].totalpage > data.dynamics[data.currentTab2].currentPage) {
+                        data.dynamics[data.currentTab2].currentPage += 1;
+                        loadDynamicData(function () {
+                            data.mescroll.endByPage(data.pageSize, data.dynamics[data.currentTab2].totalpage)
+                        }, function () {
+                            data.mescroll.endErr();
+                        });
+                    } else {
+                        data.mescroll.endErr();
+                    }
+                }
+            }, downCallback() {
+                emptyData();
+                if (vm.currentTab === 0) {
+                    loadActivityData(function () {
+                        data.mescroll.endByPage(data.pageSize, data.activitys[data.currentTab1].totalpage)
+                    }, function () {
+                        data.mescroll.endErr();
+                    });
+                } else {
+                    loadDynamicData(function () {
+                        data.mescroll.endByPage(data.pageSize, data.dynamics[data.currentTab2].totalpage)
+                    }, function () {
+                        data.mescroll.endErr();
+                    });
+                }
+            },
             adAutoplay: function (event) {
                 new Swiper(".swiper-container", {
                     direction: "horizontal", /*横向滑动*/
@@ -662,6 +708,23 @@
                 $('#outerdiv').fadeIn("fast");
             }, closeDiglog() {
                 $('#outerdiv').fadeOut("fast");
+            }, forward(view) {
+                gotoReleaseView(view);
+            }, gotoDynamicDetails(key) {
+                let dynamicId = data.dynamics[data.currentTab2].arrayResult[key].id;
+                location.href = 'dynamic.html?dynamicId=' + dynamicId;
+            }, gotoCreditCenterView(userId) {
+                if (userInfo) {
+                    location.href = 'credit.html?userId=' + userId;
+                } else {
+                    location.href = 'login.html';
+                }
+            }, gotoApplyView(activityId) {
+                if (userInfo) {
+                    location.href = 'signup.html?activityId=' + activityId;
+                } else {
+                    location.href = 'login.html';
+                }
             }
         }
     });
@@ -722,11 +785,9 @@
     $("#outerdiv").hide();
     $(function () {
         advertise();
-        loadActivityData();
         init_wx_js_sdk(href, function (result) {
             //初始化接口环境
             wx.config({
-                debug: true,
                 appId: result.appid,
                 timestamp: result.timestamp,
                 nonceStr: result.noncestr,
@@ -742,7 +803,7 @@
                     success: function (res) {
                         data.lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                         data.lon = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                        // loadActivityData();
+                        loadActivityData();
                     }
                 });
                 wx.hideMenuItems({
@@ -782,7 +843,7 @@
         }
     }
 
-    function loadActivityData(refresh, loaded) {
+    function loadActivityData(cbOK, cbErr) {
         let token = '';
         if (userInfo) {
             token = userInfo.token;
@@ -800,12 +861,14 @@
                 data.activitys[data.currentTab1].arrayResult = data.activitys[data.currentTab1].arrayResult.concat(res.list);
                 data.activitys[data.currentTab1].totalpage = res.totalpage;
             }
+            cbOK && cbOK();
         }, function () {
+            cbErr && cbErr();
         }, function () {
         });
     }
 
-    function loadDynamicData() {
+    function loadDynamicData(cbOK, cbErr) {
         let token = '';
         if (userInfo) {
             token = userInfo.token;
@@ -837,8 +900,9 @@
                 data.dynamics[data.currentTab2].arrayResult = array.concat(newData);
                 data.dynamics[data.currentTab2].totalpage = res.totalPage;
             }
+            cbOK && cbOK();
         }, function () {
-
+            cbErr && cbErr();
         }, function () {
 
         })

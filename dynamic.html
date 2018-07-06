@@ -6,11 +6,16 @@
           content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <title>动态详情</title>
     <link rel="stylesheet" href="css/dynamic.css">
+    <link rel="stylesheet" href="../css/mescroll.min.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
 </head>
 <body>
 <header>
     <div class="play_flex">
-        <div class="head_img play_flex">
+        <div class="head_img play_flex" onclick="goBack()">
             <img src="img/return_1.png" alt="">
         </div>
         <div class="head_txt play_flex">
@@ -20,180 +25,214 @@
         <div class="play_flex"></div>
     </div>
 </header>
-<div id="vueData">
-    <pull-to :top-load-method="refresh" :bottom-load-method="upLoad">
-        <div class="body">
-            <!--发起人-->
-            <div class="landlord play_flex">
+<div id="vueData" class="mescroll">
+    <div class="body">
+        <!--发起人-->
+        <div class="landlord play_flex">
+            <div class="play_flex">
+                <!--发起人头像-->
+                <img :src="dynamic.portraitId?imagePath+dynamic.portraitId:'img/portrait.png'" alt="">
+                <!--发起人信息-->
                 <div class="play_flex">
-                    <!--发起人头像-->
-                    <img :src="dynamic.portraitId?imagePath+dynamic.portraitId:'img/portrait.png'" alt="">
-                    <!--发起人信息-->
+                    <!--名字-->
+                    <div>{{dynamic.name}}</div>
                     <div class="play_flex">
-                        <!--名字-->
-                        <div>{{dynamic.name}}</div>
-                        <div class="play_flex">
-                            <div class="play_flex age_sex">
-                                <!--性别-->
-                                <img :src="dynamic.gender==1?'img/nan.png':'img/nv.png'" alt="">
-                                <!--年龄-->
-                                <span>{{dynamic.age}}</span>
-                            </div>
-                            <!--等级-->
-                            <div v-if="dynamic.vip>0">
-                                <span v-if="dynamic.vip>8" class="txt_svip play_in_blk">SVIP9</span>
-                            </div>
+                        <div class="play_flex age_sex">
+                            <!--性别-->
+                            <img :src="dynamic.gender==1?'img/nan.png':'img/nv.png'" alt="">
+                            <!--年龄-->
+                            <span>{{dynamic.age}}</span>
+                        </div>
+                        <!--等级-->
+                        <div v-if="dynamic.vip>0">
+                            <span v-if="dynamic.vip>8" class="txt_svip play_in_blk">SVIP9</span>
                         </div>
                     </div>
                 </div>
-                <!--发起人地理位置-->
-                <!--<div class="play_flex">
-                    <img src="img/location.png" alt="">
-                    <span>1.6km</span>
-                </div>-->
             </div>
-            <!--动态信息-->
-            <div class="information">
-                <!--动态文字-->
-                <div class="">
-                    <p>{{dynamic.content}}</p>
+            <!--发起人地理位置-->
+            <div class="play_flex">
+                <img src="img/location.png" alt="">
+                <span>{{dynamic.location}}</span>
+            </div>
+        </div>
+        <!--动态信息-->
+        <div class="information">
+            <!--动态文字-->
+            <div class="">
+                <p>{{dynamic.content}}</p>
+            </div>
+            <!--动态图片-->
+            <div class="">
+                <!--3张图片缩小 pic_suoxiao-->
+                <img v-for="img in dynamic.picture" :class="dynamic.picture.length>3?pic_suoxiao:''"
+                     :src="imagePath+img" alt="">
+            </div>
+            <!--动态其他-->
+            <div>
+                <span class="col_hui">{{dynamic.createDate}}</span>
+                <!--<span class="col_hui">180浏览</span>-->
+            </div>
+        </div>
+        <!--其他信息-->
+        <div class="other">
+            <div class="play_in_blk">
+                <!--评论-->
+                <div class="play_in_blk">
+                    <img src="img/comment_1.png" alt="">
+                    <span>{{dynamic.dynamicCount}}</span>
                 </div>
-                <!--动态图片-->
-                <div class="">
-                    <!--3张图片缩小 pic_suoxiao-->
-                    <img v-for="img in dynamic.picture" :src="imagePath+img" alt="">
+                <!--点赞-->
+                <div class="play_in_blk" @click="dynamicPraise">
+                    <img src="img/fabulous_1.png" alt="">
+                    <span>{{dynamic.praise}}</span>
                 </div>
-                <!--动态其他-->
+            </div>
+            <!--更多-->
+            <div class="play_in_blk">
+                <img src="img/zhuan.png" alt="">
+            </div>
+        </div>
+    </div>
+    <footer>
+        <!--标题评论区-->
+        <div class="comment_area">
+            <span>评论区(</span>
+            <span>{{commentList.length}}</span>
+            <span>)</span>
+        </div>
+        <!--评论楼层-->
+        <div class="comment_floor">
+            <!--评论楼-->
+            <div v-for="comm in commentList" class="layer_floor play_flex">
+                <div class="play_flex">
+                    <!--评论楼楼主头像-->
+                    <img :src="comm.portraitId?imagePath+comm.portraitId:'img/portrait.png'" alt="">
+                </div>
+                <!--评论楼楼主信息-->
                 <div>
-                    <span class="col_hui">{{dynamic.createDate}}</span>
-                    <!--<span class="col_hui">180浏览</span>-->
-                </div>
-            </div>
-            <!--其他信息-->
-            <div class="other">
-                <div class="play_in_blk">
-                    <!--评论-->
-                    <div class="play_in_blk">
-                        <img src="img/comment_1.png" alt="">
-                        <span>{{dynamic.dynamicCount}}</span>
+                    <div class="play_flex">
+                        <!--评论楼楼主名称-->
+                        <span class="col_hui">{{comm.name}}</span>
+                        <div class="age_sex play_flex nan">
+                            <!--评论楼楼主性别-->
+                            <img :src="comm.gender==1?'img/nan.png':'img/nv.png'" alt="">
+                            <!--评论楼楼主年龄-->
+                            <span>{{comm.age}}</span>
+                        </div>
                     </div>
-                    <!--点赞-->
-                    <div class="play_in_blk">
-                        <img src="img/fabulous_1.png" alt="">
-                        <span>{{dynamic.praise}}</span>
+                    <!--评论楼楼主发言-->
+                    <div>
+                        <span>{{comm.comment}}</span>
                     </div>
-                </div>
-                <!--更多-->
-                <div class="play_in_blk">
-                    <img src="img/zhuan.png" alt="">
+                    <!--评论楼楼主沙发-->
+                    <div>
+                        <div v-for="secondComm in comm.comments">
+                            <span class="col_lan">{{secondComm.userName}}@{{secondComm.replyName}}</span>
+                            <span class="col_hui">{{secondComm.comment}}</span>
+                        </div>
+                        <div v-on:click="seeComments(comm.dynamicId,comm.id,comm.userId,comm.name)">
+                            <span class="col_lan">回复量{{comm.count}}条></span>
+                        </div>
+                    </div>
+                    <!--评论楼楼主发言时间-->
+                    <div>
+                        <span class="col_hui">{{comm.createDate}}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <footer>
-            <!--标题评论区-->
-            <div class="comment_area">
-                <span>评论区(</span>
-                <span>{{commentList.length}}</span>
-                <span>)</span>
+        <div class="comment_speak">
+            <div class="play_flex">
+                <input type="text" placeholder="说点啥..." v-model="comments">
+                <button @click="sendComments">发送</button>
+                <img src="img/laugh.png" alt="">
             </div>
-            <!--评论楼层-->
-            <div class="comment_floor">
-                <!--评论楼-->
-                <div v-for="comm in commentList" class="layer_floor play_flex">
-                    <div class="play_flex">
-                        <!--评论楼楼主头像-->
-                        <img :src="comm.portraitId?imagePath+comm.portraitId:'img/portrait.png'" alt="">
-                    </div>
-                    <!--评论楼楼主信息-->
-                    <div>
-                        <div class="play_flex">
-                            <!--评论楼楼主名称-->
-                            <span class="col_hui">{{comm.name}}</span>
-                            <div class="age_sex play_flex nan">
-                                <!--评论楼楼主性别-->
-                                <img :src="comm.gender==1?'img/nan.png':'img/nv.png'" alt="">
-                                <!--评论楼楼主年龄-->
-                                <span>{{comm.age}}</span>
-                            </div>
-                        </div>
-                        <!--评论楼楼主发言-->
-                        <div>
-                            <span>{{comm.comment}}</span>
-                        </div>
-                        <!--评论楼楼主沙发-->
-                        <div>
-                            <div v-for="secondComm in comm.comments">
-                                <span class="col_lan">{{secondComm.userName}}@{{secondComm.replyName}}</span>
-                                <span class="col_hui">{{secondComm.comment}}</span>
-                            </div>
-                            <div v-on:click="seeComments(comm.dynamicId,comm.id,comm.userId,comm.name)">
-                                <span class="col_lan">回复量{{comm.count}}条></span>
-                            </div>
-                        </div>
-                        <!--评论楼楼主发言时间-->
-                        <div>
-                            <span class="col_hui">{{comm.createDate}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="comment_speak">
-                <div class="play_flex">
-                    <input type="text" placeholder="说点啥...">
-                    <img src="img/laugh.png" alt="">
-                </div>
-            </div>
-        </footer>
-    </pull-to>
+        </div>
+    </footer>
 </div>
-
 </body>
-<script src="js/jquery-3.3.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../js/layer.js"></script>
-<script src="../js/utils.js"></script>
-<script src="js/service.js"></script>
-<script src="../js/vue-pull-to.min.js"></script>
+<script src="../js/mescroll.min.js"></script>
 <script>
+    let userInfo = localStorage.getItem('localUser');
+    if (userInfo) {
+        userInfo = JSON.parse(userInfo);
+    }
     let data = {
-        imagePath: null,
+        imagePath: imagePath,
         dynamic: null,
         commentList: [],
         pageIndex: 1,
         pageSize: 20,
         totalPage: 0,
         comments: '',
-        createDate: null
+        createDate: null,
+        mescroll: null
     };
     let vm = new Vue({
         el: '#vueData',
         data: data,
-        components: {
-            PullTo: VuePullTo
+        mounted: function () {
+            let that = this;
+            data.mescroll = new MeScroll("vueData", {
+                up: {
+                    callback: that.upCallback,
+                    auto: false
+                }, down: {
+                    use: false
+                }
+            });
         },
         methods: {
-            refresh(loaded) {
-                emptyData();
-                localLoadCommentList(loaded);
-            },
-            upLoad(loaded) {
+            upCallback() {
+                console.log(2);
                 if (data.totalPage > data.pageIndex) {
-                    localLoadCommentList(loaded);
+                    localLoadCommentList(function () {
+                        data.mescroll.endByPage(data.pageSize, data.totalPage)
+                    }, function () {
+                        data.mescroll.endErr();
+                    });
                 } else {
-                    toast('没有更多');
-                    loaded('done');
+                    data.mescroll.endErr();
                 }
-            }, seeComments(dynamicId, commentId, respondent, replyName) {
+            },
+            seeComments(dynamicId, commentId, respondent, replyName) {
 
+            },
+            sendComments() {
+                if (checkInput(data.comments)) {
+                    sendComments();
+                } else {
+                    toast('不能发送空白内容');
+                }
+            }, dynamicPraise(){
+                if (!userInfo) {
+                    toast('登录后操作');
+                    return;
+                }
+                $.ajax({
+                    url: host + '/jdynamic/ispraise',
+                    data: {
+                        token: userInfo.token,
+                        dynamicId: dynamicId
+                    },
+                    dataType: 'json',
+                    method: 'GET',
+                    success: (res) => {
+                        if (res.success) {
+                            toast(res.result);
+                        }
+                    }
+                })
             }
         }
     });
     let dynamicId = GetQueryString('dynamicId');
-    // letlocalUser dynamicId = 'f2dc7c9dd4eb40169606c063565793b8';
     $(function () {
         if (dynamicId) {
-            data.imagePath = imagePath;
             loadDynamicDetails(dynamicId, function (res) {
+                console.log(res)
                 res.createDate = formatMsgTime(res.createDate);
                 data.dynamic = res;
             });
@@ -201,8 +240,48 @@
         }
     });
 
-    function localLoadCommentList(loaded) {
+    function sendComments() {
+        if (!userInfo) {
+            toast('登录后操作');
+            return;
+        }
+        $.ajax({
+            url: host + '/jdynamic/savecomment',
+            data: {
+                token: userInfo.token,
+                dynamicId: dynamicId,
+                comment: data.comments,
+                typeId: 1
+            },
+            dataType: 'json',
+            method: 'GET',
+            success: (res) => {
+                if (res.success) {
+                    let newComm = {
+                        portraitId: userInfo.picture,
+                        createDate: formatMsgTime(new Date().getTime()),
+                        gender: userInfo.gender,
+                        name: userInfo.name,
+                        age: userInfo.age,
+                        comment: data.comments,
+                        count:0
+                    };
+                    data.commentList.push(newComm);
+                    data.comments = '';
+                }else {
+                    toast(res.errCodeDes);
+                }
+            }
+        })
+    }
+
+    function goBack() {
+        history.go(-1);
+    }
+
+    function localLoadCommentList(cbOK, cbErr) {
         loadCommentList(dynamicId, data.pageIndex, data.pageSize, function (res) {
+            console.log(res);
             if (res.success && res.result.list.length > 0) {
                 let oldData = data.commentList;
                 let newData = res.result.list;
@@ -212,16 +291,10 @@
                 data.commentList = oldData.concat(newData);
                 data.totalPage = res.result.totalPage;
             }
-            loaded && loaded('done');
+            cbOK && cbOK();
         }, function () {
-            loaded && loaded('fail');
+            cbErr && cbErr();
         })
-    }
-
-    function emptyData() {
-        let ary = data.commentList;
-        ary.splice(0, ary.length);
-        data.commentList = ary;
     }
 </script>
 </html>

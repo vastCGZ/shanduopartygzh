@@ -362,10 +362,17 @@ a.btn1 {
   max-width: 100%;
 }
 
-
-.box_ft {
+.box_ft{
+  height: 82px;
+  width: 100%;
+  background-color: #F7F8FF;
+}
+.box_ft>div{
   background-color: white;
   padding: 0 6px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .box_ft_hd {

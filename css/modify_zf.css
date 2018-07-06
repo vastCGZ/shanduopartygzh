@@ -22,7 +22,7 @@ header{
   margin-bottom: 50px;
 }
 
-.body>div>div:nth-child(4) {
+.body>div>div:nth-child(5) {
   width: 205px;
   height: 40px;
   background-color: #5E75FF;
@@ -31,7 +31,7 @@ header{
   border-radius: 50px;
 }
 
-.body>div>div:nth-child(4)>a {
+.body>div>div:nth-child(5)>a {
   color: #FFFFFF;
 }
 
@@ -40,6 +40,7 @@ header{
   height: 1px;
   opacity: 0;
   border: 0;
+  color: transparent;
 }
 
 .passwordLabel {

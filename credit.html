@@ -1,175 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/credit.css">
-  <link rel="stylesheet" href="css/common.css">
-  <script src="js/jquery-3.3.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <title>信用中心</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/credit.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <title>信用中心</title>
 </head>
 <body>
-  <div id="vueData">
+<div id="vueData">
     <header>
-      <div>
-        <div class="title_header dis_flex">
-          <div>
-            <img src="img/return_1.png" alt="">
-          </div>
-          <div class="dis_flex"></div>
-          <div></div>
+        <div>
+            <div class="title_header dis_flex">
+                <div @click="goBack">
+                    <img src="img/return_1.png" alt="">
+                </div>
+                <div class="dis_flex"></div>
+                <div></div>
+            </div>
         </div>
-      </div>
-      <div>
-        <div class="dis_flex">
-          <img src="img/portrait.png" alt="">
-          <h4>5分</h4>
-          <span class="col_hui">初窥门径</span>
+        <div>
+            <div class="dis_flex">
+                <img src="img/portrait.png" alt="">
+                <h4>5分</h4>
+                <span class="col_hui">初窥门径</span>
+            </div>
+            <div class="dis_flex">
+                <div>
+                    <a @click.prevent="changer()" class="dis_inli active" href="javascript:">发布</a>
+                </div>
+                <div>
+                    <a @click.prevent="changer()" class="dis_inli" href="javascript:">参与</a>
+                </div>
+            </div>
         </div>
-        <div class="dis_flex">
-          <div>
-            <a @click.prevent="changer(0)" class="dis_inli active" href="javascript:;">发布</a>
-          </div>
-          <div>
-            <a @click.prevent="changer(1)" class="dis_inli" href="javascript:;">参与</a>
-          </div>
-        </div>
-      </div>
     </header>
     <div class="body">
-      <div v-if="!show" :style="{maxHeight: winHeight+'px'}">
-        <div class="hot_ul_li_header dis_flex">
-          <div class="hot_ul_li_header_title dis_flex">
-            <img src="img/bottom_img.png">
-            <div class="dis_flex">
-              <span>小猪佩奇</span>
-              <div class="dis_flex">
-                <div class="text_sex_off">26</div>
-                <div>
-                  <!--判断显示VIP-->
-                  <div class="dis_inli text_svip">
-                    <span>SVIP8</span>
-                  </div>
-                  <div v-if="false" class="dis_inli text_vip">
-                    <span>VIP5</span>
-                  </div>
+        <div v-if="!show" :style="{maxHeight: winHeight+'px'}" v-for="item in crediPoints[show].arrayResult">
+            <div class="hot_ul_li_header dis_flex">
+                <div class="hot_ul_li_header_title dis_flex">
+                    <img :src="item.head_portrait_id?imagePath+item.head_portrait_id:'img/bottom_img.png'">
+                    <div class="dis_flex">
+                        <span>{{item.user_name}}</span>
+                        <div class="dis_flex">
+                            <div class="text_sex_off">{{item.age}}</div>
+                            <div>
+                                <!--判断显示VIP-->
+                                <div class="dis_inli text_svip">
+                                    <span>SVIP8</span>
+                                </div>
+                                <div v-if="false" class="dis_inli text_vip">
+                                    <span>VIP5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="hot_ul_li_header_time dis_flex">
+                    <p>主题:{{item.activity_name}}</p>
+                    <p>{{item.mode}}</p>
+                </div>
             </div>
-          </div>
-          <div class="hot_ul_li_header_time dis_flex">
-            <p>主题:一起吃火锅</p>
-            <p>AA制</p>
-          </div>
+            <div class="body_ul">
+                <div class="body_li dis_flex" v-for="scoreItem in item.scoreList">
+                    <div class="hot_ul_li_header_title dis_flex">
+                        <img :src="scoreItem.head_portrait_id?imagePath+scoreItem.head_portrait_id:'img/bottom_img.png'">
+                        <div class="dis_flex">
+                            <div class="dis_flex">
+                                <span>{{scoreItem.user_name}}</span>
+                                <img v-if="scoreItem.score" v-for="score in scoreItem.score" class='pj_aix'
+                                     src='img/fabulous_2.png'>
+                            </div>
+                            <div class="dis_flex">
+                                <span>发起者评价:</span>
+                                <img v-if="scoreItem.others_score" v-for="o_score in scoreItem.others_score"
+                                     class='pj_aix' src='img/fabulous_2_1.png'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dis_flex">
+                        <!--占位-->
+                        <p>&nbsp;</p>
+                        <p v-if="scoreItem.evaluation_content">{{scoreItem.evaluation_content}}</p>
+                        <p v-else>没有评论</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="body_ul">
-          <div class="body_li dis_flex">
-            <div class="hot_ul_li_header_title dis_flex">
-              <img src="img/bottom_img.png">
-              <div class="dis_flex">
-                <div class="dis_flex">
-                  <span>小猪佩奇</span>
-                  <img v-for="item in 3" class='pj_aix' src='img/fabulous_2.png'>
-                  <img v-for="item in 5-3" class='pj_aix' src='img/fabulous_2_1.png'>
+        <div v-else :style="{maxHeight: winHeight+'px'}" v-for="item in crediPoints[show].arrayResult">
+            <div class="hot_ul_li_header dis_flex">
+                <div class="hot_ul_li_header_title dis_flex">
+                    <img :src="item.head_portrait_id?imagePath+item.head_portrait_id:'img/bottom_img.png'">
+                    <div class="dis_flex">
+                        <span>{{item.user_name}}</span>
+                        <div class="dis_flex">
+                            <div class="text_sex_off">{{item.age}}</div>
+                            <div>
+                                <!--判断显示VIP-->
+                                <div class="dis_inli text_svip">
+                                    <span>SVIP8</span>
+                                </div>
+                                <div v-if="false" class="dis_inli text_vip">
+                                    <span>VIP5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="dis_flex">
-                  <span class="col_hui">1分钟</span>
+                <div class="hot_ul_li_header_time dis_flex">
+                    <p>主题:{{item.activity_name}}</p>
+                    <p>{{item.mode}}</p>
                 </div>
-              </div>
             </div>
-            <div class="dis_flex">
-              <!--占位-->
-              <p>&nbsp;</p>
-              <p>活动整体感觉一般吧，主要是我胖虎没吃饱!</p>
+            <div class="body_ul">
+                <div class="body_li dis_flex" v-for="scoreItem in item.scoreList">
+                    <div class="hot_ul_li_header_title dis_flex">
+                        <img :src="scoreItem.head_portrait_id?imagePath+scoreItem.head_portrait_id:'img/bottom_img.png'">
+                        <div class="dis_flex">
+                            <div class="dis_flex">
+                                <span>{{scoreItem.user_name}}</span>
+                                <img v-if="scoreItem.score" v-for="score in scoreItem.score" class='pj_aix'
+                                     src='img/fabulous_2.png'>
+                            </div>
+                            <div class="dis_flex">
+                                <span>发起者评价:</span>
+                                <img v-if="scoreItem.others_score" v-for="o_score in scoreItem.others_score"
+                                     class='pj_aix' src='img/fabulous_2_1.png'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dis_flex">
+                        <!--占位-->
+                        <p>&nbsp;</p>
+                        <p v-if="scoreItem.evaluation_content">{{scoreItem.evaluation_content}}</p>
+                        <p v-else>没有评论</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div v-else :style="{maxHeight: winHeight+'px'}">
-        <div class="hot_ul_li_header dis_flex">
-          <div class="hot_ul_li_header_title dis_flex">
-            <img src="img/bottom_img.png">
-            <div class="dis_flex">
-              <span>小猪佩奇</span>
-              <div class="dis_flex">
-                <div class="text_sex_off">26</div>
-                <div>
-                  <!--判断显示VIP-->
-                  <div class="dis_inli text_svip">
-                    <span>SVIP8</span>
-                  </div>
-                  <div v-if="false" class="dis_inli text_vip">
-                    <span>VIP5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="hot_ul_li_header_time dis_flex">
-            <p>主题:K歌</p>
-            <p>AA制</p>
-          </div>
-        </div>
-        <div class="body_ul">
-          <div class="body_li dis_flex">
-            <div class="hot_ul_li_header_title dis_flex">
-              <img src="img/bottom_img.png">
-              <div class="dis_flex">
-                <div class="dis_flex">
-                  <span>小猪佩奇</span>
-                  <img v-for="item in 3" class='pj_aix' src='img/fabulous_2.png'>
-                  <img v-for="item in 5-3" class='pj_aix' src='img/fabulous_2_1.png'>
-                </div>
-                <div class="dis_flex">
-                  <span>发起者评价:</span>
-                </div>
-              </div>
-            </div>
-            <div class="dis_flex">
-              <!--占位-->
-              <p>&nbsp;</p>
-              <p class="col_hui">活动整体感觉一般吧，主要是我胖虎没吃饱!</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        <div v-if="crediPoints[show].arrayResult.length==0">没有数据</div>
     </div>
-  </div>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
-  let vm = new Vue({
-    el: '#vueData',
-    data: {
-      //判断显示发布还是活动
-      show:0,
-      //获取屏幕分辨率高度
-      winHeight:null
-    },
-    mounted: function () {
-      //获取屏幕分辨率高度
-      this.winHeight = window.screen.height-90;
-    },
-    methods: {
-      // 类别切换
-      changer(classifyId) {
-        let selectId = $(event.currentTarget).parent().index();
-        if (classifyId === selectId) {
-          $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
-          this.show = classifyId;
-        }
-      }
+    let userId = GetQueryString('userId');
+    let localUser = localStorage.getItem('localUser');
+    if (localUser) {
+        localUser = JSON.parse(localUser);
     }
-  });
+    let vm = new Vue({
+        el: '#vueData',
+        data: {
+            imagePath: imagePath,
+            //判断显示发布还是活动
+            show: 0,
+            //获取屏幕分辨率高度
+            winHeight: null,
+            //定义动态数组
+            crediPoints: [{
+                currentPage: 1,
+                totalpage: 0,
+                arrayResult: []
+            }, {
+                currentPage: 1,
+                totalpage: 0,
+                arrayResult: []
+            }],
+            bodyInfo: {},
+            pageSize: 20,
+        },
+        mounted: function () {
+            //获取屏幕分辨率高度
+            this.winHeight = window.screen.height - 90;
+        },
+        methods: {
+            // 类别切换
+            changer() {
+                let selectId = $(event.currentTarget).parent().index();
+                if (vm.show === selectId) {
+                    return;
+                }
+                $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
+                this.show = selectId;
+                emptyData();
+                loadCrediPoints();
+            }, goBack() {
+                history.go(-1);
+            }
+        }
+    });
+
+    $(function () {
+        loadCrediPoints();
+    });
+
+    function loadCrediPoints() {
+        $.ajax({
+            data: {
+                token: localUser.token,
+                userId: userId,
+                type: vm.show + 1,
+                page: vm.crediPoints[vm.show].currentPage,
+                pageSize: vm.pageSize
+            },
+            url: host + '/reputation/creditDetails',
+            success: (res) => {
+                console.log(res);
+                if (res.success) {
+                    if (res.result.list.length > 0) {
+                        vm.crediPoints[vm.show].arrayResult = vm.crediPoints[vm.show].arrayResult.concat(res.result.list);
+                    }
+                    vm.crediPoints[vm.show].totalpage = res.result.totalpage;
+                    vm.bodyInfo = res.result.map;
+                    vm.bodyInfo.level = levelConversion(vm.bodyInfo.reputation);
+                }
+            }, complete: function () {
+
+            }
+        })
+    }
+
+    function emptyData() {
+        let ary = vm.crediPoints[vm.show].arrayResult;
+        ary.splice(0, ary.length);
+        vm.crediPoints[vm.show].arrayResult = ary;
+        vm.crediPoints[vm.show].currentPage = 1;
+        vm.crediPoints[vm.show].totalpage = 0;
+    }
+
+    //等级换算
+    function levelConversion(reputation) {
+        var level = '';
+        if (reputation <= 20) {
+            level = '初窥门径'
+        } else if (reputation <= 60) {
+            level = '登堂入室'
+        } else if (reputation <= 200) {
+            level = '炉火纯青'
+        } else if (reputation <= 500) {
+            level = '登峰造极'
+        } else if (reputation <= 1000) {
+            level = '出神入化'
+        } else if (reputation <= 2000) {
+            level = '意境入门'
+        } else if (reputation <= 5000) {
+            level = '意境小成'
+        } else if (reputation <= 10000) {
+            level = '意境大成'
+        } else if (reputation <= 20000) {
+            level = '意境圆满'
+        }
+        return level;
+    }
 </script>
 </html>

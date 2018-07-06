@@ -1,121 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/modify_zf.css">
-  <link rel="stylesheet" href="css/common.css">
-  <script src="js/jquery-3.3.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <title>修改支付密码</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/modify_zf.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <title>修改支付密码</title>
 </head>
 <body>
-  <div id="vueData">
+<div id="vueData">
     <header>
-      <div class="title_header dis_flex">
-        <div>
-          <img src="img/return_1.png" alt="">
+        <div class="title_header dis_flex">
+            <div @click="goBack">
+                <img src="img/return_1.png" alt="">
+            </div>
+            <div></div>
+            <div></div>
         </div>
-        <div></div>
-        <div></div>
-      </div>
     </header>
     <div class="body">
-      <div v-if="isShow">
-        <div class="dis_flex">修改密码</div>
-        <div class="dis_flex col_hui">请输入支付密码，以验证身份</div>
-        <div class="passwordDiv dis_flex">
-          <label class="passwordLabel">
-            <ul @click="onClck">
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-          </label>
-          <input type="tal" class="password" name="password1" maxlength="6" @input="onIpt">
+        <div v-if="isShow">
+            <div class="dis_flex">修改密码</div>
+            <div class="dis_flex col_hui">请输入支付密码，以验证身份</div>
+            <div class="passwordDiv dis_flex">
+                <label class="passwordLabel">
+                    <ul @click="onClck">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </label>
+                <input type="tal" class="password" name="password1" maxlength="6" @input="onIpt">
+            </div>
         </div>
-      </div>
-      <div v-else>
-        <div class="dis_flex">设置新的支付密码</div>
-        <div class="dis_flex col_hui">请输入新的支付密码，用于支付验证</div>
-        <div class="passwordDiv dis_flex">
-          <label class="passwordLabel">
-            <ul @click="onClck">
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-          </label>
-          <input type="tal" class="password" name="password2" maxlength="6" @input="onIpt">
+        <div v-else>
+            <div class="dis_flex">设置新的支付密码</div>
+            <div class="dis_flex col_hui">请输入新的支付密码，用于支付验证</div>
+            <div class="passwordDiv dis_flex">
+                <label class="passwordLabel">
+                    <ul @click="onClck">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </label>
+                <input type="tal" class="password" name="password2" maxlength="6" @input="onIpt">
+            </div>
+            <div class="dis_flex">
+                <a href="javascript:" @click="onBack">上一步</a>
+            </div>
+            <div class="dis_flex">
+                <a href="javascript:" @click="submitDone">完成修改</a>
+            </div>
         </div>
-        <div class="dis_flex">
-          <a href="javascript:;">完成修改</a>
-        </div>
-      </div>
     </div>
     <footer></footer>
-  </div>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
-  var vm = new Vue({
-    el: '#vueData',
-    data: {
-      isShow:true
-    },
-    mounted: function () {
-      $('.password').focus();
-    },
-    methods: {
-      //密码框输入事件
-      onIpt(event){
-        var num = new RegExp(/[0-9.]/);
-        let list = event.target.previousElementSibling.children[0].children;
-        for(let k=0;k<list.length;k++){
-          list[k].innerText = '';
+    let userInfo = JSON.parse(localStorage.getItem('localUser'));
+    var vm = new Vue({
+        el: '#vueData',
+        data: {
+            isShow: true,
+            wallets_password: null,
+            wallets_password1: null
+        },
+        mounted: function () {
+            $('.password').focus();
+        },
+        methods: {
+            goBack() {
+                history.go(-1);
+            }, onBack() {
+                vm.isShow = true;
+                vm.onClck();
+            }, submitDone() {
+                let newPwd = vm.wallets_password1;
+                if (!checkInput(newPwd) || newPwd.replace(/\s/g, '').length < 6) {
+                    toast('新密码为空或长度不足');
+                    return;
+                }
+                $.ajax({
+                    url: host + '/jmoney/updatepassword',
+                    data: {
+                        token: userInfo.token,
+                        typeId: 2,
+                        password: vm.wallets_password,
+                        newPassword: vm.wallets_password1
+                    },
+                    dataType: 'json',
+                    header: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    },
+                    method: 'POST',
+                    success: (res) => {
+                        console.log(res);
+                        if (res.success) {
+                            toast('设置成功');
+                            setTimeout(function () {
+                                history.go(-1);
+                            }, 1000);
+                        } else {
+                            toast(res.errCodeDes);
+                        }
+                    }
+                });
+            },
+            //密码框输入事件
+            onIpt(event) {
+                if(vm.isShow){
+                   vm.wallets_password=event.target.value;
+                }else {
+                    vm.wallets_password1=event.target.value;
+                }
+                var num = new RegExp(/[0-9.]/);
+                let list = event.target.previousElementSibling.children[0].children;
+                for (let k = 0; k < list.length; k++) {
+                    list[k].innerText = '';
+                }
+                for (let i = 0; i < event.target.value.length; i++) {
+                    if (!num.test(event.target.value[i])) {
+                        event.target.value = event.target.value.substr(0, i);
+                        return false;
+                    }
+                    //input输入一个就改变一个li为•
+                    list[i].innerText = '•';
+                }
+                //判断是否是验证密码
+                if (event.target.name === 'password1') {
+                    //判断验证支付密码长度
+                    if (event.target.value.length === 6) {
+                        //改变输入框
+                        this.isShow = false;
+                        //删除li里的值
+                        vm.onClck()
+                    }
+                }
+            },
+            //点击密码框清除密码
+            onClck() {
+                $("input[name = 'password1']").val('');
+                $("input[name = 'password2']").val('');
+                $('.password').focus();
+                $('.passwordDiv ul li').text('')
+            }
         }
-        for(let i=0;i<event.target.value.length;i++){
-          if(!num.test(event.target.value[i])){
-            event.target.value = event.target.value.substr(0,i);
-            return false;
-          }
-          //input输入一个就改变一个li为•
-          list[i].innerText =  '•';
-        }
-        //判断是否是验证密码
-        if (event.target.name == 'password1' ) {
-          //判断验证支付密码长度
-          if (event.target.value.length == 6) {
-            //改变输入框
-            this.isShow = false
-            //删除li里的值
-            vm.onClck()
-          }
-        }
-      },
-      //点击密码框清除密码
-      onClck(){
-        $("input[name = 'password1']").val('');
-        $("input[name = 'password2']").val('');
-        $('.password').focus();
-        $('.passwordDiv ul li').text('')
-      }
-    }
-  });
+    });
 </script>
 </html>

@@ -1,125 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/information.css">
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/swiper-4.3.2.min.css">
-  <script src="../js/jquery-3.3.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <title>消息</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/interface.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/swiper-4.3.2.min.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/webim.js"></script>
+    <title>消息</title>
 </head>
 <body>
 <div class="main" id="vueData">
-  <div class="main_inner clearfix">
-    <div id="chatArea" class="box chat">
-      <div class="box_hd">
-        <!--添加-->
-        <div class="title_header dis_flex">
-          <div>
-            <img src="img/return_1.png" alt="">
-          </div>
-          <div class="dis_flex">
-            <!--是svip加class： hd_svip-->
-            <span>方西涯</span>
-            <span>WiFi在线</span>
-          </div>
-          <div>
-            <img src="img/copy_1_1.png" alt="">
-          </div>
-        </div>
-      </div>
-      <div class="box_bd" id="messageList">
-        <!--自己发-->
-        <div class="message me">
-          <!--头像-->
-          <img class="avatar" src="img/nan_2.png" />
-          <div class="content">
-            <!--时间-->
-            <div class="nickname"><span class="time">10:10:08</span></div>
-            <div class="bubble bubble_primary right">
-              <div class="bubble_cont">
-                <div class="plain">
-                  <!--聊天信息-->
-                  <pre>你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐你欠我一顿大餐</pre>
+    <div class="main_inner clearfix">
+        <div id="chatArea" class="box chat">
+            <div class="box_hd">
+                <!--添加-->
+                <div class="title_header dis_flex">
+                    <div @click="goBack">
+                        <img src="img/return_1.png" alt="">
+                    </div>
+                    <div class="dis_flex">
+                        <!--是svip加class： hd_svip-->
+                        <span>{{toUserName}}</span>
+                        <span>{{actionStatus}}</span>
+                    </div>
+                    <div>
+                        <img src="img/copy_1_1.png" alt="">
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <!--别人发-->
-        <div class="message">
-          <!--头像-->
-          <img class="avatar" src="img/nv_2.png" />
-          <div class="content">
-            <!--时间-->
-            <div class="nickname"><span class="time">10:12:20</span></div>
-            <div class="bubble bubble_default left">
-              <div class="bubble_cont">
-                <div class="plain">
-                  <!--聊天信息-->
-                  <pre>(⊙o⊙)…好吧</pre>
+            <div class="box_bd" id="messageList">
+                <div v-for="message in messageBody">
+                    <!--自己发-->
+                    <div class="message me" v-if="message.me">
+                        <!--头像-->
+                        <img class="avatar" :src="userInfo.picture?userInfo.picture:'img/nan_2.'"/>
+                        <div class="content">
+                            <!--时间-->
+                            <div class="nickname"><span class="time">{{message.time}}</span></div>
+                            <div class="bubble bubble_primary right">
+                                <div class="bubble_cont">
+                                    <div class="plain">
+                                        <!--聊天信息-->
+                                        <pre>{{message.content}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--别人发-->
+                    <div class="message" v-else>
+                        <!--头像-->
+                        <img class="avatar" :src="recentContact.Image?recentContact.Image:'img/nv_2.png'"/>
+                        <div class="content">
+                            <!--时间-->
+                            <div class="nickname"><span class="time">{{message.time}}</span></div>
+                            <div class="bubble bubble_default left">
+                                <div class="bubble_cont">
+                                    <div class="plain">
+                                        <!--聊天信息-->
+                                        <pre>{{message.content}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <!--别人发-->
-        <div class="message">
-          <!--头像-->
-          <img class="avatar" src="img/nv_2.png" />
-          <div class="content">
-            <!--时间-->
-            <div class="nickname"><span class="time">10:12:20</span></div>
-            <div class="bubble bubble_default left">
-              <div class="bubble_cont">
-                <div class="plain">
-                  <!--聊天信息-->
-                  <pre>请你吃一个月大餐！</pre>
+            <div class="box_ft">
+                <div>
+                    <div class="box_ft_hd">
+                        <div class="eaitWrap">
+                            <input id="editArea" class="editArea" contenteditable="true" placeholder="请输入消息"
+                                   v-model="msgContent">
+                        </div>
+                        <a href="javascript:" class="btn1 dis_inli" id="btn_send" @click="sendMsg">发送</a>
+                    </div>
+                    <div class="web_wechat_div dis_flex">
+                        <a href="javascript:" class="web_wechat web_wechat_audio"></a>
+                        <a href="javascript:" class="web_wechat web_wechat_pic"></a>
+                        <a href="javascript:" class="web_wechat web_wechat_photograph"></a>
+                        <a href="javascript:" class="web_wechat web_wechat_video"></a>
+                        <a href="javascript:" class="web_wechat web_wechat_face"></a>
+                        <a href="javascript:" class="web_wechat web_wechat_location"></a>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="box_ft">
-        <div class="box_ft_hd">
-          <div class="eaitWrap">
-            <input id="editArea" class="editArea" contenteditable="true" placeholder="请输入消息">
-          </div>
-          <a href="javascript:;" class="btn1 dis_inli" id="btn_send">发送</a>
-        </div>
-        <div class="web_wechat_div dis_flex">
-          <a href="javascript:" class="web_wechat web_wechat_audio"></a>
-          <a href="javascript:" class="web_wechat web_wechat_pic"></a>
-          <a href="javascript:" class="web_wechat web_wechat_photograph"></a>
-          <a href="javascript:" class="web_wechat web_wechat_video"></a>
-          <a href="javascript:" class="web_wechat web_wechat_face"></a>
-          <a href="javascript:" class="web_wechat web_wechat_location"></a>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/webim_handler.js"></script>
 <script>
-  $(function () {
-    /*跳转到最新的消息*/
-    resetMessageArea();
-    function resetMessageArea() {
-      $('#messageList').animate({ 'scrollTop': 999 }, 500);
+    let toUserId = GetQueryString('toUserId');
+    let toUserName = decodeURIComponent(GetQueryString('toUserName'));
+    let localUser = localStorage.getItem('localUser');
+    if (localUser) {
+        localUser = JSON.parse(localUser);
+        localUser.picture = imagePath + localUser.picture;
     }
-  });
+
+    function resetMessageArea() {
+        $('#messageList').animate({'scrollTop': 999}, 500);
+    }
+
+    var vm = new Vue({
+        el: '#vueData',
+        data: {
+            msgContent: '',
+            userInfo: localUser,
+            actionStatus: '',
+            toUserName: toUserName,
+            messageBody: [],
+            recentContact: {}
+        }, methods: {
+            goBack(){
+                history.go(-1);
+            },
+            sendMsg() {
+                if (!checkInput(vm.msgContent)) {
+                    toast('不能发送空白内容');
+                    return;
+                }
+                onSendMsg(vm.msgContent, function (res) {
+                    vm.msgContent = '';
+                    if (res) {
+                        vm.messageBody.push(res);
+                        resetMessageArea();
+                    }
+                }, function (res) {
+                    if (res && res.ActionStatus === 'FAIL') {
+                        switch (res.ErrorCode) {
+                            case 20003:
+                                toast('账号无效');
+                                break;
+                            case 20009:
+                                //双方互相不是好友，禁止发送
+                                toast('双方不是好友');
+                                break;
+                            case 20010:
+                                //自己不是对方的好友（单向关系），禁止发送
+                                toast('不是对方的好友');
+                                break;
+                            case 20011:
+                                //对方不是自己的好友（单向关系），禁止发送
+                                toast('对方不是自己的好友');
+                                break;
+                        }
+                    } else {
+                        toast(res);
+                    }
+                })
+            }
+        }
+    });
+    $(function () {
+        initIM(localUser, function () {
+            init({
+                selType: webim.SESSION_TYPE.C2C
+                , selToID: toUserId
+                , selSess: null //当前聊天会话
+            });
+            getLastC2CHistoryMsgs(10, function (res) {
+                $.each(res.historyMsgList, function (i, item) {
+                    let msg = {
+                        fromAccount: item.fromAccount,
+                        content: item.elems[0].content.text,
+                        time: getLocalTime(item.time)
+                    };
+                    if (item.fromAccount === localUser.userId) {
+                        msg.me = true;
+                    }
+                    vm.messageBody.push(msg);
+                });
+                resetMessageArea();
+            });
+        });
+        searchProfileByUserId([toUserId], function (res) {
+            vm.recentContact.Nick = res[0].Nick;
+            vm.recentContact.Gender = res[0].Gender;
+            vm.recentContact.Image = res[0].Image;
+        });
+    });
+
+    //连接状态通知处理
+    function onConnNotifyback(obj) {
+        vm.actionStatus = obj;
+    }
+
+    //接受新消息
+    function newMessageNotification(obj) {
+        console.log('新消息@');
+        if (obj.fromAccount === toUserId) {
+            vm.messageBody.push({
+                fromAccount: obj.fromAccount,
+                content: obj.content,
+                time: obj.time
+            });
+            resetMessageArea();
+        }
+    }
 </script>
 </html>

@@ -16,7 +16,10 @@
     <link rel="stylesheet" href="css/chat.css">
     <link rel="stylesheet" href="css/common.css">
     <script src="../js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="../js/layer.js"></script>
     <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
     <script src="js/webim.js"></script>
     <title>聊天</title>
 </head>
@@ -37,17 +40,17 @@
     </header>
     <!--主体-->
     <div class="body">
-        <div v-for="item in recentContact" class="dis_flex city_list_div">
+        <div v-for="(item,index) in recentContact" class="dis_flex city_list_div" @click="gotoSessionView(index)">
             <div>
                 <img :src="item.Image?item.Image:'img/portrait.png'" alt="">
             </div>
             <div class="dis_flex">
                 <div>
                     <!--不是SVIP 去掉text_SVIP-->
-                    <span class="text_SVIP">{{item.Nick?item.Nick:"临时会话"}}</span>
+                    <span>{{item.Nick}}</span>
                     <!--性别为男 text_sex_off 变成 text_sex_on-->
-                    <div :class="item.Gender?'dis_inli text_sex_on bg_red_vip':'dis_inli text_sex_off bg_red_vip'">
-                        <span>{{item.age}}</span>
+                    <div :class="item.Gender=='男'?'dis_inli text_sex_on bg_red_vip':'dis_inli text_sex_off bg_red_vip'">
+                        <span>{{item.Gender}}</span>
                     </div>
                     <!--性别为男 text_svip 变成 text_vip-->
                     <!--<span class="text_svip">SVIP</span>-->
@@ -97,11 +100,11 @@
             </div>
             <div class="dis_none foot_div_ul">
                 <div class="dis_flex">
-                    <a href="#" class="dis_flex">
+                    <a href="javascript:" @click="forward('release_hd.html')" class="dis_flex">
                         <img src="img/activity_1.png" alt="">
                         <span class="col_hui">发活动</span>
                     </a>
-                    <a href="#" class="dis_flex">
+                    <a href="javascript:" @click="forward('release_dt.html')" class="dis_flex">
                         <img src="img/dynamic.png" alt="">
                         <span class="col_hui">发动态</span>
                     </a>
@@ -111,19 +114,32 @@
     </footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="js/bootstrap.js"></script>
 <script src="js/webim_handler.js"></script>
 <script type="text/javascript">
     let localUser = localStorage.getItem('localUser');
     if (localUser) {
         localUser = JSON.parse(localUser);
     }
-    let vm = new Vue({
+    var vm = new Vue({
         el: '#vueData',
         data: {
             recentContact: []
         },
-        methods: {}
+        methods: {
+            forward(view) {
+                gotoReleaseView(view);
+            },
+            gotoSessionView(key) {
+                let contact = vm.recentContact[key];
+                for (let i in vm.recentContact) {
+                    if (contact.To_Account === vm.recentContact[i].To_Account) {
+                        vm.recentContact[i].UnreadMsgCount = 0;
+                        break;
+                    }
+                }
+                location.href = 'interface.html?toUserId=' + contact.To_Account + '&toUserName=' + contact.Nick + '';
+            }
+        }
     });
     $(document).ready(function () {
         //底部当前的图片更换和文字变色
@@ -134,145 +150,23 @@
             $('.foot_div_ul').toggle()
         })
     });
-    const Config = {
-        sdkappid: 1400088239,
-        accountType: 25943,
-        accountMode: 0 //帐号模式，0-表示独立模式，1-表示托管模式
-    };
-    $(function () {
-        if (localUser) {
-            initIM(function () {
-                webim.getRecentContactList({
-                    'Count': 10 //最近的会话数 ,最大为 100
-                }, function (resp) {
-                    if (resp.SessionItem) {
-                        let ids = [];
-                        let sessions = resp.SessionItem;
-                        for (let i in sessions) {
-                            ids.push(sessions[i].To_Account);
-                            sessions[i].MsgTimeStamp = getLocalTime(sessions[i].MsgTimeStamp);
-                            sessions[i].isTouchMove = false;
-                        }
-                        vm.recentContact = sessions;
-                        console.log(vm.recentContact);
-                        searchProfileByUserId(ids)
-                    }
-                }, function (resp) {
-                    //错误回调
-                });
-            });
-        }
-    });
 
-    //获取用户资料
-    function searchProfileByUserId(ids) {
-        let tag_list = [
-            "Tag_Profile_IM_Nick",//昵称
-            "Tag_Profile_IM_Gender",//性别
-            "Tag_Profile_IM_Image"//头像
-        ];
-        let options = {
-            'To_Account': ids,
-            'TagList': tag_list
-        };
-        webim.getProfilePortrait(
-            options,
-            function (resp) {
-                if (resp.UserProfileItem && resp.UserProfileItem.length > 0) {
-                    for (let i in resp.UserProfileItem) {
-                        let to_account = resp.UserProfileItem[i].To_Account;
-                        let nick = null, gender = null, imageUrl = null;
-                        for (let j in resp.UserProfileItem[i].ProfileItem) {
-                            switch (resp.UserProfileItem[i].ProfileItem[j].Tag) {
-                                case 'Tag_Profile_IM_Nick':
-                                    nick = resp.UserProfileItem[i].ProfileItem[j].Value;
-                                    break;
-                                case 'Tag_Profile_IM_Gender':
-                                    switch (resp.UserProfileItem[i].ProfileItem[j].Value) {
-                                        case 'Gender_Type_Male':
-                                            gender = '男';
-                                            break;
-                                        case 'Gender_Type_Female':
-                                            gender = '女';
-                                            break;
-                                        case 'Gender_Type_Unknown':
-                                            gender = '未知';
-                                            break;
-                                    }
-                                    break;
-                                case 'Tag_Profile_IM_Image':
-                                    imageUrl = resp.UserProfileItem[i].ProfileItem[j].Value;
-                                    break;
-                            }
-                        }
-                        let lls = vm.recentContact;
-                        for (let k in lls) {
-                            if (to_account === lls[k].To_Account) {
-                                lls[k].Nick = webim.Tool.formatText2Html(nick);
-                                lls[k].Gender = gender;
-                                lls[k].Image = imageUrl;
-                                vm.recentContact = lls;
-                                break;
-                            }
-                        }
-                    }
-                }
-            },
-            function (err) {
-                console.log(err);
-            }
-        );
-    }
-
-    function initIM(cbOk) {
-        // var avChatRoomId = '@TGS#aWTBZTDFW';
-        init({
-            accountMode: Config.accountMode
-            , accountType: Config.accountType
-            , sdkAppID: Config.sdkappid
-        });
-        //当前用户身份
-        let loginInfo = {
-            'sdkAppID': Config.sdkappid, //用户所属应用id,必填
-            'appIDAt3rd': Config.sdkappid, //用户所属应用id，必填
-            'accountType': Config.accountType, //用户所属应用帐号类型，必填
-            'identifier': localUser.userId, //当前用户ID,必须是否字符串类型，选填
-            'identifierNick': localUser.name, //当前用户昵称，选填
-            'userSig': localUser.userSig, //当前用户身份凭证，必须是字符串类型，选填
-            'headimg': localUser.picture,
-            'gender': localUser.gender
-        };
-        //监听事件
-        let listeners = {
-            "onConnNotify": onConnNotify, //选填,
-            //监听新消息(大群)事件，必填
-            "onMsgNotify": onMsgNotify,//监听新消息(私聊(包括普通消息和全员推送消息)，普通群(非直播聊天室)消息)事件，必填
-        };
-
-        //其他对象，选填
-        let options = {
-            'isAccessFormalEnv': true,//是否访问正式环境，默认访问正式，选填
-            'isLogOn': false//是否开启控制台打印日志,默认开启，选填
-        };
-        //sdk登录
-        sdkLogin(loginInfo, listeners, options, cbOk);
+    //连接状态通知处理
+    function onConnNotifyback(obj) {
     }
 
     function newMessageNotification(obj) {
-        let oldRecentContact = vm.recentContact;
         let atList = false;
-        for (let i in oldRecentContact) {
-            if (obj.fromAccount === oldRecentContact[i].To_Account) {
+        for (let i in vm.recentContact) {
+            if (obj.fromAccount === vm.recentContact[i].To_Account) {
                 atList = true;
-                let count = oldRecentContact[i].UnreadMsgCount;
-                oldRecentContact[i].UnreadMsgCount = count + 1;
-                oldRecentContact[i].MsgShow = obj.content;
-                vm.recentContact = oldRecentContact;
+                vm.recentContact[i].UnreadMsgCount += 1;
+                vm.recentContact[i].MsgShow = obj.content;
                 break;
             }
         }
         if (!atList) {
-            vm.recentContact = vm.recentContact.push({
+            vm.recentContact.push({
                 MsgShow: obj.content,
                 MsgTimeStamp: obj.time,
                 To_Account: obj.fromAccount,
@@ -280,9 +174,46 @@
                 UnreadMsgCount: 1,
                 Type: obj.Type
             });
-            searchProfileByUserId([obj.fromAccount]);
+            searchProfileByUserId([obj.fromAccount], function (res) {
+                for (let i = 0; i < vm.recentContact.length; i++) {
+                    if (res[0].To_Account === vm.recentContact[i].To_Account) {
+                        vm.recentContact[i].Nick = res[0].Nick;
+                        vm.recentContact[i].Gender = res[0].Gender;
+                        vm.recentContact[i].Image = res[0].Image;
+                    }
+                }
+            });
         }
     }
+
+    $(function () {
+        if (localUser) {
+            initIM(localUser, function () {
+                webim.getRecentContactList({
+                    'Count': 10 //最近的会话数 ,最大为 100
+                }, function (resp) {
+                    if (resp.SessionItem) {
+                        let ids = [];
+                        $.each(resp.SessionItem, function (i, item) {
+                            ids.push(item.To_Account);
+                            item.MsgTimeStamp = getLocalTime(item.MsgTimeStamp);
+                            item.isTouchMove = false;
+                            vm.recentContact.push(item);
+                        });
+                        searchProfileByUserId(ids, function (res) {
+                            $.each(vm.recentContact, function (i, item) {
+                                if (res[i].To_Account === item.To_Account) {
+                                    vm.recentContact[i].Nick = res[i].Nick;
+                                    vm.recentContact[i].Gender = res[i].Gender;
+                                    vm.recentContact[i].Image = res[i].Image;
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        }
+    });
 </script>
 </body>
 </html>

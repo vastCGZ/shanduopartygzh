@@ -34,8 +34,6 @@ a:focus, a:active, a:focus-within, a:visited, a:hover{
 body *{
   -webkit-tap-highlight-color: transparent;
   /*在一些手机上，如iphone，点击按钮等元素会出现点击态的背景色，设置为透明就看不出来了*/
-  -webkit-user-select:none;
-  /*设置元素内的文字及其子元素将不会被选中*/
 }
 body{
   height: 100%;

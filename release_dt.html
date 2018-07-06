@@ -1,83 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/release_dt.css">
-  <link rel="stylesheet" href="css/common.css">
-  <script src="../js/jquery-3.3.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <title>动态发布</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/release_dt.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <title>动态发布</title>
 </head>
 <body>
-  <div id="vueData">
+<div id="vueData">
     <!--头部-->
     <header>
-      <!--添加-->
-      <div class="title_header dis_flex">
-        <div>
-          <a href="#">取消</a>
+        <!--添加-->
+        <div class="title_header dis_flex">
+            <div>
+                <a href="#" @click="cancel">取消</a>
+            </div>
+            <div>
+                <span>发布动态</span>
+            </div>
+            <div>
+                <a href="#" @click="launchDynamic">发布</a>
+            </div>
         </div>
-        <div>
-          <span>发布动态</span>
-        </div>
-        <div>
-          <a href="#">发布</a>
-        </div>
-      </div>
     </header>
     <!--主体-->
     <div class="body">
-      <div class="dt_hade">
+        <div class="dt_hade">
+            <div>
+                <textarea name="dttxt" id="" rows="6" placeholder="说说你觉得有趣儿的事吧!" v-model="dynamic.content"></textarea>
+            </div>
+            <div class="dt_pic">
+                <div class="dis_inli" v-for="(item,index) in myStyle">
+                    <div :style="item"></div>
+                    <a class="dis_inli" href="javascipt:" @click="delImg(index)">x</a>
+                </div>
+                <!--添加-->
+                <div class="dis_inli" @click="onLoadImg">
+                    <div style="background-image: url('img/bitmap_1.png')"></div>
+                </div>
+            </div>
+            <div>
+                <span class="bg_position col_lan" @click="openMap" v-if="dynamic.location==''">选择地址名</span>
+                <span class="bg_position col_lan" @click="openMap" v-else>{{dynamic.location}}</span>
+            </div>
+        </div>
         <div>
-          <textarea name="dttxt" id="" rows="6" placeholder="说说你觉得有趣儿的事吧!"></textarea>
+            <img src="img/copy_2_1.png" alt="">
+            <img src="img/copy_6_1.png" alt="">
+            <img src="img/copy_4_1.png" alt="">
         </div>
-        <div class="dt_pic">
-          <div class="dis_inli">
-            <div style="background-image: url('img/lbt.png')"></div>
-            <a class="dis_inli" href="javascipt:">x</a>
-          </div>
-          <!--添加-->
-          <div class="dis_inli">
-            <div style="background-image: url('img/bitmap_1.png')"></div>
-          </div>
-        </div>
-        <div>
-          <span class="bg_position col_lan">长沙-五一广场</span>
-        </div>
-      </div>
-      <div>
-        <img src="img/copy_2_1.png" alt="">
-        <img src="img/copy_6_1.png" alt="">
-        <img src="img/copy_4_1.png" alt="">
-      </div>
     </div>
     <!--尾部-->
     <footer>
-      <div>
-        <img src="img/laugh_1.png" alt="">
-        <img src="img/laugh_6.png" alt="">
-        <img src="img/laugh_4.png" alt="">
-        <img src="img/laugh_8.png" alt="">
-      </div>
+        <div>
+            <img src="img/laugh_1.png" alt="">
+            <img src="img/laugh_6.png" alt="">
+            <img src="img/laugh_4.png" alt="">
+            <img src="img/laugh_8.png" alt="">
+        </div>
     </footer>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script type="text/javascript">
-    var vm = new Vue({
-          el:'#vueData',
-          data:{},
-          methods: {}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    let href = location.href.split('#')[0];
+    let addrName = decodeURIComponent(GetQueryString('name'));
+    let addr = decodeURIComponent(GetQueryString('addr'));
+    let latng = GetQueryString('latng');
+    let localUser = JSON.parse(localStorage.localUser);
+    let vm = new Vue({
+        el: '#vueData',
+        data: {
+            avatarUrl: [],
+            myStyle: [],
+            dynamic: {
+                token: null,
+                content: null,
+                picture: [],
+                lat: null,
+                lon: null,
+                location: ''
+            },
+            pictureSize: 9
+        }, watch: {
+            avatarUrl: {//深度监听，可监听到对象、数组的变化
+                handler(val, oldVal) {
+                    localStorage.avatarUrl = JSON.stringify(val);
+                },
+                deep: true
+            },
+            myStyle: {//深度监听，可监听到对象、数组的变化
+                handler(val, oldVal) {
+                    localStorage.myStyle = JSON.stringify(val);
+                },
+                deep: true
+            },
+            dynamic: {//深度监听，可监听到对象、数组的变化
+                handler(val, oldVal) {
+                    localStorage.dynamic = JSON.stringify(val);
+                },
+                deep: true
+            }
+        },
+        methods: {
+            onLoadImg() {
+                if (vm.avatarUrl.length === 9) {
+                    toast('最多选择9张');
+                    return;
+                }
+                let imgCount = vm.pictureSize - vm.avatarUrl.length;
+
+                wx.chooseImage({
+                    count: imgCount,
+                    sizeType: ['compressed'],
+                    success: function (res) {
+                        let u = navigator.userAgent;//手机类型android或ios
+                        //if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                        if (u.indexOf('iPhone') > -1) {
+                            $.each(res.localIds, function (i, item) {
+                                vm.avatarUrl.push(item);
+                                wx.getLocalImgData({
+                                    localId: item, // 图片的localID
+                                    success: function (res) {
+                                        vm.myStyle.push({backgroundImage: "url('" + res.localData + "')"});
+                                    }
+                                });
+                            });
+                        } else {
+                            $.each(res.localIds, function (i, item) {
+                                vm.avatarUrl.push(item);
+                                vm.myStyle.push({backgroundImage: "url('" + item + "')"});
+                            });
+                        }
+                    }
+                });
+            }
+            , delImg(key) {
+                vm.avatarUrl.splice(key, 1);
+                vm.myStyle.splice(key, 1);
+            }
+            , cancel() {
+                location.href = 'index.html';
+            }
+            , launchDynamic() {
+                if (!checkInput(vm.dynamic.location)) {
+                    toast('请选择发布地址');
+                    return;
+                }
+                if (vm.avatarUrl.length > 0) {
+                    uploadImg(vm.avatarUrl);
+                } else if (vm.dynamic.content) {
+                    pushDynamic();
+                } else {
+                    toast('发布想说的话或选择图片分享');
+                }
+            }, openMap() {
+                location.href = 'https://3gimg.qq.com/lightmap/components/locationPicker2/index.html?type=0&backurl=http://lixinrong.vicp.io/yapingzh/shanduoWeb/release_dt.html&key=Q74BZ-4AT34-QCUU5-XADLJ-XTGQZ-65FQM&referer=near-store';
+            }
+        }
+    });
+    if ('null' != addrName) {
+        initData();
+        if ('我的位置' === addrName) {
+            vm.dynamic.location = addr;
+        } else {
+            vm.dynamic.location = addrName;
+        }
+        vm.dynamic.lon = latng.split(',')[1];
+        vm.dynamic.lat = latng.split(',')[0];
+    }
+
+    function initData() {
+        if (localStorage.dynamic) {
+            let localDynamic = JSON.parse(localStorage.dynamic);
+            vm.dynamic = {
+                content: localDynamic.content,
+                lat: localDynamic.lat,
+                lon: localDynamic.lon,
+                picture: [],
+                location: localDynamic.location
+            };
+        }
+        if (localStorage.avatarUrl) {
+            vm.avatarUrl = JSON.parse(localStorage.avatarUrl);
+        }
+        if (localStorage.myStyle) {
+            vm.myStyle = JSON.parse(localStorage.myStyle);
+        }
+    }
+
+    $(function () {
+        init_wx_js_sdk(href, function (result) {
+            //初始化接口环境
+            wx.config({
+                appId: result.appid,
+                timestamp: result.timestamp,
+                nonceStr: result.noncestr,
+                signature: result.signature,
+                jsApiList: ['chooseImage', 'uploadImage', 'getLocation']
+            });
+            wx.ready(function () {
+                wx.getLocation({
+                    success: function (res) {
+                        vm.dynamic.lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        vm.dynamic.lon = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    }
+                });
+            });
+        });
+        initData();
+    });
+
+    var imgIndex = 0;
+
+    function uploadImg(pics) {
+        wx.uploadImage({
+            localId: pics[imgIndex], // 需要上传的图片的本地ID，由chooseImage接口获得
+            success: function (res) {
+                vm.dynamic.picture.push(res.serverId); // 返回图片的服务器端ID
+                imgIndex++;
+                if (imgIndex === pics.length) {
+                    pushDynamic();
+                } else {
+                    uploadImg(pics);
+                }
+            },
+            fail: function () {
+                toast('上传失败');
+            }
         })
-  </script>
+    }
+
+    function pushDynamic() {
+        vm.dynamic.token = localUser.token;
+        layer.open({type: 2});
+        $.ajax({
+                url: "/yapingzh/pushDynamic.do",
+                data: {"dynamic": JSON.stringify(vm.dynamic)},
+                dataType: 'json',
+                method: 'GET',
+                success: function (res) {
+                    if (res.success) {
+                        localStorage.removeItem("dynamic");
+                        localStorage.removeItem("avatarUrl");
+                        localStorage.removeItem("myStyle");
+                        toast('发布成功');
+                        setTimeout(function () {
+                            location.href = 'index.html';
+                        }, 1000)
+                    }
+                }, fail: function () {
+                    toast('发布错误');
+                }, complete: function () {
+                    imgIndex = 0;
+                    layer.closeAll();
+                }
+            }
+        )
+    }
+</script>
 </body>
 </html>

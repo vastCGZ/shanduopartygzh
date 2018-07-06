@@ -46,7 +46,8 @@
     let aging = 60;
     let interval = null;
     let tmpUser = {
-        unionId:localStorage.getItem('unionid')
+        unionId:localStorage.getItem('unionid'),
+        type:1
     };
     let data = {
         phone: '', auth_code: '', pwd: '', hint: '发送验证码', disabled: false

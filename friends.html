@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="css/friends.css">
     <link rel="stylesheet" href="css/common.css">
     <script src="../js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/unicode_util.js"></script>
     <title>好友</title>
 </head>
 <body>
@@ -55,10 +58,12 @@
             <div class="tab-pane fade in active" id="Onenearby">
                 <div class="container">
                     <div class="city">
-                        <div v-for="group in groups" class="city-list">
+                        <span v-if="groups.length==0">没有好友</span>
+                        <div v-for="(group,key) in groups" class="city-list">
                             <!--遍历A开头的好友-->
                             <span class="city-letter" id="A1">{{group.groupName}}</span>
-                            <div v-for="userinfo in group.users" class="dis_flex city_list_div">
+                            <div v-for="(userinfo,index) in group.users" class="dis_flex city_list_div"
+                                 @click="openSession(key,index)">
                                 <div>
                                     <img :src="userinfo.picture?imagePath+userinfo.picture:'img/portrait.png'" alt="">
                                 </div>
@@ -126,11 +131,11 @@
             </div>
             <div class="dis_none foot_div_ul">
                 <div class="dis_flex">
-                    <a href="#" class="dis_flex">
+                    <a href="javascript:" @click="forward('release_hd.html')" class="dis_flex">
                         <img src="img/activity_1.png" alt="">
                         <span class="col_hui">发活动</span>
                     </a>
-                    <a href="#" class="dis_flex">
+                    <a href="javascript:" @click="forward('release_dt.html')" class="dis_flex">
                         <img src="img/dynamic.png" alt="">
                         <span class="col_hui">发动态</span>
                     </a>
@@ -139,9 +144,6 @@
         </div>
     </footer>
 </div>
-<script src="js/bootstrap.js"></script>
-<script src="js/service.js"></script>
-<script src="js/unicode_util.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
     let userInfo = localStorage.getItem('localUser')
@@ -159,8 +161,14 @@
         el: '#vueData',
         data: data,
         methods: {
+            forward(view) {
+                gotoReleaseView(view);
+            },
             gotoAddFriendView() {
                 location.href = 'addFriendView.html'
+            }, openSession(key,index) {
+                let user = data.groups[key].users[index];
+                location.href = 'interface.html?toUserId=' + user.userId + '&toUserName=' + user.name + '';
             }
         }
     });
