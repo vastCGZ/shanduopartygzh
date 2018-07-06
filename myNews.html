@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/myNews.css">
+    <link rel="stylesheet" href="css/common.css">
+    <title>我的消息</title>
+</head>
+<body>
+    <div id="vueData">
+        <header>
+            <div class="title_header dis_flex">
+                <div>
+                    <img src="img/icon_back_arrow.png" alt="">
+                </div>
+                <div>
+                    <span>我的消息</span>
+                </div>
+                <div></div>
+            </div>
+        </header>
+        <div class="body">
+            <!--1个动态消息-->
+            <div class="news_li dis_flex">
+                <!--顶部回复人-->
+                <div class="dis_flex">
+                    <!--回复人信息-->
+                    <div class="dis_flex">
+                        <img src="img/bottom_img.png" alt="">
+                        <div>
+                            <!--名称-->
+                            <div>
+                                <span>小猪佩奇</span>
+                            </div>
+                            <!--等级，性别-->
+                            <div class="dis_flex">
+                                <div class="text_sex_off">26</div>
+                                <span class="text_svip">SVIP</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <span>回复你:</span>
+                            </div>
+                            <p class="dis_flex">&nbsp;</p>
+                        </div>
+                    </div>
+                    <!--回复人留言-->
+                    <p>heheheheheheheheheehehehehehehehehehehehehe</p>
+                </div>
+                <!--底部动态信息-->
+                <div>
+                    <div class="dis_flex">
+                        <div class="bg_pic" style="background-image: url('img/lbt.png')"></div>
+                        <span class="col_lan">小猪佩奇:</span>
+                        <span>最近都不太想动，五毛钱以上的活动不要叫我！</span>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="col_lan">小羊苏西:</span>
+                            <span>出来嗨!</span>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="回复小猪佩奇：">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+    </div>
+</body>
+</html>

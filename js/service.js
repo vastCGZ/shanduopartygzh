@@ -64,9 +64,9 @@ function loadCommentList(dynamicId, pageIndex, pageSize, cbOk, cbErr) {
 
 function login(unionId, username, password, cbOk, cbErr) {
     $.ajax({
-        url: host + '/wx/binding',
+        url: host + '/wx/bindingUser',
         data: {
-            unionId: unionId, username: username, password: password
+            unionId: unionId, phone: username, password: password,type:1
         },
         type: 'POST',
         header: {

@@ -1,3 +1,6 @@
+div.hot_ul>div.hot_ul_li>div.hot_ul_li_footer>div:last-child{
+  line-height: 14px!important;
+}
 body{
   background-color: #F8F9FF;;
 }

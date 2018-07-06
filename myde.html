@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <meta content="telephone=no,email=no" name="format-detection">
     <!--禁止自动识别电话号码和邮箱-->
     <meta content="yes" name="apple-mobile-web-app-capable">
@@ -22,49 +21,53 @@
 <body>
   <div id="vueData">
     <!--头部-->
-    <header>
-        <div class="my_head_ul dis_flex" style="background-image: url('img/nan_2.png')">
-            <div class="my_head_li">
+    <header class="dis_flex">
+        <div class="my_head dis_flex" style="background-color:#5E75FF;">
+            <div class="dis_flex">
+                <a href="setup.html">
+                    <img src="img/icon-9.png">
+                </a>
+            </div>
+            <div class="dis_flex">
                 <img :src="userInfo.picture?imagePath+userInfo.picture:'img/portrait.png'" alt="">
-            </div>
-            <div class="my_head_li">
-                <span>{{userInfo.name}}</span>
-                <!--性别为男 text_sex_on 变成 text_sex_off-->
-                <div :class="userInfo.gender==1?'dis_inli text_sex_on':'dis_inli text_sex_off'">
-                    <span>{{userInfo.age}}</span>
+                <div class="dis_flex">
+                    <div class="dis_flex">
+                        <span>{{userInfo.name}}</span>
+                        <div :class="userInfo.gender==1?'dis_inli text_sex_on':'dis_inli text_sex_off'">
+                            <span>{{userInfo.age}}</span>
+                        </div>
+                        <div class="dis_inli text_svip"><!-- v-if="userInfo.vip>8"-->
+                            <span>SVIP7</span>
+                        </div>
+                        <div class="dis_inli text_LV">
+                            <span>LV{{userInfo.level}}</span>
+                        </div>
+                    </div>
+                    <div class="">
+                        <span>闪多号:</span>
+                        <span>{{userInfo.userId}}</span>
+                    </div>
                 </div>
             </div>
-            <div class="my_head_li">
-                <span>闪多号:</span>
-                <span>{{userInfo.userId}}</span>
-            </div>
-            <div v-if="userInfo.vip>0" class="my_head_li">
-                <div v-if="userInfo.vip>8" class="dis_inli text_svip">
-                    <span>SVIP7</span>
-                </div>
-                <div class="dis_inli text_level">
-                    <span>LV{{userInfo.level}}</span>
-                </div>
-            </div>
-            <div class="my_head_li dis_flex">
-                <div>
-                    <span>0</span>
-                    <span>好友</span>
-                </div>
-                <div>
-                    <span>0</span>
-                    <span>活动</span>
-                </div>
-                <div>
-                    <span>0</span>
-                    <span>动态</span>
-                </div>
-            </div>
+        </div>
+        <div class="my_head_class dis_flex">
+            <a href="" class="dis_flex">
+                <span>18</span>
+                <span>好友</span>
+            </a>
+            <a href="" class="dis_flex">
+                <span>15</span>
+                <span>活动</span>
+            </a>
+            <a href="" class="dis_flex">
+                <span>12</span>
+                <span>动态</span>
+            </a>
         </div>
     </header>
     <!--主体-->
     <div class="body">
-      <div class="dis_flex">
+      <a href="myactivity.html" class="dis_flex">
         <div>
           <img src="img/icon-3.png" alt="">
           <span>我的动态</span>
@@ -72,8 +75,8 @@
         <div>
           <img src="img/icon-1.png" alt="">
         </div>
-      </div>
-      <div class="dis_flex">
+      </a>
+      <a href="myactivity.html" class="dis_flex">
         <div class="dis_flex">
           <img src="img/icon-4.png" alt="">
           <span>我的活动</span>
@@ -81,8 +84,8 @@
         <div class="dis_flex">
           <img src="img/icon-1.png" alt="">
         </div>
-      </div>
-      <div class="dis_flex">
+      </a>
+      <a href="credit.html" class="dis_flex">
         <div>
           <img src="img/icon-5.png" alt="">
           <span>信用中心</span>
@@ -90,8 +93,8 @@
         <div>
           <img src="img/icon-1.png" alt="">
         </div>
-      </div>
-      <div class="dis_flex">
+      </a>
+      <a href="" class="dis_flex">
         <div>
           <img src="img/icon-6.png" alt="">
           <span>我的钱包</span>
@@ -99,8 +102,8 @@
         <div>
           <img src="img/icon-1.png" alt="">
         </div>
-      </div>
-      <div class="dis_flex">
+      </a>
+      <a href="" class="dis_flex">
         <div>
           <img src="img/icon-7.png" alt="">
           <span>会员中心</span>
@@ -108,16 +111,16 @@
         <div>
           <img src="img/icon-1.png" alt="">
         </div>
-      </div>
-      <div class="dis_flex">
+      </a>
+      <a href="" class="dis_flex">
         <div>
           <img src="img/icon-8.png" alt="">
-          <span>设置</span>
+          <span>客服中心</span>
         </div>
         <div>
           <img src="img/icon-1.png" alt="">
         </div>
-      </div>
+      </a>
     </div>
     <!--尾部-->
     <footer>
@@ -134,8 +137,10 @@
                     <span class="dis_inli col_hui">聊天</span>
                 </a>
                 <!--发布-->
-                <a href="#" class="foot_li dis_flex">
-                    <img src="img/activity.png" alt="">
+                <a href="javascript:;" class="foot_li dis_flex">
+                    <div>
+                        <span class="dis_inli">+</span>
+                    </div>
                     <span class="dis_inli col_hui">发布</span>
                 </a>
                 <!--好友-->
@@ -144,10 +149,23 @@
                     <span class="dis_inli col_hui">好友</span>
                 </a>
                 <!--我的-->
-                <a href="#" class="foot_li dis_flex">
+                <a href="javascript:;" class="foot_li dis_flex">
                     <img src="img/personal.png" alt="">
                     <span class="dis_inli col_hui">我的</span>
                 </a>
+            </div>
+            <div class="dis_none foot_div_ul">
+                <div class="dis_flex">
+                    <a href="release_hd.html" class="dis_flex">
+                        <img src="img/activity_1.png" alt="">
+                        <span>发活动</span>
+                    </a>
+                    <a href="release_dt.html" class="dis_flex">
+                        <img src="img/dynamic.png" alt="">
+                        <span>发动态</span>
+                    </a>
+                    <img src="img/icon_publish_cross.png" alt="">
+                </div>
             </div>
         </div>
     </footer>
@@ -169,6 +187,9 @@
         $(".foot_li:nth-child(5)>span").css('color', '#5970FF');
         //点击活动显示/隐藏
         $('.foot_li:nth-child(3)').click(function () {
+            $('.foot_div_ul').toggle()
+        });
+        $('.foot_div_ul>div>img').click(function () {
             $('.foot_div_ul').toggle()
         });
         let vm = new Vue({
