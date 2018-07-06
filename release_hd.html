@@ -1,125 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/release_hd.css">
-  <link rel="stylesheet" href="css/common.css">
-  <title>活动发布</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/release_hd.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <title>活动发布</title>
 </head>
 <body>
- <div id="vueData">
-   <header>
-     <!--添加-->
-     <div class="title_header dis_flex">
-       <div>
-         <a href="#">取消</a>
-       </div>
-       <div>
-         <span>活动发布</span>
-       </div>
-       <div></div>
-     </div>
-   </header>
-   <div class="body">
-     <form action="">
-       <!--活动主题-->
-       <div>
-         <input type="text" placeholder="请输入活动主题(最多输入20字符)">
-       </div>
-       <!--活动内容-->
-       <div>
-         <textarea placeholder="请输入活动内容(禁止发布违禁文字)"></textarea>
-       </div>
-       <!--活动人数-->
-       <div class="dis_flex">
-         <!--男-->
-         <div class="dis_flex">
-           <img src="img/nan_1.png" alt="">
-           <select class="form-control">
-            <option>10人</option>
-           </select>
-         </div>
-         <!--女-->
-         <div class="dis_flex">
-           <img src="img/nv_1.png" alt="">
-           <select class="form-control">
-             <option>10人</option>
-           </select>
-         </div>
-       </div>
-       <!--活动开始时间-->
-       <div class="dis_flex he_list_li">
-         <div class="dis_flex">
-           <img src="img/time.png" alt="">
-           <span>活动开始时间：</span>
-         </div>
-         <div>
-           <input type='datetime-local'/>
-         </div>
-       </div>
-       <!--活动结束时间-->
-       <div class="dis_flex he_list_li">
-         <div class="dis_flex">
-           <img src="img/time.png" alt="">
-           <span>活动结束时间：</span>
-         </div>
-         <div>
-           <input type='datetime-local'/>
-         </div>
-       </div>
-       <!--付款方式-->
-       <div class="dis_flex he_list_li">
-         <div class="dis_flex">
-           <img src="img/money.png" alt="">
-           <span>付款方式：</span>
-         </div>
-         <div class="dis_flex">
-           <select class="form-control">
-             <option>请选择付款方式</option>
-             <option>AA制</option>
-           </select>
-         </div>
-       </div>
-       <!--活动地点-->
-       <div class="dis_flex he_list_li">
-         <div class="dis_flex">
-           <img src="img/position.png" alt="">
-           <span>活动地点：</span>
-         </div>
-         <div class="dis_flex">
-           <span>小区/写字楼/商城</span>
-           <img src="img/return_2_1.png" alt="">
-         </div>
-       </div>
-       <!--备注详细地址-->
-       <div>
-         <textarea placeholder="请输入详细地址"></textarea>
-       </div>
-     </form>
-   </div>
-   <footer class="dis_flex">
-     <div>活动置顶</div>
-     <div>活动发布</div>
-   </footer>
- </div>
+<div id="vueData">
+    <header>
+        <!--添加-->
+        <div class="title_header dis_flex">
+            <div>
+                <a href="javascript:" @click="cancel">取消</a>
+            </div>
+            <div>
+                <span>活动发布</span>
+            </div>
+            <div></div>
+        </div>
+    </header>
+    <div class="body">
+        <form>
+            <!--活动主题-->
+            <div>
+                <input type="text" placeholder="请输入活动主题(最多输入20字符)" v-model="activity.activityName">
+            </div>
+            <!--活动内容-->
+            <div>
+                <textarea placeholder="请输入活动内容(禁止发布违禁文字)" v-model="activity.remarks"></textarea>
+            </div>
+            <!--活动人数-->
+            <div class="dis_flex">
+                <!--男-->
+                <div class="dis_flex">
+                    <img src="img/nan_1.png" alt="">
+                    <select v-model="activity.selManIndex" class="form-control" @change="selectNanNum">
+                        <option v-for="(nan,index) in array1" :value="index">{{nan}}人</option>
+                    </select>
+                </div>
+                <!--女-->
+                <div class="dis_flex">
+                    <img src="img/nv_1.png" alt="">
+                    <select v-model="activity.selNvIndex" class="form-control" @change="selectNvNum">
+                        <option v-for="(nv,index) in array" :value="index">{{nv}}人</option>
+                    </select>
+                </div>
+            </div>
+            <!--活动开始时间-->
+            <div class="dis_flex he_list_li">
+                <div class="dis_flex">
+                    <img src="img/time.png" alt="">
+                    <span>活动开始时间：</span>
+                </div>
+                <div>
+                    <input type='datetime-local' v-model="activity.activityStartTime"/>
+                </div>
+            </div>
+            <!--活动结束时间-->
+            <div class="dis_flex he_list_li">
+                <div class="dis_flex">
+                    <img src="img/time.png" alt="">
+                    <span>报名截止时间：</span>
+                </div>
+                <div>
+                    <input type='datetime-local' v-model="activity.activityCutoffTime"/>
+                </div>
+            </div>
+            <!--付款方式-->
+            <div class="dis_flex he_list_li">
+                <div class="dis_flex">
+                    <img src="img/money.png" alt="">
+                    <span>消费方式：</span>
+                </div>
+                <div class="dis_flex">
+                    <select v-model="activity.modeIndex" class="form-control" @change="selectMode">
+                        <option v-for="(mode,index) in modes" :value="index">{{mode}}</option>
+                    </select>
+                </div>
+            </div>
+            <!--活动地点-->
+            <div class="dis_flex he_list_li">
+                <div class="dis_flex">
+                    <img src="img/position.png" alt="">
+                    <span>活动地点：</span>
+                </div>
+                <div class="dis_flex" @click="openMap">
+                    <span v-if="activity.activityAddress!=''">{{activity.activityAddress}}</span><span
+                        v-else>小区/写字楼/商城</span>
+                    <img src="img/return_2_1.png" alt="">
+                </div>
+            </div>
+            <!--备注详细地址-->
+            <div>
+                <textarea placeholder="请输入详细地址" v-model="activity.detailedAddress"></textarea>
+            </div>
+        </form>
+    </div>
+    <footer class="dis_flex">
+        <div>活动置顶</div>
+        <div @click="pushActivity">活动发布</div>
+    </footer>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
-  var vm = new Vue({
-    el:'#vueData',
-    data:{},
-    methods: {}
-  })
-  
+    let addrName = decodeURIComponent(GetQueryString('name'));
+    let addr = decodeURIComponent(GetQueryString('addr'));
+    let latng = GetQueryString('latng');
+    let localUser = JSON.parse(localStorage.localUser);
+    var vm = new Vue({
+        el: '#vueData',
+        data: {
+            array: ['女', 10, 20, 30, 40, 50],
+            array1: ['男', 10, 20, 30, 40, 50],
+            modes: ['选择消费方式', 'AA制', '男生请客', '我请客'],
+            activity: {
+                token: null,
+                activityName: '',
+                activityAddress: '',
+                detailedAddress: '',
+                mode: null,
+                modeIndex: 0,
+                manNumber: null,
+                selManIndex: 0,
+                womanNumber: null,
+                selNvIndex: 0,
+                remarks: '',
+                activityStartTime: '',
+                activityCutoffTime: '',
+                lon: null,
+                lat: null
+            },
+            rm: ''
+        },
+        watch: {
+            activity: {//深度监听，可监听到对象、数组的变化
+                handler(val, oldVal) {
+                    localStorage.activity = JSON.stringify(val);
+                },
+                deep: true
+            }
+        },
+        methods: {
+            cancel() {
+                history.go(-1);
+            },
+            openMap() {
+                location.href = 'https://3gimg.qq.com/lightmap/components/locationPicker2/index.html?type=0&backurl=http://lixinrong.vicp.io/yapingzh/shanduoWeb/release_hd.html&key=Q74BZ-4AT34-QCUU5-XADLJ-XTGQZ-65FQM&referer=near-store';
+            }, selectNanNum(e) {
+                let index = e.target.value;
+                if (index > 0) {
+                    vm.activity.selManIndex = index;
+                    vm.activity.manNumber = vm.array1[index];
+                }
+            }, selectNvNum(e) {
+                let index = e.target.value;
+                if (index > 0) {
+                    vm.activity.selNvIndex = index;
+                    vm.activity.womanNumber = vm.array[index];
+                }
+            }, selectMode(e) {
+                let index = e.target.value;
+                if (index > 0) {
+                    vm.activity.modeIndex = index;
+                    vm.activity.mode = vm.modes[index];
+                }
+            }, pushActivity() {
+                vm.activity.token = localUser.token;
+                if (checkInputData()) {
+                    layer.open({type: 2});
+                    $.ajax({
+                        url: host + '/activity/saveactivity',
+                        data: vm.activity,
+                        dataType: 'json',
+                        method: 'GET',
+                        success: function (res) {
+                            if (res.success) {
+                                toast('发布成功');
+                                localStorage.removeItem('activity');
+                                setTimeout(function () {
+                                    location.href = 'index.html';
+                                }, 1000)
+                            }
+                        }, complete: function () {
+                            layer.closeAll();
+                        }
+                    });
+                }
+            }
+        }
+    });
+    function checkInputData() {
+        let activity = vm.activity;
+        if (!checkInput(activity.activityName)) {
+            toast('请输入活动主题');
+            return false;
+        }
+        if (!checkInput(activity.remarks)) {
+            toast('请输入活动内容');
+            return false;
+        }
+        if (!activity.manNumber && !activity.womanNumber) {
+            toast('请输入活动人数');
+            return false;
+        }
+        if (!checkInput(activity.activityStartTime)) {
+            toast('请输入活动开始时间');
+            return false;
+        }
+        if (!checkInput(activity.activityCutoffTime)) {
+            toast('请输入活动截止时间');
+            return false;
+        }
+        let currentTime = new Date();
+        let startDate = new Date(activity.activityStartTime);
+        let cutoffDate = new Date(activity.activityCutoffTime);
+        if ((startDate.getTime() - currentTime.getTime()) < 3 * 3600000) {
+            toast('开始时间距离当前时间不足三个小时\n请重新选择');
+            return;
+        }
+        if (startDate.getTime() <= cutoffDate.getTime()) {
+            toast('没有充足的报名时间');
+            return;
+        }
+        if (!activity.mode) {
+            toast('请输入活动消费方式');
+            return false;
+        }
+        if (!checkInput(activity.activityAddress)) {
+            toast('请输入活动地点');
+            return false;
+        }
+        console.log(vm.activity);
+        return true;
+    }
+
+    if ('null' != addrName) {
+        initData();
+        if ('我的位置' === addrName) {
+            vm.activity.activityAddress = addr;
+        } else {
+            vm.activity.activityAddress = addrName;
+        }
+        vm.activity.lon = latng.split(',')[1];
+        vm.activity.lat = latng.split(',')[0];
+    }
+    $(function () {
+        initData();
+    });
+
+    function initData() {
+        if (localStorage.activity) {
+            let localActivity = JSON.parse(localStorage.activity);
+            vm.activity = {
+                activityName: localActivity.activityName,
+                activityAddress: localActivity.activityAddress,
+                detailedAddress: localActivity.detailedAddress,
+                mode: localActivity.mode,
+                modeIndex: localActivity.modeIndex,
+                manNumber: localActivity.manNumber,
+                selManIndex: localActivity.selManIndex,
+                womanNumber: localActivity.womanNumber,
+                selNvIndex: localActivity.selNvIndex,
+                remarks: localActivity.remarks,
+                activityStartTime: localActivity.activityStartTime,
+                activityCutoffTime: localActivity.activityCutoffTime,
+                lon:localActivity.lon,
+                lat:localActivity.lat
+            }
+        }
+    }
 </script>
 </html>

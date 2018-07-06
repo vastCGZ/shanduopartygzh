@@ -1,13 +1,117 @@
 var selToID
-    , loginInfo
+    , loginInfo = {}
     , accountMode
     , accountType
     , sdkAppID
     , avChatRoomId
     , selType
     , selSess
-    , selSessHeadUrl
-;
+    , selSessHeadUrl;
+const Config = {
+    sdkappid: 1400088239,
+    accountType: 25943,
+    accountMode: 0 //帐号模式，0-表示独立模式，1-表示托管模式
+};
+
+function initIM(localUser, cbOk) {
+    // var avChatRoomId = '@TGS#aWTBZTDFW';
+    init({
+        accountMode: Config.accountMode
+        , accountType: Config.accountType
+        , sdkAppID: Config.sdkappid
+    });
+    //当前用户身份
+    loginInfo.sdkAppID = Config.sdkappid; //用户所属应用id,必填
+    loginInfo.appIDAt3rd = Config.sdkappid; //用户所属应用id，必填
+    loginInfo.accountType = Config.accountType; //用户所属应用帐号类型，必填
+    loginInfo.identifier = localUser.userId; //当前用户ID,必须是字符串类型，选填
+    loginInfo.identifierNick = localUser.name; //当前用户昵称，选填
+    loginInfo.userSig = localUser.userSig; //当前用户身份凭证，必须是字符串类型，选填
+    loginInfo.headimg = imagePath + localUser.picture;
+    loginInfo.gender = localUser.gender;
+    //监听事件
+    let listeners = {
+        "onConnNotify": onConnNotify, //选填,
+        //监听新消息(大群)事件，必填
+        "onMsgNotify": onMsgNotify,//监听新消息(私聊(包括普通消息和全员推送消息)，普通群(非直播聊天室)消息)事件，必填
+    };
+
+    //其他对象，选填
+    let options = {
+        'isAccessFormalEnv': true,//是否访问正式环境，默认访问正式，选填
+        'isLogOn': false//是否开启控制台打印日志,默认开启，选填
+    };
+    //sdk登录
+    sdkLogin(loginInfo, listeners, options, cbOk);
+}
+
+//获取用户资料
+function searchProfileByUserId(ids, cbOK) {
+    let tag_list = [
+        "Tag_Profile_IM_Nick",//昵称
+        "Tag_Profile_IM_Gender",//性别
+        "Tag_Profile_IM_Image"//头像
+    ];
+    let options = {
+        'To_Account': ids,
+        'TagList': tag_list
+    };
+    webim.getProfilePortrait(
+        options,
+        function (resp) {
+            if (resp.UserProfileItem && resp.UserProfileItem.length > 0) {
+                let profile = [];
+                for (let i in resp.UserProfileItem) {
+                    let to_account = resp.UserProfileItem[i].To_Account;
+                    let nick = null, gender = null, imageUrl = null;
+                    for (let j in resp.UserProfileItem[i].ProfileItem) {
+                        switch (resp.UserProfileItem[i].ProfileItem[j].Tag) {
+                            case 'Tag_Profile_IM_Nick':
+                                nick = resp.UserProfileItem[i].ProfileItem[j].Value;
+                                break;
+                            case 'Tag_Profile_IM_Gender':
+                                switch (resp.UserProfileItem[i].ProfileItem[j].Value) {
+                                    case 'Gender_Type_Male':
+                                        gender = '男';
+                                        break;
+                                    case 'Gender_Type_Female':
+                                        gender = '女';
+                                        break;
+                                    case 'Gender_Type_Unknown':
+                                        gender = '未知';
+                                        break;
+                                }
+                                break;
+                            case 'Tag_Profile_IM_Image':
+                                imageUrl = resp.UserProfileItem[i].ProfileItem[j].Value;
+                                break;
+                        }
+                    }
+                    profile.push({
+                        To_Account: to_account,
+                        Nick: webim.Tool.formatText2Html(nick),
+                        Gender: gender,
+                        Image: imageUrl
+                    });
+                    /*let lls = vm.recentContact;
+                    for (let k in lls) {
+                        if (to_account === lls[k].To_Account) {
+                            lls[k].Nick = webim.Tool.formatText2Html(nick);
+                            lls[k].Gender = gender;
+                            lls[k].Image = imageUrl;
+                            vm.recentContact = lls;
+                            break;
+                        }
+                    }*/
+                }
+                cbOK && cbOK(profile);
+            }
+        },
+        function (err) {
+            console.log(err);
+        }
+    );
+}
 
 //监听大群新消息（普通，点赞，提示，红包）
 function onBigGroupMsgNotify(msgList, callback) {
@@ -26,16 +130,16 @@ function onConnNotify(resp) {
     var actionStatus = '';
     switch (resp.ErrorCode) {
         case webim.CONNECTION_STATUS.ON:
-            actionStatus = '正常';
+            actionStatus = '网络正常';
             break;
         case webim.CONNECTION_STATUS.OFF:
-            actionStatus = '离线';
+            actionStatus = '网络离线';
             break;
         default:
-            actionStatus = '未知';
+            actionStatus = '网络未知';
             break;
     }
-    // WxNotificationCenter.postNotificationName('onConnNotify', actionStatus);
+    onConnNotifyback(actionStatus);
 }
 
 //监听新消息(私聊(包括普通消息、全员推送消息)，普通群(非直播聊天室)消息)事件
@@ -84,7 +188,7 @@ function handlderMsg(msg) {
                         'LastedMsgTime': msg.getTime()//消息时间戳
                     };
                     webim.c2CMsgReaded(opts);
-                    // console.error('收到一条c2c消息(好友消息或者全员推送消息): 发送人=' + fromAccountNick + ", 内容=" + contentHtml);
+                    console.error('收到一条c2c消息(好友消息或者全员推送消息): 发送人=' + fromAccountNick + ", 内容=" + contentHtml);
                     newMessageNotification({
                         fromAccount: fromAccount,
                         content: contentHtml,
@@ -125,7 +229,7 @@ function sdkLogin(userInfo, listeners, options, cbOk) {
             );
         },
         function (err) {
-            alert(err.ErrorInfo);
+            console.log(err.ErrorInfo);
         }
     );
 }
@@ -208,7 +312,7 @@ function showMsg(msg) {
     return {
         fromAccount: fromAccount,
         content: content,
-        time: utils.getLocalTime(msg.getTime()),
+        time: getLocalTime(msg.getTime()),
         me: isSelfSend
     }
 }
@@ -964,14 +1068,15 @@ function getLastC2CHistoryMsgs(reqMsgCount, cbOk, cbError) {
             //   'LastMsgTime': resp.LastMsgTime,
             //   'MsgKey': resp.MsgKey
             // };
-            if (cbOk) {
-                var data = {};
-                data.historyMsgList = resp.MsgList;
-                data.complete = complete === 0
-                cbOk(data);
-            }
+            cbOk && cbOk({
+                historyMsgList: resp.MsgList,
+                complete: complete === 0
+            })
+
         },
-        cbError
+        function () {
+            cbError && cbError()
+        }
     )
 }
 

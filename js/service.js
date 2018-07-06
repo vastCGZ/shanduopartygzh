@@ -66,7 +66,7 @@ function login(unionId, username, password, cbOk, cbErr) {
     $.ajax({
         url: host + '/wx/bindingUser',
         data: {
-            unionId: unionId, phone: username, password: password,type:1
+            unionId: unionId, phone: username, password: password, type: 3
         },
         type: 'POST',
         header: {
@@ -121,4 +121,12 @@ function getDynamicData(req, cbOk, cbErr, done) {
             done && done();
         }, type: 'GET'
     });
+}
+
+function gotoReleaseView(view) {
+    if (localStorage.localUser) {
+        location.href = view;
+    } else {
+        location.href = 'login.html';
+    }
 }

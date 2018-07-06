@@ -1,431 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <meta content="telephone=no,email=no" name="format-detection">
-  <!--禁止自动识别电话号码和邮箱-->
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/myactivity.css">
-  <link rel="stylesheet" href="css/common.css">
-  <script src="../js/jquery-3.3.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <title>我的活动</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/myactivity.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/mescroll.min.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <title>我的活动</title>
 </head>
 <body>
-  <div id="vueData">
+<div id="vueData">
     <header>
-      <div>
-        <div class="title_header dis_flex">
-          <div>
-            <img src="img/return_1.png" alt="">
-          </div>
-          <div>
-            <span>我的活动</span>
-          </div>
-          <div></div>
-        </div>
-      </div>
-      <div class="dis_flex">
         <div>
-          <a @click.prevent="changer(0)" class="dis_inli active" href="javascript:;">已参加</a>
+            <div class="title_header dis_flex">
+                <div @click="goBack">
+                    <img src="img/return_1.png" alt="">
+                </div>
+                <div>
+                    <span>我的活动</span>
+                </div>
+                <div></div>
+            </div>
         </div>
-        <div>
-          <a @click.prevent="changer(1)" class="dis_inli" href="javascript:;">已报名</a>
+        <div class="dis_flex">
+            <div>
+                <a @click.prevent="changer(0)" class="dis_inli active" href="javascript:">已参加</a>
+            </div>
+            <div>
+                <a @click.prevent="changer(1)" class="dis_inli" href="javascript:">已报名</a>
+            </div>
+            <div>
+                <a @click.prevent="changer(2)" class="dis_inli" href="javascript:">我的</a>
+            </div>
         </div>
-        <div>
-          <a @click.prevent="changer(2)" class="dis_inli" href="javascript:;">我的</a>
-        </div>
-      </div>
     </header>
-    <div class="body">
-      <div v-if="show == 0" :style="{maxHeight: winHeight+'px'}">
-        <!--没有数据显示-->
-        <span v-if="false" class="dis_inli">没有数据</span>
-        <div class="hot_ul">
-          <div class="hot_ul_li">
-            <div class="hot_ul_li_header dis_flex">
-              <!--活动发起人信息-->
-              <div class="hot_ul_li_header_title dis_flex">
-                <img src="img/portrait.png">
-                <div class="dis_flex">
-                  <span>小猪佩奇</span>
-                  <div class="dis_flex">
-                    <div class="text_sex_off">26</div>
-                    <div>
-                      <div class="dis_inli text_svip" v-if="false">
-                        <span>SVIP8</span>
-                      </div>
-                      <div class="dis_inli text_vip">
-                        <span>VIP5</span>
-                      </div>
+    <div id="mescroll" class="body mescroll">
+        <div v-if="currentTab == 0" :style="{maxHeight: winHeight+'px'}">
+            <!--没有数据显示-->
+            <span v-if="activities[currentTab].arrayResult.length==0" class="dis_inli">没有数据</span>
+            <div class="hot_ul" v-else>
+                <div class="hot_ul_li" v-for="(item,key) in activities[currentTab].arrayResult">
+                    <div class="hot_ul_li_header dis_flex">
+                        <!--活动发起人信息-->
+                        <div class="hot_ul_li_header_title dis_flex">
+                            <img :src="item.headPortraitId?imagePath+item.headPortraitId:'img/portrait.png'">
+                            <div class="dis_flex">
+                                <span>{{item.userName}}</span>
+                                <div class="dis_flex">
+                                    <div class="text_sex_off">{{item.age}}</div>
+                                    <div v-if="item.vipGrade>0">
+                                        <div class="dis_inli text_svip">
+                                            <span>SVIP8</span>
+                                        </div>
+                                        <div class="dis_inli text_vip">
+                                            <span>VIP5</span>
+                                        </div>
 
-                      <div class="dis_inli text_level">
-                        <span>LV96</span>
-                      </div>
+                                        <div class="dis_inli text_level">
+                                            <span>LV96</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--活动时间-->
+                        <div class="hot_ul_li_header_time dis_flex">
+                            <p class="col_lan">{{item.activityStartTime}}</p>
+                            <p class="col_hui">报名截止{{item.activityCutoffTime}}</p>
+                        </div>
                     </div>
-                  </div>
+                    <div class="hot_ul_li_body">
+                        <!--主题-->
+                        <div class="hot_ul_li_body_theme">
+                            <span class="col_hui">主题:</span>
+                            <span>{{item.activityName}}</span>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.mode}}</span>
+                        </div>
+                        <!--活动地点-->
+                        <div class="hot_ul_li_body_place">
+                            <span class="col_hui">活动地点:</span>
+                            <span>{{item.activityAddress}}</span>
+                            <span class="bg_position col_lan">{{item.location}}km</span>
+                        </div>
+                        <!--活动内容-->
+                        <div class="hot_ul_li_body_content dis_flex">
+                            <span class="col_hui dis_inli">活动内容:</span>
+                            <span class="dis_inli">{{item.remarks}}</span>
+                        </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                        <!--参与人数-->
+                        <div class="dis_flex">
+                            <div>
+                                <img src="img/nan_1.png" alt="">
+                                <span>{{item.manNumber}}</span>
+                            </div>
+                            <div>
+                                <img src="img/nv_1.png" alt="">
+                                <span>{{item.womanNumber}}</span>
+                            </div>
+                        </div>
+                        <!--其他-->
+                        <div class="dis_flex">
+                            <div>
+                                <span>信用轨迹</span>
+                            </div>
+                            <div>
+                                <span>删除</span>
+                            </div>
+                            <img src="img/copy.png" alt="">
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <!--活动时间-->
-              <div class="hot_ul_li_header_time dis_flex">
-                <p class="col_lan">2018/4/24/14:04星期二</p>
-                <p class="col_hui">报名截止2018/4/26/18:00</p>
-              </div>
             </div>
-            <div class="hot_ul_li_body">
-              <!--主题-->
-              <div class="hot_ul_li_body_theme">
-                <span class="col_hui">主题:</span>
-                <span>activityInfo.activityName</span>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activityInfo.mode</span>
-              </div>
-              <!--活动地点-->
-              <div class="hot_ul_li_body_place">
-                <span class="col_hui">活动地点:</span>
-                <span>activityInfo.activityAddress</span>
-                <span class="bg_position col_lan">1.6666 km</span>
-              </div>
-              <!--活动内容-->
-              <div class="hot_ul_li_body_content dis_flex">
-                <span class="col_hui dis_inli">活动内容:</span>
-                <span class="dis_inli">activityInfo.remarks</span>
-              </div>
-            </div>
-            <div class="hot_ul_li_footer dis_flex">
-              <!--参与人数-->
-              <div class="dis_flex">
-                <div>
-                  <img src="img/nan_1.png" alt="">
-                  <span>01/10</span>
-                </div>
-                <div>
-                  <img src="img/nv_1.png" alt="">
-                  <span>01/10</span>
-                </div>
-              </div>
-              <!--其他-->
-              <div class="dis_flex">
-                <div>
-                  <span>信用轨迹</span>
-                </div>
-                <div>
-                  <span>删除</span>
-                </div>
-                <img src="img/copy.png" alt="">
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-      <div v-if="show == 1" :style="{maxHeight: winHeight+'px'}">
-        <!--没有数据显示-->
-        <span v-if="false" class="dis_inli">没有数据</span>
-        <div class="hot_ul">
-          <div class="hot_ul_li">
-            <div class="hot_ul_li_header dis_flex">
-              <!--活动发起人信息-->
-              <div class="hot_ul_li_header_title dis_flex">
-                <img src="img/portrait.png">
-                <div class="dis_flex">
-                  <span>小猪佩奇</span>
-                  <div class="dis_flex">
-                    <div class="text_sex_off">26</div>
-                    <div>
-                      <div class="dis_inli text_svip" v-if="false">
-                        <span>SVIP8</span>
-                      </div>
-                      <div class="dis_inli text_vip">
-                        <span>VIP5</span>
-                      </div>
+        <div v-if="currentTab == 1" :style="{maxHeight: winHeight+'px'}">
+            <!--没有数据显示-->
+            <span v-if="activities[currentTab].arrayResult.length==0" class="dis_inli">没有数据</span>
+            <div class="hot_ul" v-else>
+                <div class="hot_ul_li" v-for="(item,key) in activities[currentTab].arrayResult">
+                    <div class="hot_ul_li_header dis_flex">
+                        <!--活动发起人信息-->
+                        <div class="hot_ul_li_header_title dis_flex">
+                            <img :src="item.headPortraitId?imagePath+item.headPortraitId:'img/portrait.png'">
+                            <div class="dis_flex">
+                                <span>{{item.userName}}</span>
+                                <div class="dis_flex">
+                                    <div class="text_sex_off">{{item.age}}</div>
+                                    <div v-if="item.vipGrade>0">
+                                        <div class="dis_inli text_svip">
+                                            <span>SVIP8</span>
+                                        </div>
+                                        <div class="dis_inli text_vip">
+                                            <span>VIP5</span>
+                                        </div>
 
-                      <div class="dis_inli text_level">
-                        <span>LV96</span>
-                      </div>
+                                        <div class="dis_inli text_level">
+                                            <span>LV96</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--活动时间-->
+                        <div class="hot_ul_li_header_time dis_flex">
+                            <p class="col_lan">{{item.activityStartTime}}</p>
+                            <p class="col_hui">报名截止{{item.activityCutoffTime}}</p>
+                        </div>
                     </div>
-                  </div>
+                    <div class="hot_ul_li_body">
+                        <!--主题-->
+                        <div class="hot_ul_li_body_theme">
+                            <span class="col_hui">主题:</span>
+                            <span>{{item.activityName}}</span>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.mode}}</span>
+                        </div>
+                        <!--活动地点-->
+                        <div class="hot_ul_li_body_place">
+                            <span class="col_hui">活动地点:</span>
+                            <span>{{item.activityAddress}}</span>
+                            <span class="bg_position col_lan">{{item.location}}km</span>
+                        </div>
+                        <!--活动内容-->
+                        <div class="hot_ul_li_body_content dis_flex">
+                            <span class="col_hui dis_inli">活动内容:</span>
+                            <span class="dis_inli">{{item.remarks}}</span>
+                        </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                        <!--参与人数-->
+                        <div class="dis_flex">
+                            <div>
+                                <img src="img/nan_1.png" alt="">
+                                <span>{{item.manNumber}}</span>
+                            </div>
+                            <div>
+                                <img src="img/nv_1.png" alt="">
+                                <span>{{item.womanNumber}}</span>
+                            </div>
+                        </div>
+                        <!--其他-->
+                        <div class="dis_flex">
+                            <div>
+                                <span>信用轨迹</span>
+                            </div>
+                            <div>
+                                <span>取消报名</span>
+                            </div>
+                            <img src="img/copy.png" alt="">
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <!--活动时间-->
-              <div class="hot_ul_li_header_time dis_flex">
-                <p class="col_lan">2018/4/24/14:04星期二</p>
-                <p class="col_hui">报名截止2018/4/26/18:00</p>
-              </div>
             </div>
-            <div class="hot_ul_li_body">
-              <!--主题-->
-              <div class="hot_ul_li_body_theme">
-                <span class="col_hui">主题:</span>
-                <span>activityInfo.activityName</span>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activityInfo.mode</span>
-              </div>
-              <!--活动地点-->
-              <div class="hot_ul_li_body_place">
-                <span class="col_hui">活动地点:</span>
-                <span>activityInfo.activityAddress</span>
-                <span class="bg_position col_lan">1.6666 km</span>
-              </div>
-              <!--活动内容-->
-              <div class="hot_ul_li_body_content dis_flex">
-                <span class="col_hui dis_inli">活动内容:</span>
-                <span class="dis_inli">activityInfo.remarks</span>
-              </div>
-            </div>
-            <div class="hot_ul_li_footer dis_flex">
-              <!--参与人数-->
-              <div class="dis_flex">
-                <div>
-                  <img src="img/nan_1.png" alt="">
-                  <span>01/10</span>
-                </div>
-                <div>
-                  <img src="img/nv_1.png" alt="">
-                  <span>01/10</span>
-                </div>
-              </div>
-              <!--其他-->
-              <div class="dis_flex">
-                <div>
-                  <span>信用轨迹</span>
-                </div>
-                <div>
-                  <span>取消报名</span>
-                </div>
-                <img src="img/copy.png" alt="">
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-      <div v-if="show == 2" :style="{maxHeight: winHeight+'px'}">
-        <!--没有数据显示-->
-        <span v-if="false" class="dis_inli">没有数据</span>
-        <div class="hot_ul">
-          <div class="hot_ul_li">
-            <div class="hot_ul_li_header dis_flex">
-              <!--活动发起人信息-->
-              <div class="hot_ul_li_header_title dis_flex">
-                <img src="img/portrait.png">
+        <div v-if="currentTab == 2" :style="{maxHeight: winHeight+'px'}">
+            <!--没有数据显示-->
+            <span v-if="activities[currentTab].arrayResult.length==0" class="dis_inli">没有数据</span>
+            <div class="hot_ul" v-else>
+                <div class="hot_ul_li" v-for="(item,key) in activities[currentTab].arrayResult">
+                    <div class="hot_ul_li_header dis_flex">
+                        <!--活动发起人信息-->
+                        <div class="hot_ul_li_header_title dis_flex">
+                            <img :src="item.headPortraitId?imagePath+item.headPortraitId:'img/portrait.png'">
+                            <div class="dis_flex">
+                                <span>{{item.userName}}</span>
+                                <div class="dis_flex">
+                                    <div class="text_sex_off">{{item.age}}</div>
+                                    <div v-if="item.vipGrade>0">
+                                        <div class="dis_inli text_svip">
+                                            <span>SVIP8</span>
+                                        </div>
+                                        <div class="dis_inli text_vip">
+                                            <span>VIP5</span>
+                                        </div>
+
+                                        <div class="dis_inli text_level">
+                                            <span>LV96</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--活动时间-->
+                        <div class="hot_ul_li_header_time dis_flex">
+                            <p class="col_lan">{{item.activityStartTime}}</p>
+                            <p class="col_hui">报名截止{{item.activityCutoffTime}}</p>
+                        </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                        <!--主题-->
+                        <div class="hot_ul_li_body_theme">
+                            <span class="col_hui">主题:</span>
+                            <span>{{item.activityName}}</span>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.mode}}</span>
+                        </div>
+                        <!--活动地点-->
+                        <div class="hot_ul_li_body_place">
+                            <span class="col_hui">活动地点:</span>
+                            <span>{{item.activityAddress}}</span>
+                            <span class="bg_position col_lan">{{item.location}}km</span>
+                        </div>
+                        <!--活动内容-->
+                        <div class="hot_ul_li_body_content dis_flex">
+                            <span class="col_hui dis_inli">活动内容:</span>
+                            <span class="dis_inli">{{item.remarks}}</span>
+                        </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                        <!--参与人数-->
+                        <div class="dis_flex">
+                            <div>
+                                <img src="img/nan_1.png" alt="">
+                                <span>{{item.manNumber}}</span>
+                            </div>
+                            <div>
+                                <img src="img/nv_1.png" alt="">
+                                <span>{{item.womanNumber}}</span>
+                            </div>
+                        </div>
+                        <!--其他-->
+                        <div class="dis_flex">
+                            <div>
+                                <span>信用轨迹</span>
+                            </div>
+                            <div>
+                                <span @click="imgShow">置顶</span>
+                            </div>
+                            <img src="img/copy.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--置顶信息-->
+            <div v-if="isShowOne" class="dis_flex outerdiv" style="display: none;">
                 <div class="dis_flex">
-                  <span>小猪佩奇</span>
-                  <div class="dis_flex">
-                    <div class="text_sex_off">26</div>
                     <div>
-                      <div class="dis_inli text_svip" v-if="false">
-                        <span>SVIP8</span>
-                      </div>
-                      <div class="dis_inli text_vip">
-                        <span>VIP5</span>
-                      </div>
-                      <div class="dis_inli text_level">
-                        <span>LV96</span>
-                      </div>
+                        <div class="title_header dis_flex">
+                            <div class="dis_flex">
+                                <img src="img/off_1.png" alt="" @click="closeDiglog">
+                            </div>
+                            <div class="dis_flex">
+                                <span>普通置顶</span>
+                            </div>
+                            <div class="dis_flex"></div>
+                        </div>
                     </div>
-                  </div>
+                    <div class="dis_flex">
+                        <div>
+                            <span>2</span>
+                            <span>元</span>
+                            <span>/12小时</span>
+                        </div>
+                        <div>
+                            <img src="img/copy_10.png" alt="">
+                            <span>余额支付</span>
+                        </div>
+                        <div>
+                            <div>
+                                <img src="img/copy_2_1.png" alt="">
+                                <span>微信支付</span>
+                            </div>
+                            <div>
+                                <img src="img/copy_9.png" alt="">
+                                <span>支付宝支付</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span>开通VIP置顶费用低至1.5元!</span>
+                            <span>去开通>></span>
+                        </div>
+                    </div>
+                    <div class="dis_flex">
+                        <div class="dis_flex">取消</div>
+                        <div class="dis_flex" @click="isShow">确认支付</div>
+                    </div>
                 </div>
-              </div>
-              <!--活动时间-->
-              <div class="hot_ul_li_header_time dis_flex">
-                <p class="col_lan">2018/4/24/14:04星期二</p>
-                <p class="col_hui">报名截止2018/4/26/18:00</p>
-              </div>
             </div>
-            <div class="hot_ul_li_body">
-              <!--主题-->
-              <div class="hot_ul_li_body_theme">
-                <span class="col_hui">主题:</span>
-                <span>activityInfo.activityName</span>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activityInfo.mode</span>
-              </div>
-              <!--活动地点-->
-              <div class="hot_ul_li_body_place">
-                <span class="col_hui">活动地点:</span>
-                <span>activityInfo.activityAddress</span>
-                <span class="bg_position col_lan">1.6666 km</span>
-              </div>
-              <!--活动内容-->
-              <div class="hot_ul_li_body_content dis_flex">
-                <span class="col_hui dis_inli">活动内容:</span>
-                <span class="dis_inli">activityInfo.remarks</span>
-              </div>
+            <!--支付信息-->
+            <div v-else class="dis_flex outerdiv" style="display: none;">
+                <div class="dis_flex">
+                    <div>
+                        <div class="title_header dis_flex">
+                            <div class="dis_flex">
+                                <img src="img/off_1.png" alt="" @click="closeDiglog">
+                            </div>
+                            <div class="dis_flex">
+                                <span>支付密码</span>
+                            </div>
+                            <div class="dis_flex"></div>
+                        </div>
+                    </div>
+                    <div class="dis_flex" @click="onClck">
+                        <div>
+                            <span>请输入六位支付密码</span>
+                        </div>
+                        <div class="passwordDiv dis_flex">
+                            <label class="passwordLabel">
+                                <ul>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </label>
+                            <input type="tal" class="password" name="password1" maxlength="6" @input="onIpt">
+                        </div>
+                    </div>
+                    <div class="dis_flex">
+                        <div class="dis_flex">取消</div>
+                        <div class="dis_flex">确认</div>
+                    </div>
+                </div>
             </div>
-            <div class="hot_ul_li_footer dis_flex">
-              <!--参与人数-->
-              <div class="dis_flex">
-                <div>
-                  <img src="img/nan_1.png" alt="">
-                  <span>01/10</span>
-                </div>
-                <div>
-                  <img src="img/nv_1.png" alt="">
-                  <span>01/10</span>
-                </div>
-              </div>
-              <!--其他-->
-              <div class="dis_flex">
-                <div>
-                  <span>信用轨迹</span>
-                </div>
-                <div>
-                  <span @click="imgShow">置顶</span>
-                </div>
-                <img src="img/copy.png" alt="">
-              </div>
-            </div>
-          </div>
         </div>
-        <!--置顶信息-->
-        <div v-if="isShowOne" class="dis_flex outerdiv" style="display: none;">
-          <div class="dis_flex">
-            <div>
-              <div class="title_header dis_flex">
-                <div class="dis_flex">
-                  <img src="img/off_1.png" alt="" @click="closeDiglog">
-                </div>
-                <div class="dis_flex">
-                  <span>普通置顶</span>
-                </div>
-                <div class="dis_flex"></div>
-              </div>
-            </div>
-            <div class="dis_flex">
-              <div>
-                <span>2</span>
-                <span>元</span>
-                <span>/12小时</span>
-              </div>
-              <div>
-                <img src="img/copy_10.png" alt="">
-                <span>余额支付</span>
-              </div>
-              <div>
-                <img src="img/copy_10.png" alt="">
-                <span>余额支付</span>
-              </div>
-              <div>
-                <div>
-                  <img src="img/copy_2_1.png" alt="">
-                  <span>微信支付</span>
-                </div>
-                <div>
-                  <img src="img/copy_9.png" alt="">
-                  <span>支付宝支付</span>
-                </div>
-              </div>
-              <div>
-                <span>开通VIP置顶费用低至1.5元!</span>
-                <span>去开通>></span>
-              </div>
-            </div>
-            <div class="dis_flex">
-              <div class="dis_flex">取消</div>
-              <div class="dis_flex" @click="isShow">确认支付</div>
-            </div>
-          </div>
-        </div>
-        <!--支付信息-->
-        <div v-else class="dis_flex outerdiv" style="display: none;">
-          <div class="dis_flex">
-            <div>
-              <div class="title_header dis_flex">
-                <div class="dis_flex">
-                  <img src="img/off_1.png" alt="" @click="closeDiglog">
-                </div>
-                <div class="dis_flex">
-                  <span>支付密码</span>
-                </div>
-                <div class="dis_flex"></div>
-              </div>
-            </div>
-            <div class="dis_flex" @click="onClck">
-              <div>
-                <span>请输入六位支付密码</span>
-              </div>
-              <div class="passwordDiv dis_flex">
-                <label class="passwordLabel">
-                  <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                  </ul>
-                </label>
-                <input type="tal" class="password" name="password1" maxlength="6" @input="onIpt">
-              </div>
-            </div>
-            <div class="dis_flex">
-              <div class="dis_flex">取消</div>
-              <div class="dis_flex">确认</div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <footer></footer>
-  </div>
+</div>
 </body>
+<script src="../js/mescroll.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
-  var vm = new Vue({
-    el: '#vueData',
-    data: {
-      //判断显示已参加和已报名或者我的
-      show:0,
-      //获取屏幕分辨率高度
-      winHeight:null,
-      isShowOne:true
-    },
-    mounted: function () {
-      //获取屏幕分辨率高度
-      this.winHeight = window.screen.height-90;
-    },
-    methods: {
-      imgShow() {
-        $('.outerdiv').fadeIn("fast");
-      },
-      closeDiglog() {
-        $('.outerdiv').fadeOut("fast");
-      },
-      isShow() {
-        this.isShowOne = false
-      },
-      // 类别切换
-      changer(classifyId) {
-        let selectId = $(event.currentTarget).parent().index();
-        if (classifyId === selectId) {
-          $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
-          this.show = classifyId;
+    let userInfo = JSON.parse(localStorage.getItem('localUser'));
+    let href = location.href.split('#')[0];
+    let lat, lon, pageSize = 20;
+    let vm = new Vue({
+        el: '#vueData',
+        data: {
+            imagePath: imagePath,
+            //tab切换
+            currentTab: 0,
+            //获取屏幕分辨率高度
+            winHeight: null,
+            isShowOne: true,
+            activities: [{
+                currentPage: 1,
+                totalPage: 0,
+                arrayResult: []
+            }, {
+                currentPage: 1,
+                totalPage: 0,
+                arrayResult: []
+            }, {
+                currentPage: 1,
+                totalPage: 0,
+                arrayResult: []
+            }],
+            mescroll: null
+        },
+        mounted: function () {
+            //获取屏幕分辨率高度
+            this.winHeight = window.screen.height - 90;
+            let that = this;
+            that.mescroll = new MeScroll("mescroll", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
+                up: {
+                    callback: that.upCallback, //上拉回调
+                    auto: false,
+                    noMoreSize: 10
+                }, down: {
+                    auto: false,
+                    callback: that.downCallback
+                }
+            });
+        },
+        methods: {
+            upCallback() {
+                if (vm.activities[vm.currentTab].totalPage > vm.activities[vm.currentTab].currentPage) {
+                    vm.activities[vm.currentTab].currentPage += 1;
+                    loadActivities(function () {
+                        vm.mescroll.endByPage(pageSize, vm.activities[vm.currentTab].totalPage);
+                    });
+                } else {
+                    vm.mescroll.endByPage(pageSize, vm.activities[vm.currentTab].totalPage);
+                }
+            }
+            ,
+            downCallback() {
+                emptyData();
+                loadActivities(function () {
+                    vm.mescroll.endByPage(pageSize, vm.activities[vm.currentTab].totalPage);
+                });
+            }
+            ,
+            goBack() {
+                history.go(-1);
+            }
+            ,
+            imgShow() {
+                $('.outerdiv').fadeIn("fast");
+            }
+            ,
+            closeDiglog() {
+                $('.outerdiv').fadeOut("fast");
+            }
+            ,
+            isShow() {
+                this.isShowOne = false
+            }
+            ,
+            // 类别切换
+            changer(classifyId) {
+                let selectId = $(event.currentTarget).parent().index();
+                if (vm.currentTab === selectId) {
+                    return;
+                }
+                this.currentTab = classifyId;
+                $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
+                emptyData();
+                loadActivities();
+            }
+            ,
+            //点击密码框清除密码
+            onClck() {
+                $('.password').focus();
+            }
+            ,
+            //密码框输入事件
+            onIpt(event) {
+                let num = new RegExp(/[0-9.]/);
+                let list = event.target.previousElementSibling.children[0].children;
+                for (let k = 0; k < list.length; k++) {
+                    list[k].innerText = '';
+                }
+                for (let i = 0; i < event.target.value.length; i++) {
+                    if (!num.test(event.target.value[i])) {
+                        event.target.value = event.target.value.substr(0, i);
+                        return false;
+                    }
+                    //input输入一个就改变一个li为•
+                    list[i].innerText = '•';
+                }
+            }
+            ,
         }
-      },
-      //点击密码框清除密码
-      onClck(){
-        $('.password').focus();
-      },
-      //密码框输入事件
-      onIpt(event){
-        var num = new RegExp(/[0-9.]/);
-        let list = event.target.previousElementSibling.children[0].children;
-        for(let k=0;k<list.length;k++){
-          list[k].innerText = '';
-        }
-        for(let i=0;i<event.target.value.length;i++){
-          if(!num.test(event.target.value[i])){
-            event.target.value = event.target.value.substr(0,i);
-            return false;
-          }
-          //input输入一个就改变一个li为•
-          list[i].innerText =  '•';
-        }
-      },
+    });
+    $(function () {
+        init_wx_js_sdk(href, function (result) {
+            //初始化接口环境
+            wx.config({
+                appId: result.appid,
+                timestamp: result.timestamp,
+                nonceStr: result.noncestr,
+                signature: result.signature,
+                jsApiList: ['getLocation', 'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'onMenuShareQZone', 'hideMenuItems']
+            });
+            wx.ready(function () {
+                wx.getLocation({
+                    success: function (res) {
+                        lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        lon = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        loadActivities();
+                    }
+                });
+                wx.hideMenuItems({
+                    menuList: ['menuItem:copyUrl', 'menuItem:share:qq', 'menuItem:share:QZone', 'menuItem:openWithQQBrowser', 'menuItem:openWithSafari', 'menuItem:share:email', 'menuItem:readMode']
+                });
+                let shareBoay = {
+                    title: '吃喝玩乐上闪多！', // 分享标题
+                    desc: '一个和附近人交友拼团的神奇应用！', // 分享描述
+                    link: 'https://yapinkeji.com/yapingzh/shanduoWeb/index.html', // 分享链接
+                    imgUrl: 'https://yapinkeji.com/logo.png', // 分享图标
+                    success: function () {
+                        toast('分享成功')
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                };
+                wx.onMenuShareTimeline(shareBoay);
+                wx.onMenuShareAppMessage(shareBoay);
+            });
+        });
+    });
+
+    function emptyData() {
+        let ary = vm.activities[vm.currentTab].arrayResult;
+        ary.splice(0, ary.length);
+        vm.activities[vm.currentTab].arrayResult = ary;
+        vm.activities[vm.currentTab].currentPage = 1;
+        vm.activities[vm.currentTab].totalpage = 0;
     }
-  })
+
+    function loadActivities(cb) {
+        $.ajax({
+            url: host + '/activity/showHotActivity',
+            data: {
+                token: userInfo.token,
+                page: vm.activities[vm.currentTab].currentPage,
+                pageSize: pageSize,
+                lat: lat,
+                lon: lon,
+                type: vm.currentTab + 4
+            },
+            dataType: 'json',
+            method: 'GET',
+            success: function (res) {
+                if (res.success && res.result.list.length > 0) {
+                    vm.activities[vm.currentTab].totalpage = res.result.totalpage;
+                    vm.activities[vm.currentTab].arrayResult = vm.activities[vm.currentTab].arrayResult.concat(res.result.list);
+                }
+                cb && cb();
+            }
+        })
+    }
 </script>
 </html>

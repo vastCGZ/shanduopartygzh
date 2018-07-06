@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <title>活动详情</title>
     <link rel="stylesheet" href="css/activity.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body>
 <header>
     <div class="play_flex">
-        <div class="head_img play_flex">
+        <div class="head_img play_flex" onclick="goBack()">
             <img src="img/return_1.png" alt="">
         </div>
         <div class="head_txt play_flex">
@@ -92,39 +97,6 @@
                 </div>
             </div>
         </div>
-        <!--判断当前弹出框是否隐藏  -->
-        <div class='sare_frame' style="display:none;">
-            <div class='share'>
-                <div class='inline'>
-                    <img src='img/copy_1.png'>
-                    <span>闪多好友</span>
-                </div>
-                <div class='inline'>
-                    <img src='img/copy_2.png'>
-                    <span>微信好友</span>
-                </div>
-                <div class='inline'>
-                    <img src='img/copy_3.png'>
-                    <span>朋友圈</span>
-                </div>
-                <div class='inline'>
-                    <img src='img/copy_4.png'>
-                    <span>QQ好友</span>
-                </div>
-                <div class='inline'>
-                    <img src='img/copy_5.png'>
-                    <span>QQ空间</span>
-                </div>
-                <div class='inline'>
-                    <img src='img/copy_6.png'>
-                    <span>微博</span>
-                </div>
-                <div class='inline'>
-                    <img src='img/copy_7.png'>
-                    <span>举报</span>
-                </div>
-            </div>
-        </div>
     </div>
     <footer>
         <div class="comment_speak">
@@ -136,21 +108,15 @@
         </div>
     </footer>
 </div>
-<script src="../js/jquery-3.3.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../js/layer.js"></script>
-<script src="../js/utils.js"></script>
-<script src="js/service.js"></script>
-<script src="https://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 <script>
     let userInfo = localStorage.getItem('localUser');
     if (userInfo) {
         userInfo = JSON.parse(userInfo);
     }
     let activityId = GetQueryString('activityId');
-    // let activityId = 'b15d7ebfab514186a3c07c372b576aae';
     let data = {
-        imagePath: null,
+        imagePath: imagePath,
         activityInfo: null,
         participant: [],
         joinActivity: 0
@@ -160,7 +126,7 @@
         data: data,
         methods: {
             confirmation() {
-                if(userInfo) {
+                if (userInfo) {
                     $.ajax({
                         data: {
                             token: userInfo.token,
@@ -184,9 +150,12 @@
         }
     });
 
+    function goBack() {
+        location.href = 'index.html';
+    }
+
     $(function () {
         if (activityId) {
-            data.imagePath = imagePath;
             loadActivityDetail(activityId, function (res) {
                 data.activityInfo = res.activityInfo;
                 data.participant = res.resultList;
