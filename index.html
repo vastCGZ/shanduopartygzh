@@ -29,20 +29,23 @@
 <body>
 <div id="vueData">
     <!--头部-->
-    <header class="dis_flex">
-        <!--标签切换标题-->
-        <ul id="OneTab" class="dis_flex">
-            <!--活动标题-->
-            <li class="active">
-                <a href="#home" data-toggle="tab">活动</a>
-            </li>
-            <!--动态标题-->
-            <li>
-                <a href="#profile">动态</a>
-            </li>
-        </ul>
-        <!--放大镜-->
-        <img src="img/bitmap_copy.png" alt="">
+    <header>
+        <div class="dis_flex">
+            <img src="img/icon_sign.png" alt="">
+            <!--标签切换标题-->
+            <ul id="OneTab" class="dis_flex">
+                <!--活动标题-->
+                <li class="active">
+                    <a href="#home" data-toggle="tab">活动</a>
+                </li>
+                <!--动态标题-->
+                <li>
+                    <a href="#profile">动态</a>
+                </li>
+            </ul>
+            <!--放大镜-->
+            <img src="img/icon_search.png" alt="">
+        </div>
     </header>
     <!--主体-->
     <div id="mescroll" class="body mescroll">
@@ -54,6 +57,9 @@
                     <div class="swiper-slide" v-for="ad in advertise">
                         <img :src="imagePath+ad.picture">
                     </div>
+            <!--<div class="swiper-slide">
+                        <img src="img/bitmap_1.png">
+                    </div>-->
                 </div>
                 <!--分页器-->
                 <div class="swiper-pagination"></div>
@@ -405,7 +411,7 @@
                                         <div class="dynamic_pic">
                                             <!--大于二张class里加  dynamic_pic_div -->
                                             <div v-for="(img,index) in dynamicInfo.picture"
-                                                 :class="dynamicInfo.picture.length>2?'dynamic_pic_div':'dis_inli'">
+                                                 :class="dynamicInfo.picture.length>2?'dynamic_pic_div dis_inli':'dis_inli'">
                                                 <div :style="img.myStyle" @click.stop="imgShow(key,index)"></div>
                                                 <img :src="img.imgPath">
                                             </div>
@@ -479,7 +485,7 @@
                                         <div class="dynamic_pic">
                                             <!--大于二张class里加  dynamic_pic_div -->
                                             <div v-for="(img,index) in dynamicInfo.picture"
-                                                 :class="dynamicInfo.picture.length>2?'dynamic_pic_div':'dis_inli'">
+                                                 :class="dynamicInfo.picture.length>2?'dynamic_pic_div dis_inli':'dis_inli'">
                                                 <div :style="img.myStyle" @click.stop="imgShow(key,index)"></div>
                                                 <img :src="img.imgPath">
                                             </div>
@@ -524,7 +530,7 @@
         <div class="foot_div">
             <div class="foot_ul dis_flex">
                 <!--首页-->
-                <a href="#" class="foot_li dis_flex">
+                <a href="javascript:;" class="foot_li dis_flex">
                     <img id="pic" src="img/index.png" alt="">
                     <span class="dis_inli col_hui">首页</span>
                 </a>
@@ -534,8 +540,10 @@
                     <span class="dis_inli col_hui">聊天</span>
                 </a>
                 <!--发布-->
-                <a href="#" class="foot_li dis_flex">
-                    <img src="img/activity.png" alt="">
+                <a href="javascript:" class="foot_li dis_flex">
+                    <div>
+                        <span class="dis_inli">+</span>
+                    </div>
                     <span class="dis_inli col_hui">发布</span>
                 </a>
                 <!--好友-->
@@ -553,12 +561,13 @@
                 <div class="dis_flex">
                     <a href="javascript:" @click="forward('release_hd.html')" class="dis_flex">
                         <img src="img/activity_1.png" alt="">
-                        <span class="col_hui">发活动</span>
+                        <span>发活动</span>
                     </a>
                     <a href="javascript:" @click="forward('release_dt.html')" class="dis_flex">
                         <img src="img/dynamic.png" alt="">
-                        <span class="col_hui">发动态</span>
+                        <span>发动态</span>
                     </a>
+                    <img src="img/icon_publish_cross.png" alt="">
                 </div>
             </div>
         </div>
@@ -695,12 +704,17 @@
             adAutoplay: function (event) {
                 new Swiper(".swiper-container", {
                     direction: "horizontal", /*横向滑动*/
-                    loop: true, /*形成环路（即：可以从最后一张图跳转到第一张图*/
                     pagination: {
                         el: '.swiper-pagination',
                         clickable: true, /*点击切换图*/
                     }, /*分页器*/
-                    autoplay: {delay: 3000}//3秒切换一次
+                    watchOverflow: true,//一个时不显示分页器，不滑动
+                    observer:true,
+                    observeParents:true,
+                    autoplay:{
+                        delay: 3000,
+                        disableOnInteraction: true,
+                    }
                 })
             },
             imgShow(key, index) {
@@ -728,6 +742,15 @@
             }
         }
     });
+    let onul = $('header>div>ul')
+    $(window).scroll(function(){
+        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+            $('#OneTab').replaceWith(`<img src='img/icon__title_shanduo.png' id='OneTab'/>`);
+        }
+        if (!($(window).scrollTop() + $(window).height() == $(document).height())) {
+            $('#OneTab').replaceWith(onul);
+        }
+    });
     $(document).ready(function () {
         //底部当前的图片更换和文字变色
         $(".foot_li:nth-child(1)>img").attr('src', 'img/index_1.png');
@@ -736,6 +759,9 @@
         $('.foot_li:nth-child(3)').click(function () {
             $('.foot_div_ul').toggle()
         })
+        $('.foot_div_ul>div>img').click(function () {
+            $('.foot_div_ul').toggle()
+        });
     });
     //执行轮播图方法
     vm.adAutoplay();

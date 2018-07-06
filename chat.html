@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="css/chat.css">
     <link rel="stylesheet" href="css/common.css">
     <script src="../js/jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.js"></script>
     <script src="../js/layer.js"></script>
     <script src="../js/utils.js"></script>
     <script src="js/service.js"></script>
@@ -78,13 +77,15 @@
                     <span class="dis_inli col_hui">首页</span>
                 </a>
                 <!--聊天-->
-                <a href="#" class="foot_li dis_flex">
+                <a href="javascript:;" class="foot_li dis_flex">
                     <img src="img/chat.png" alt="">
                     <span class="dis_inli col_hui">聊天</span>
                 </a>
                 <!--发布-->
-                <a href="#" class="foot_li dis_flex">
-                    <img src="img/activity.png" alt="">
+                <a href="javascript:;" class="foot_li dis_flex">
+                    <div>
+                        <span class="dis_inli">+</span>
+                    </div>
                     <span class="dis_inli col_hui">发布</span>
                 </a>
                 <!--好友-->
@@ -102,12 +103,13 @@
                 <div class="dis_flex">
                     <a href="javascript:" @click="forward('release_hd.html')" class="dis_flex">
                         <img src="img/activity_1.png" alt="">
-                        <span class="col_hui">发活动</span>
+                        <span>发活动</span>
                     </a>
                     <a href="javascript:" @click="forward('release_dt.html')" class="dis_flex">
                         <img src="img/dynamic.png" alt="">
-                        <span class="col_hui">发动态</span>
+                        <span>发动态</span>
                     </a>
+                    <img src="img/icon_publish_cross.png" alt="">
                 </div>
             </div>
         </div>
@@ -148,7 +150,10 @@
         //点击活动显示/隐藏
         $('.foot_li:nth-child(3)').click(function () {
             $('.foot_div_ul').toggle()
-        })
+        });
+        $('.foot_div_ul>div>img').click(function () {
+            $('.foot_div_ul').toggle()
+        });
     });
 
     //连接状态通知处理

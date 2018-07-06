@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="css/release_hd.css">
     <link rel="stylesheet" href="css/common.css">
     <script src="../js/jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.js"></script>
     <script src="../js/layer.js"></script>
     <script src="../js/utils.js"></script>
     <script src="js/service.js"></script>
@@ -241,10 +240,6 @@
             toast('没有充足的报名时间');
             return;
         }
-        // let startTime = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate() + " " + startDate.getHours() + ":" + startDate.getMinutes();
-        // let endTime = cutoffDate.getFullYear() + "-" + (cutoffDate.getMonth() + 1) + "-" + cutoffDate.getDate() + " " + cutoffDate.getHours() + ":" + cutoffDate.getMinutes();
-        // vm.activity.activityStartTime = startDate;
-        // vm.activity.activityCutoffTime = cutoffDate;
         if (!activity.mode) {
             toast('请输入活动消费方式');
             return false;

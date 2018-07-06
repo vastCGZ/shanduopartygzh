@@ -65,7 +65,7 @@
             <!--动态图片-->
             <div class="">
                 <!--3张图片缩小 pic_suoxiao-->
-                <img v-for="img in dynamic.picture" :class="dynamic.picture.length>3?pic_suoxiao:''"
+                <img v-for="img in dynamic.picture" :class="dynamic.picture.length>2?'pic_suoxiao':''"
                      :src="imagePath+img" alt="">
             </div>
             <!--动态其他-->

@@ -21,7 +21,6 @@
     <script src="../js/layer.js"></script>
     <script src="../js/utils.js"></script>
     <script src="js/service.js"></script>
-    <script src="js/bootstrap.js"></script>
     <title>我的活动</title>
 </head>
 <body>
@@ -421,7 +420,7 @@
             });
         },
         methods: {
-            upCallback(page) {
+            upCallback() {
                 if (vm.activities[vm.currentTab].totalPage > vm.activities[vm.currentTab].currentPage) {
                     vm.activities[vm.currentTab].currentPage += 1;
                     loadActivities(function () {
@@ -432,7 +431,7 @@
                 }
             }
             ,
-            downCallback(page) {
+            downCallback() {
                 emptyData();
                 loadActivities(function () {
                     vm.mescroll.endByPage(pageSize, vm.activities[vm.currentTab].totalPage);

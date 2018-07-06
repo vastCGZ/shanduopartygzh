@@ -1,0 +1,96 @@
+body{
+    background-color: #f7f8ff;
+}
+header{
+    height: 51px;
+    border-bottom: 1px solid #F4F4F4;
+}
+.news_li{
+    flex-direction: column;
+    padding: 10px 10px 20px;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.news_li>div:first-child{
+    flex-direction: column;
+}
+.news_li>div:first-child>div:first-child{
+    align-items: center;
+}
+.news_li>div:first-child>p{
+    padding: 10px 0;
+}
+.news_li>div:first-child>div:first-child>div{
+    margin-left: 10px;
+}
+.news_li>div:first-child>div:first-child>div>p{
+    height: 16px;
+}
+.news_li>div:first-child>div:first-child>img{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+}
+.text_sex_off{
+    margin-right: 5px;
+}
+.news_li>div:last-child>div:first-child{
+    background-color: #F7F8FF;
+    align-items: center;
+}
+.bg_pic{
+    width:70px;
+    height:0;
+    padding-bottom: 70px;
+    overflow:hidden;
+    background-position: center  center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+}
+.news_li>div:last-child>div:first-child>span:nth-child(2){
+    white-space: nowrap;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+.news_li>div:last-child>div:first-child>span:last-child{
+    width: 52%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*iphone6 plus*/
+@media (min-width: 376px) and (max-width: 415px){
+    .news_li>div:last-child>div:first-child>span:last-child{
+        width: 62%;
+    }
+}
+/*iphone6*/
+@media (min-width: 321px) and (max-width: 376px){
+    .news_li>div:last-child>div:first-child>span:last-child{
+        width: 56%;
+    }
+}
+/*iphone5*/
+@media (max-width: 321px){
+    .news_li>div:last-child>div:first-child>span:last-child{
+        width: 52%;
+    }
+}
+.news_li>div:last-child>div:last-child>div:first-child{
+    height: 40px;
+    line-height: 40px;
+}
+.news_li>div:last-child>div:last-child>div:last-child{
+    background-color: #f7f8ff;
+    padding-left: 10px;
+}
+.news_li>div:last-child>div:last-child>div:last-child>input{
+    background-color: #f7f8ff;
+    width: 100%;
+    height: 30px;
+    border: 0;
+    outline: 0;
+}

@@ -74,7 +74,6 @@ function login(unionId, username, password, cbOk, cbErr) {
         },
         dataType: 'json',
         success: (res) => {
-            console.log(res);
             if (res.success) {
                 cbOk && cbOk(res.result);
             } else {

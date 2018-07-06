@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/activityevaluation_fq.css">
+    <link rel="stylesheet" href="css/common.css">
+    <title>活动评价</title>
+</head>
+<body>
+    <div id="vueData">
+        <header>
+            <div>
+                <div class="title_header dis_flex">
+                    <div>
+                        <img src="img/return_1.png" alt="">
+                    </div>
+                    <div>
+                        <span>活动评价</span>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+        </header>
+        <div class="body" :style="{minHeight: winHeight+'px'}">
+            <div class="dis_flex">
+                <div>
+                    <span>主题:</span>
+                    <span>一起吃火锅</span>&nbsp;&nbsp;
+                    <span>AA制</span>
+                </div>
+                <div>
+                    <span>已结束</span>&nbsp;&nbsp;
+                    <span>参与者10人</span>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <img src="img/bottom_img.png" alt="">
+                    <span>胖虎</span>
+                    <div class="dis_inli">
+                        <img src="img/fabulous_2.png" alt="">
+                        <img src="img/fabulous_2.png" alt="">
+                        <img src="img/fabulous_2_1.png" alt="">
+                        <img src="img/fabulous_2_1.png" alt="">
+                        <img src="img/fabulous_2_1.png" alt="">
+                    </div>
+                </div>
+                <div class="dis_flex">
+                    <span class="dis_inli"></span>
+                    <input type="text" placeholder="对参与者评价吧! ...">
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div>
+                <a href="javascript:;" class="dis_flex">提交评价</a>
+            </div>
+        </footer>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#vueData',
+        data: {
+            winHeight:null
+        },
+        mounted: function () {
+            //获取屏幕分辨率高度
+            this.winHeight = window.screen.height-120;
+        },
+        methods: {}
+    })
+</script>
+</html>

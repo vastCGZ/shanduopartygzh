@@ -2,31 +2,38 @@ body>div{
     background: #F7F8FF;
 }
 header{
+    height: 45px;
+    width: 100%;
+}
+header>div{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     justify-content: space-between;
-    padding: 10px;
+    padding: 10px 20px;
     background-color: #ffffff;
 }
-header>ul.dis_flex>li>a{
+header>div>ul.dis_flex>li>a{
     color: #999999;
-    text-decoration: underline;
-    font-size: 16px;
-}
-header>ul.dis_flex>li.active>a{
     font-size: 18px;
-    color: #3D59FF;
 }
-header>ul.dis_flex>li:last-child{
+header>div>ul.dis_flex>li.active>a{
+    color: #657CFF;
+    font-weight: bold;
+}
+header>div>ul.dis_flex>li:last-child{
     margin-left: 2rem;
 }
-header>img{
-    width: 2.5rem;
-    height: 2.5rem;
+header>div>img{
+    height: 2rem;
 }
 /*轮播图*/
 .swiper-pagination-bullet{
     width: 5px!important;
     height: 5px!important;
-    background: #3D59FF!important;
+    background: #657CFF!important;
 }
 .swiper-pagination-bullet-active{
     width: 12% !important;
@@ -66,19 +73,19 @@ header>img{
 }
 .banner{
     width: 100%;
-    background: #F7F8FF;
+    background: #fff;
 }
 .banner>div:last-child{
     width: 100%;
 }
 .banner>div>div{
-    border-radius: 1rem;
+    border-radius: 10px;
     width: 37.5rem;
     padding: 10px 10px 30px 10px;
 }
 .banner>div>div>img{
     width: 100%;
-    border-radius: 1rem;
+    border-radius: 10px;
 }
 /*活动类别*/
 section.activity_class,section.dynamic_class{
@@ -88,8 +95,6 @@ section.activity_class,section.dynamic_class{
 section.activity_class>ul, section.dynamic_class>ul{
     justify-content: center;
     background: #ffffff;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
 }
 section.activity_class>ul>li{
     flex-grow:1;
@@ -97,14 +102,15 @@ section.activity_class>ul>li{
     padding: 8px 5px 0 5px;
 }
 section.activity_class>ul>li>a, section.dynamic_class>ul>li>a{
+    text-align: center;
     color: #999999;
     font-size: 1.4rem;
     width: 60px;
 }
 section.activity_class>ul>li.active>a, section.dynamic_class>ul>li.active>a{
     padding-bottom: 5px;
-    border-bottom: 3px solid #3D59FF;
-    color: #333333;
+    border-bottom: 3px solid #657CFF;
+    color: #657CFF;
 }
 /*类别内容*/
 section.activity_content{
