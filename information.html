@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <meta content="telephone=no,email=no" name="format-detection">
     <!--禁止自动识别电话号码和邮箱-->
     <meta content="yes" name="apple-mobile-web-app-capable">
@@ -13,226 +14,484 @@
     <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
     <link rel="stylesheet" href="css/information.css">
     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="../css/mescroll.min.css">
     <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <title>个人详细</title>
 </head>
 <body>
-    <div id="vueData">
-        <header>
-            <div class="dis_flex" style="background-image: url('img/nan_2.png')">
-                <div>
-                    <img src="img/return_1.png" alt="">
-                </div>
-                <div>
-                    <img src="img/bottom_img.png" alt="">
-                </div>
-                <div class="dis_flex">
-                    <span>小猪佩奇</span>
-                    <div class="text_sex_on">26</div>
-                </div>
-                <div>
-                    <span>闪多号:</span>
-                    <span>10007</span>
-                </div>
-                <div>
-                    <div class="text_vip">VIP</div>
-                    <div class="text_level">LV90</div>
-                </div>
-                <div class="dis_flex">
-                    <a href="javascript:">
-                        <span>1</span>
-                        <span>好友</span>
-                    </a>
-                    <a href="javascript:">
-                        <span>1</span>
-                        <span>活动</span>
-                    </a>
-                    <a href="javascript:">
-                        <span>1</span>
-                        <span>动态</span>
-                    </a>
-                </div>
+<div id="vueData" class="mescroll">
+    <header>
+        <div class="dis_flex" style="background-image: url('img/nan_2.png')">
+            <div @click="goBack">
+                <img src="img/return_1.png" alt="">
+            </div>
+            <div>
+                <img :src="otherUser.picture?imagePath+otherUser.picture:'img/bottom_img.png'" alt="">
             </div>
             <div class="dis_flex">
-                <div class="dis_flex">
-                    <a href="javascript:" @click.prevent="changer()" class="active dis_flex">TA的活动</a>
-                </div>
-                <div class="dis_flex">
-                    <a href="javascript:"  @click.prevent="changer()" class="dis_flex">TA的动态</a>
-                </div>
+                <span>{{otherUser.name}}</span>
+                <div class="text_sex_on">{{otherUser.age}}</div>
             </div>
-        </header>
-        <div class="body">
-            <div v-if="show == 0">
-                <div class="hot_ul">
-                   <!-- <span class="dis_inli">没有活动</span>-->
-                    <div class="hot_ul_li">
-                        <div class="hot_ul_li_header dis_flex">
-                            <!--活动发起人信息-->
-                            <div class="hot_ul_li_header_title dis_flex">
-                                <img src="img/portrait.png">
+            <div>
+                <span>闪多号:</span>
+                <span>{{otherUser.userId}}</span>
+            </div>
+            <div v-if="otherUser.vip>0">
+                <div class="text_vip">VIP</div>
+                <div class="text_level">LV90</div>
+            </div>
+            <div class="dis_flex">
+                <a href="javascript:">
+                    <span>{{otherUser.attention}}</span>
+                    <span>好友</span>
+                </a>
+                <a href="javascript:">
+                    <span>{{otherUser.activity}}</span>
+                    <span>活动</span>
+                </a>
+                <a href="javascript:">
+                    <span>{{otherUser.dynamic}}</span>
+                    <span>动态</span>
+                </a>
+            </div>
+        </div>
+        <div class="dis_flex">
+            <div class="dis_flex">
+                <a href="javascript:" @click.prevent="changer()" class="active dis_flex">TA的活动</a>
+            </div>
+            <div class="dis_flex">
+                <a href="javascript:" @click.prevent="changer()" class="dis_flex">TA的动态</a>
+            </div>
+        </div>
+    </header>
+    <div class="body">
+        <div v-if="currentTab==0">
+            <div class="hot_ul">
+                <span class="dis_inli" v-if="ds.length==0">没有活动</span>
+                <div class="hot_ul_li" v-else v-for="(item,key) in ds">
+                    <div class="hot_ul_li_header dis_flex">
+                        <!--活动发起人信息-->
+                        <div class="hot_ul_li_header_title dis_flex">
+                            <img :src="item.headPortraitId?imagePath+item.headPortraitId:'img/portrait.png'">
+                            <div class="dis_flex">
+                                <span>{{item.userName}}</span>
                                 <div class="dis_flex">
-                                    <span>小猪佩奇</span>
-                                    <div class="dis_flex">
-                                        <div class="dis_inli text_sex_on">26</div>
-                                        <div>
-                                            <div class="dis_inli text_vip">
-                                                <span>VIP5</span>
-                                            </div>
-                                            <div class="dis_inli text_level">
-                                                <span>LV90</span>
-                                            </div>
+                                    <div class="dis_inli text_sex_on">{{item.age}}</div>
+                                    <div v-if="item.vipGrade>0">
+                                        <div class="dis_inli text_vip">
+                                            <span>VIP5</span>
+                                        </div>
+                                        <div class="dis_inli text_level">
+                                            <span>LV90</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--活动时间-->
-                            <div class="hot_ul_li_header_time dis_flex">
-                                <p class="col_lan">activityStartTime</p>
-                                <p class="col_hui">报名截止activityInfo.</p>
-                            </div>
                         </div>
-                        <div class="hot_ul_li_body">
-                            <!--主题-->
-                            <div class="hot_ul_li_body_theme">
-                                <span class="col_hui">主题:</span>
-                                <span>activityName</span>
-                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode</span>
-                            </div>
-                            <!--活动地点-->
-                            <div class="hot_ul_li_body_place">
-                                <span class="col_hui">活动地点:</span>
-                                <span>activityInfo</span>
-                                <span class="bg_position col_lan">activityInfo.km</span>
-                            </div>
-                            <!--活动内容-->
-                            <div class="hot_ul_li_body_content dis_flex">
-                                <span class="col_hui dis_inli">活动内容:</span>
-                                <span class="dis_inli">activityInfo</span>
-                            </div>
-                        </div>
-                        <div class="hot_ul_li_footer dis_flex">
-                            <!--参与人数-->
-                            <div class="dis_flex">
-                                <div>
-                                    <img src="img/nan_1.png" alt="">
-                                    <span>01/10</span>
-                                </div>
-                                <div>
-                                    <img src="img/nv_1.png" alt="">
-                                    <span>199/199</span>
-                                </div>
-                            </div>
-                            <!--其他-->
-                            <div class="dis_flex">
-                                <div>
-                                    <span>信用轨迹</span>
-                                </div>
-                                <div>
-                                    <span>去报名</span>
-                                    <img src="img/icon-2.png" alt="">
-                                </div>
-                                <img src="img/copy.png" alt="">
-                            </div>
+                        <!--活动时间-->
+                        <div class="hot_ul_li_header_time dis_flex">
+                            <p class="col_lan">{{item.activityStartTime}}</p>
+                            <p class="col_hui">报名截止:{{item.activityCutoffTime}}</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div v-if="show == 1">
-                <div class="hot_ul">
-                    <!--没有活动时-->
-<!--                    <span class="dis_inli">没有动态</span>-->
-                    <div class="hot_ul_li">
-                        <div class="hot_ul_li_header dis_flex">
-                            <!--活动发起人信息-->
-                            <div class="hot_ul_li_header_title dis_flex">
-                                <img src="img/portrait.png">
-                                <div class="dis_flex">
-                                    <span>小猪佩奇</span>
-                                    <div class="dis_flex">
-                                        <div class="dis_inli text_sex_on">26</div>
-                                        <div>
-                                            <div class="dis_inli text_vip">
-                                                <span>VIP5</span>
-                                            </div>
-                                            <div class="dis_inli text_level">
-                                                <span>LV90</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="hot_ul_li_body">
+                        <!--主题-->
+                        <div class="hot_ul_li_body_theme">
+                            <span class="col_hui">主题:</span>
+                            <span>{{item.activityName}}</span>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.mode}}</span>
+                        </div>
+                        <!--活动地点-->
+                        <div class="hot_ul_li_body_place">
+                            <span class="col_hui">活动地点:</span>
+                            <span>{{item.activityAddress}}</span>
+                            <span class="bg_position col_lan">{{item.location}}km</span>
+                        </div>
+                        <!--活动内容-->
+                        <div class="hot_ul_li_body_content dis_flex">
+                            <span class="col_hui dis_inli">活动内容:</span>
+                            <span class="dis_inli">{{item.remarks}}</span>
+                        </div>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                        <!--参与人数-->
+                        <div class="dis_flex">
+                            <div>
+                                <img src="img/nan_1.png" alt="">
+                                <span>{{item.manNumber}}</span>
                             </div>
-                            <!--位置-->
-                            <div class="hot_ul_li_header_time dis_flex">
-                                <p class="col_lan bg_position">1.6km</p>
+                            <div>
+                                <img src="img/nv_1.png" alt="">
+                                <span>{{item.womanNumber}}</span>
                             </div>
                         </div>
-                        <div class="hot_ul_li_body">
-                            <!--动态内容-->
-                            <p class="dynamic_speak">你好啊啊啊啊啊啊啊啊啊啊</p>
-                            <div class="dynamic_pic">
-                                <!--大于二张class里加  dynamic_pic_div -->
-<!--                                <div v-for="(img,index) in dynamicInfo.picture" :class="dynamicInfo
-.picture.length>2?'dynamic_pic_div dis_inli':'dis_inli'">
-                                    <div :style="img.myStyle" @click="imgShow(key,index)"></div>
-                                    <img :src="img.imgPath">
-                               </div>-->
+                        <!--其他-->
+                        <div class="dis_flex">
+                            <div>
+                                <span>信用轨迹</span>
                             </div>
-                            <span class="col_hui">14分钟前</span>
-                        </div>
-                        <div class="hot_ul_li_footer dis_flex">
-                            <!--评论，点赞数量-->
-                            <div class="dis_flex">
-                                <div>
-                                    <img src="img/comment_1.png" alt="">
-                                    <span>128</span>
-                                </div>
-                                <div>
-                                    <img src="img/fabulous_1.png" alt="">
-                                    <span>220</span>
-                                </div>
+                            <div>
+                                <span>去报名</span>
+                                <img src="img/icon-2.png" alt="">
                             </div>
-                            <!--其他-->
-                            <div class="dis_flex">
-                                <img src="img/copy.png" alt="">
-                            </div>
+                            <img src="img/copy.png" alt="">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer>
-            <div>
-                <a href="javascript:" class="dis_flex">加好友</a>
-                <!--加了好友发消息-->
-<!--                <a href="javascript:" class="dis_flex">发消息</a>-->
+        <div v-else>
+            <div class="hot_ul">
+                <!--没有活动时-->
+                <span class="dis_inli" v-if="ds.length==0">没有动态</span>
+                <div class="hot_ul_li" e-else v-for="(item,key) in ds">
+                    <div class="hot_ul_li_header dis_flex">
+                        <!--活动发起人信息-->
+                        <div class="hot_ul_li_header_title dis_flex">
+                            <img :src="item.portraitId?imagePath+item.portraitId:'img/portrait.png'">
+                            <div class="dis_flex">
+                                <span>{{item.name}}</span>
+                                <div class="dis_flex">
+                                    <div class="dis_inli text_sex_on">{{item.age}}</div>
+                                    <div v-if="item.vip>0">
+                                        <div class="dis_inli text_vip">
+                                            <span>VIP5</span>
+                                        </div>
+                                        <div class="dis_inli text_level">
+                                            <span>LV90</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--位置-->
+                        <div class="hot_ul_li_header_time dis_flex">
+                            <p class="col_lan bg_position">{{item.distance}}km</p>
+                        </div>
+                    </div>
+                    <div class="hot_ul_li_body" @click="gotoDynamicDetails(item.id)">
+                        <!--动态内容-->
+                        <p class="dynamic_speak">{{item.content}}</p>
+                        <div class="dynamic_pic">
+                            <!--大于二张class里加  dynamic_pic_div -->
+                            <div v-for="(img,index) in item.picture"
+                                 :class="item.picture.length>2?'dynamic_pic_div dis_inli':'dis_inli'">
+                                <div :style="img.myStyle" @click.stop="imgShow(key,index)"></div>
+                                <img :src="img.imgPath">
+                            </div>
+                        </div>
+                        <span class="col_hui">{{item.createDate}}</span>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                        <!--评论，点赞数量-->
+                        <div class="dis_flex">
+                            <div>
+                                <img src="img/comment_1.png" alt="">
+                                <span>{{item.dynamicCount}}</span>
+                            </div>
+                            <div>
+                                <img src="img/fabulous_1.png" alt="">
+                                <span>{{item.praise}}</span>
+                            </div>
+                        </div>
+                        <!--其他-->
+                        <div class="dis_flex">
+                            <img src="img/copy.png" alt="">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
     </div>
+    <!--点击放大-->
+    <div id="outerdiv" v-if="currentImg" @click="closeDiglog">
+        <img id="bigimg" :src="currentImg"/>
+    </div>
+    <footer>
+        <div>
+            <a href="javascript:" class="dis_flex" v-if="otherUser.isAttention" @click="gotoSessionView">发消息</a>
+            <a href="javascript:" class="dis_flex" v-else @click="addFriend">加好友</a>
+        </div>
+    </footer>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../js/mescroll.min.js"></script>
 <script type="text/javascript">
-    var vm = new Vue({
-        el: '#vueData',
-        data: {
-            //判断类别
-            show: 0,
-        },
-        mounted: function () {
-            //获取屏幕分辨率高度
-            this.winHeight = window.screen.height - 90;
-        },
-        methods: {
-            // 类别切换
-            changer() {
-                let selectId = $(event.currentTarget).parent().index();
-                if (this.show === selectId) {
-                    return false
+    let userInfo = localStorage.getItem('localUser');
+    if (userInfo) {
+        userInfo = JSON.parse(userInfo);
+    }
+    let otherUserId = GetQueryString('otherUserId'),
+        href = location.href.split('#')[0],
+        lon = 0.00,
+        lat = 0.00,
+        currentPage = 1,
+        pageSize = 20,
+        totalPage = 0,
+        vm = new Vue({
+            el: '#vueData',
+            data: {
+                //判断类别
+                imagePath: imagePath,
+                currentTab: 0, //预设当前项的值
+                otherUser: {},
+                ds: [],//数据集
+                mescroll: null,
+                currentImg: null,
+            }, mounted: function () {
+                let that = this;
+                that.mescroll = new MeScroll("vueData", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
+                    up: {
+                        callback: that.onReachBottom,
+                        auto: false,
+                        noMoreSize: 10,
+                    }, down: {
+                        auto: false,
+                        callback: that.onPullDownRefresh
+                    }
+                });
+            },
+            methods: {
+                goBack() {
+                    let pathName = window.document.location.pathname;
+                    if (pathName.indexOf('yapingzh') > -1) {
+                        history.go(-1);
+                    } else {
+                        location.href = 'index.html';
+                    }
+                },
+                imgShow(key, index) {
+                    vm.currentImg = vm.ds[key].picture[index].imgPath;
+                    $('#outerdiv').fadeIn("fast");
+                }, closeDiglog() {
+                    $('#outerdiv').fadeOut("fast");
+                },
+                // 类别切换
+                changer() {
+                    let selectId = $(event.currentTarget).parent().index();
+                    if (vm.currentTab === selectId) {
+                        return;
+                    }
+                    $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
+                    vm.currentTab = selectId;
+                    emptyData();
+                    if (vm.currentTab === 0) {
+                        getActivityData();
+                    } else {
+                        getDynamicData();
+                    }
+                },
+                //跳转动态详情
+                gotoDynamicDetails: function (dynamicId) {
+                    location.href = 'dynamic.html?dynamicId=' + dynamicId;
+                }, //下拉刷新
+                onPullDownRefresh() {
+                    emptyData();
+                    if (vm.currentTab === 0) {
+                        getActivityData(function () {
+                            vm.mescroll.endByPage(pageSize, totalPage);
+                        }, function () {
+                            vm.mescroll.endErr();
+                        });
+                    } else {
+                        getDynamicData(function () {
+                            vm.mescroll.endByPage(pageSize, totalPage);
+                        }, function () {
+                            vm.mescroll.endErr();
+                        });
+                    }
+                },
+                //上拉加载更多
+                onReachBottom() {
+                    if (totalPage > currentPage) {
+                        currentPage++;
+                        if (vm.currentTab === 0) {
+                            getActivityData(function () {
+                                vm.mescroll.endByPage(pageSize, totalPage);
+                            }, function () {
+                                vm.mescroll.endErr();
+                            });
+                        } else {
+                            getDynamicData(function () {
+                                vm.mescroll.endByPage(pageSize, totalPage);
+                            }, function () {
+                                vm.mescroll.endErr();
+                            });
+                        }
+                    } else {
+                        vm.mescroll.endErr();
+                    }
+                }, gotoSessionView() {
+                    location.href = 'interface.html?toUserId=' + vm.otherUser.userId + '&toUserName=' + vm.otherUser.name;
+                },
+                addFriend: function () {
+                    $.ajax({
+                        url: host + '/jattention/saveapply',
+                        data: {
+                            token: userInfo.token,
+                            attention: otherUserId
+                        },
+                        success: (res) => {
+                            if (res.success) {
+                                vm.otherUser.isAttention = true;
+                                toast('添加成功');
+                            }
+                        }
+                    })
                 }
-                $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
-                this.show = selectId;
             }
+        });
+    $(function () {
+        if (userInfo) {
+            loadUserDetail();
+            init_wx_js_sdk(href, function (result) {
+                //初始化接口环境
+                wx.config({
+                    appId: result.appid,
+                    timestamp: result.timestamp,
+                    nonceStr: result.noncestr,
+                    signature: result.signature,
+                    jsApiList: ['getLocation', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'hideMenuItems']
+                });
+                wx.ready(function () {
+                    wx.getLocation({
+                        success: function (res) {
+                            lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                            lon = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                            getActivityData();
+                        }
+                    });
+                    wx.hideMenuItems({
+                        menuList: ['menuItem:copyUrl', 'menuItem:share:qq', 'menuItem:share:QZone', 'menuItem:openWithQQBrowser', 'menuItem:openWithSafari', 'menuItem:share:email', 'menuItem:readMode']
+                    });
+                    wx.onMenuShareTimeline({
+                        title: '闪多名片！', // 分享标题
+                        desc: '我觉得这个人很赞，分享给大家！', // 分享描述
+                        link: 'http://lixinrong.vicp.io/yapingzh/shanduoWeb/information.html?otherUserId=' + otherUserId, // 分享链接
+                        imgUrl: 'http://lixinrong.vicp.io/logo.png', // 分享图标
+                        success: function () {
+                            toast('分享成功')
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    wx.onMenuShareAppMessage({
+                        title: '闪多名片！', // 分享标题
+                        desc: '给你一张名片！去认识吧！', // 分享描述
+                        link: 'http://lixinrong.vicp.io/yapingzh/shanduoWeb/information.html?otherUserId=' + otherUserId, // 分享链接
+                        imgUrl: 'http://lixinrong.vicp.io/logo.png', // 分享图标
+                        success: function () {
+                            toast('分享成功')
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                });
+            })
+        } else {
+            toast('没有登录不能查看!');
+            setTimeout(function () {
+                location.href = 'index.html';
+            }, 1000);
         }
-    })
+    });
+
+    function loadUserDetail() {
+        $.ajax({
+            data: {
+                token: userInfo.token,
+                userId: otherUserId
+            },
+            url: host + '/jattention/userdetails',
+            success: (res) => {
+                if (res.success) {
+                    vm.otherUser = res.result;
+                }
+            }
+        })
+    }
+
+    //远程获取活动数据
+    function getActivityData(cbOk, cbErr) {
+        $.ajax({
+            url: host + '/activity/showHotActivity',
+            data: {
+                token: userInfo.token,
+                type: 7,
+                lon: lon,
+                lat: lat,
+                page: currentPage,
+                pageSize: pageSize,
+                userId: otherUserId
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.success) {
+                    if (res.result.list.length > 0) {
+                        vm.ds = vm.ds.concat(res.result.list);
+                    }
+                    totalPage = res.result.totalpage;
+                }
+                cbOk && cbOk();
+            }, fail: function () {
+                cbErr && cbErr();
+            }, method: 'GET'
+        });
+    }
+
+    //远程获取动态数据
+    function getDynamicData(cbOk, cbErr) {
+        $.ajax({
+            url: host + '/jdynamic/dynamicList',
+            data: {
+                token: userInfo.token,
+                typeId: 4,
+                lon: lon,
+                lat: lat,
+                page: currentPage,
+                pageSize: pageSize,
+                userId: otherUserId
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.success) {
+                    let newData = res.result.list;
+                    if (newData.length > 0) {
+                        $.each(newData, function (i, item) {
+                            newData[i].createDate = formatMsgTime(item.createDate);
+                            let newItem = [];
+                            $.each(item.picture, function (j, iitem) {
+                                newItem.push({
+                                    myStyle: {backgroundImage: "url('" + imagePath + iitem + "')"},
+                                    imgPath: imagePath + iitem
+                                });
+                            });
+                            newData[i].picture = newItem;
+                        });
+                        vm.ds = vm.ds.concat(newData);
+                        totalPage = res.result.totalPage;
+                    }
+                }
+                cbOk && cbOk();
+            }, fail: function () {
+                cbErr && cbErr();
+            }, method: 'GET'
+        });
+    }
+
+    function emptyData() {
+        let ary = vm.ds;
+        ary.splice(0, ary.length);
+        vm.ds = ary;
+        currentPage = 1;
+        totalPage = 0;
+    }
 </script>
 </html>

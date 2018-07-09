@@ -21,6 +21,7 @@
     <script src="../js/utils.js"></script>
     <script src="js/service.js"></script>
     <script src="js/webim.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <title>消息</title>
 </head>
 <body>
@@ -48,7 +49,7 @@
                     <!--自己发-->
                     <div class="message me" v-if="message.me">
                         <!--头像-->
-                        <img class="avatar" :src="userInfo.picture?userInfo.picture:'img/nan_2.'"/>
+                        <img class="avatar" :src="userInfo.picture?imagePath+userInfo.picture:'img/nan_2.'"/>
                         <div class="content">
                             <!--时间-->
                             <div class="nickname"><span class="time">{{message.time}}</span></div>
@@ -56,7 +57,9 @@
                                 <div class="bubble_cont">
                                     <div class="plain">
                                         <!--聊天信息-->
-                                        <pre>{{message.content}}</pre>
+                                        <pre v-if="message.msgType=='TIMTextElem'">{{message.content}}</pre>
+                                        <pre v-else-if="message.msgType=='TIMImageElem'"><img
+                                                :src="message.content[message.content.length-1].url"/></pre>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +76,9 @@
                                 <div class="bubble_cont">
                                     <div class="plain">
                                         <!--聊天信息-->
-                                        <pre>{{message.content}}</pre>
+                                        <pre v-if="message.msgType=='TIMTextElem'">{{message.content}}</pre>
+                                        <pre v-else-if="message.msgType=='TIMImageElem'"><img
+                                                :src="message.content[message.content.length-1].url"/></pre>
                                     </div>
                                 </div>
                             </div>
@@ -92,8 +97,8 @@
                     </div>
                     <div class="web_wechat_div dis_flex">
                         <a href="javascript:" class="web_wechat web_wechat_audio"></a>
-                        <a href="javascript:" class="web_wechat web_wechat_pic"></a>
-                        <a href="javascript:" class="web_wechat web_wechat_photograph"></a>
+                        <a href="javascript:" class="web_wechat web_wechat_pic" @click="choosePicture"></a>
+                        <a href="javascript:" class="web_wechat web_wechat_photograph" @click="photograph"></a>
                         <a href="javascript:" class="web_wechat web_wechat_video"></a>
                         <a href="javascript:" class="web_wechat web_wechat_face"></a>
                         <a href="javascript:" class="web_wechat web_wechat_location"></a>
@@ -110,18 +115,20 @@
     let toUserId = GetQueryString('toUserId');
     let toUserName = decodeURIComponent(GetQueryString('toUserName'));
     let localUser = localStorage.getItem('localUser');
+    let href = location.href.split('#')[0];
     if (localUser) {
         localUser = JSON.parse(localUser);
-        localUser.picture = imagePath + localUser.picture;
     }
 
     function resetMessageArea() {
-        $('#messageList').animate({'scrollTop': 999}, 500);
+        let div = document.getElementById('messageList');
+        div.scrollTop = div.scrollHeight;
     }
 
     var vm = new Vue({
         el: '#vueData',
         data: {
+            imagePath: imagePath,
             msgContent: '',
             userInfo: localUser,
             actionStatus: '',
@@ -129,7 +136,7 @@
             messageBody: [],
             recentContact: {}
         }, methods: {
-            goBack(){
+            goBack() {
                 history.go(-1);
             },
             sendMsg() {
@@ -166,10 +173,50 @@
                         toast(res);
                     }
                 })
+            }, choosePicture() {
+                toast('公众号暂不支持发送图片');
+                /*wx.chooseImage({
+                    count: 1,
+                    sizeType: ['compressed'],
+                    sourceType: ['album'],
+                    success: function (res) {
+                        toast(res.localIds[0]);
+                        uploadPic(res.localIds[0], function (res) {
+                            toast(res);
+                        }, function (res) {
+                            toast(res);
+                        });
+                    }
+                });*/
+            }, photograph() {
+                toast('公众号暂不支持发送图片');
+                /*wx.chooseImage({
+                    count: 1,
+                    sizeType: ['compressed'],
+                    sourceType: ['camera'],
+                    success: function (res) {
+                        toast(res.localIds[0]);
+                        uploadPic(res.localIds[0], function (res) {
+                            toast(res);
+                        }, function (res) {
+                            toast(res);
+                        });
+                    }
+                });*/
             }
         }
     });
     $(function () {
+        init_wx_js_sdk(href, function (result) {
+            //初始化接口环境
+            wx.config({
+                appId: result.appid,
+                timestamp: result.timestamp,
+                nonceStr: result.noncestr,
+                signature: result.signature,
+                jsApiList: ['chooseImage', 'uploadImage', 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice']
+            });
+        });
         initIM(localUser, function () {
             init({
                 selType: webim.SESSION_TYPE.C2C
@@ -180,9 +227,18 @@
                 $.each(res.historyMsgList, function (i, item) {
                     let msg = {
                         fromAccount: item.fromAccount,
-                        content: item.elems[0].content.text,
-                        time: getLocalTime(item.time)
+                        content: null,
+                        time: getLocalTime(item.time),
+                        msgType: item.elems[0].type
                     };
+                    switch (item.elems[0].type) {
+                        case 'TIMTextElem':
+                            msg.content = item.elems[0].content.text;
+                            break;
+                        case 'TIMImageElem':
+                            msg.content = item.elems[0].content.ImageInfoArray;//[url]
+                            break;
+                    }
                     if (item.fromAccount === localUser.userId) {
                         msg.me = true;
                     }
@@ -190,11 +246,11 @@
                 });
                 resetMessageArea();
             });
-        });
-        searchProfileByUserId([toUserId], function (res) {
-            vm.recentContact.Nick = res[0].Nick;
-            vm.recentContact.Gender = res[0].Gender;
-            vm.recentContact.Image = res[0].Image;
+            searchProfileByUserId([toUserId], function (res) {
+                $.each(res, function (i, item) {
+                    vm.recentContact = item;
+                });
+            });
         });
     });
 
@@ -205,13 +261,9 @@
 
     //接受新消息
     function newMessageNotification(obj) {
-        console.log('新消息@');
+        console.log(obj);
         if (obj.fromAccount === toUserId) {
-            vm.messageBody.push({
-                fromAccount: obj.fromAccount,
-                content: obj.content,
-                time: obj.time
-            });
+            vm.messageBody.push(obj);
             resetMessageArea();
         }
     }

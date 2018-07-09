@@ -93,16 +93,6 @@ function searchProfileByUserId(ids, cbOK) {
                         Gender: gender,
                         Image: imageUrl
                     });
-                    /*let lls = vm.recentContact;
-                    for (let k in lls) {
-                        if (to_account === lls[k].To_Account) {
-                            lls[k].Nick = webim.Tool.formatText2Html(nick);
-                            lls[k].Gender = gender;
-                            lls[k].Image = imageUrl;
-                            vm.recentContact = lls;
-                            break;
-                        }
-                    }*/
                 }
                 cbOK && cbOK(profile);
             }
@@ -130,10 +120,10 @@ function onConnNotify(resp) {
     var actionStatus = '';
     switch (resp.ErrorCode) {
         case webim.CONNECTION_STATUS.ON:
-            actionStatus = '网络正常';
+            actionStatus = '会话正常';
             break;
         case webim.CONNECTION_STATUS.OFF:
-            actionStatus = '网络离线';
+            actionStatus = '离线';
             break;
         default:
             actionStatus = '网络未知';
@@ -181,20 +171,41 @@ function handlderMsg(msg) {
                     //业务可以根据发送者帐号fromAccount是否为app管理员帐号，来判断c2c消息是否为全员推送消息，还是普通好友消息
                     //或者业务在发送全员推送消息时，发送自定义类型(webim.MSG_ELEMENT_TYPE.CUSTOM,即TIMCustomElem)的消息，在里面增加一个字段来标识消息是否为推送消息
                     contentHtml = convertMsgtoHtml(msg);
-                    webim.Log.warn('receive a new c2c msg: fromAccountNick=' + fromAccountNick + ", content=" + contentHtml);
+                    // webim.Log.warn('receive a new c2c msg: fromAccountNick=' + fromAccountNick + ", content=" + contentHtml);
                     //c2c消息一定要调用已读上报接口
                     var opts = {
                         'To_Account': fromAccount,//好友帐号
                         'LastedMsgTime': msg.getTime()//消息时间戳
                     };
                     webim.c2CMsgReaded(opts);
-                    console.error('收到一条c2c消息(好友消息或者全员推送消息): 发送人=' + fromAccountNick + ", 内容=" + contentHtml);
-                    newMessageNotification({
+                    // console.error('收到一条c2c消息(好友消息或者全员推送消息): 发送人=' + fromAccountNick + ", 内容=" + contentHtml);
+                    let msgObj = {
                         fromAccount: fromAccount,
-                        content: contentHtml,
+                        content: null,
                         Type: 1,
+                        msgType: msg.elems[0].type,
                         time: getLocalTime(msg.getTime())
-                    });
+                    };
+                    switch (msg.elems[0].type) {
+                        case 'TIMTextElem':
+                            //文本
+                            msgObj.content = contentHtml;
+                            break;
+                        case 'TIMImageElem':
+                            //图片
+                            msgObj.content = msg.elems[0].content.ImageInfoArray;//[url]
+                            break;
+                        case 'TIMFaceElem':
+                            //表情
+                            break;
+                        case 'TIMSoundElem':
+                            //语音,只支持显示
+                            break;
+                        case 'TIMFileElem':
+                            //文件,只支持显示
+                            break;
+                    }
+                    newMessageNotification(msgObj);
                     break;
             }
             break;
@@ -312,6 +323,8 @@ function showMsg(msg) {
     return {
         fromAccount: fromAccount,
         content: content,
+        Type: 1,
+        msgType: 'TIMTextElem',
         time: getLocalTime(msg.getTime()),
         me: isSelfSend
     }
@@ -733,11 +746,11 @@ function onSendMsg(msg, cbOk, cbErr) {
         }
     }
     webim.sendMsg(msg, function (resp) {
-        var content = null;
-        if (selType == webim.SESSION_TYPE.C2C) {//私聊时，在聊天窗口手动添加一条发的消息，群聊时，长轮询接口会返回自己发的消息
+        let content = null;
+        if (selType === webim.SESSION_TYPE.C2C) {//私聊时，在聊天窗口手动添加一条发的消息，群聊时，长轮询接口会返回自己发的消息
             content = showMsg(msg);
         }
-        webim.Log.info("发消息成功");
+        // webim.Log.info("发消息成功");
         cbOk && cbOk(content);
         //cbOk, cbErr
         //hideDiscussForm();//隐藏评论表单

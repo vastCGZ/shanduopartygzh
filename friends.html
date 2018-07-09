@@ -62,7 +62,7 @@
                             <!--遍历A开头的好友-->
                             <span class="city-letter" id="A1">{{group.groupName}}</span>
                             <div v-for="(userinfo,index) in group.users" class="dis_flex city_list_div"
-                                 @click="openSession(key,index)">
+                                 @click="gotoUserHomePage(key,index)">
                                 <div>
                                     <img :src="userinfo.picture?imagePath+userinfo.picture:'img/portrait.png'" alt="">
                                 </div>
@@ -168,9 +168,9 @@
             },
             gotoAddFriendView() {
                 location.href = 'addFriendView.html'
-            }, openSession(key, index) {
+            }, gotoUserHomePage(key, index) {
                 let user = data.groups[key].users[index];
-                location.href = 'interface.html?toUserId=' + user.userId + '&toUserName=' + user.name + '';
+                location.href = 'information.html?otherUserId=' + user.userId + '';
             }
         }
     });

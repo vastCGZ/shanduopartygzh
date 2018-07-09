@@ -52,9 +52,9 @@
     <div id="mescroll" class="body mescroll">
         <div v-if="currentTab == 0" :style="{maxHeight: winHeight+'px'}">
             <!--没有数据显示-->
-            <span v-if="activities[currentTab].arrayResult.length==0" class="dis_inli">没有数据</span>
+            <span v-if="ds.length==0" class="dis_inli">没有数据</span>
             <div class="hot_ul" v-else>
-                <div class="hot_ul_li" v-for="(item,key) in activities[currentTab].arrayResult">
+                <div class="hot_ul_li" v-for="(item,key) in ds">
                     <div class="hot_ul_li_header dis_flex">
                         <!--活动发起人信息-->
                         <div class="hot_ul_li_header_title dis_flex">
@@ -131,9 +131,9 @@
         </div>
         <div v-if="currentTab == 1" :style="{maxHeight: winHeight+'px'}">
             <!--没有数据显示-->
-            <span v-if="activities[currentTab].arrayResult.length==0" class="dis_inli">没有数据</span>
+            <span v-if="ds.length==0" class="dis_inli">没有数据</span>
             <div class="hot_ul" v-else>
-                <div class="hot_ul_li" v-for="(item,key) in activities[currentTab].arrayResult">
+                <div class="hot_ul_li" v-for="(item,key) in ds">
                     <div class="hot_ul_li_header dis_flex">
                         <!--活动发起人信息-->
                         <div class="hot_ul_li_header_title dis_flex">
@@ -210,9 +210,9 @@
         </div>
         <div v-if="currentTab == 2" :style="{maxHeight: winHeight+'px'}">
             <!--没有数据显示-->
-            <span v-if="activities[currentTab].arrayResult.length==0" class="dis_inli">没有数据</span>
+            <span v-if="ds.length==0" class="dis_inli">没有数据</span>
             <div class="hot_ul" v-else>
-                <div class="hot_ul_li" v-for="(item,key) in activities[currentTab].arrayResult">
+                <div class="hot_ul_li" v-for="(item,key) in ds">
                     <div class="hot_ul_li_header dis_flex">
                         <!--活动发起人信息-->
                         <div class="hot_ul_li_header_title dis_flex">
@@ -275,11 +275,11 @@
                         </div>
                         <!--其他-->
                         <div class="dis_flex">
-                            <div>
-                                <span>信用轨迹</span>
+                            <div @click="refreshActivity(item.id)">
+                                <span>刷新</span>
                             </div>
-                            <div>
-                                <span @click="imgShow">置顶</span>
+                            <div @click="imgShow">
+                                <span>置顶</span>
                             </div>
                             <img src="img/copy.png" alt="">
                         </div>
@@ -379,36 +379,23 @@
 <script type="text/javascript">
     let userInfo = JSON.parse(localStorage.getItem('localUser'));
     let href = location.href.split('#')[0];
-    let lat, lon, pageSize = 20;
+    let currentPage = 1,
+        totalPage = 0, lat = 0.00, lon = 0.00, pageSize = 20, mescroll = null;
     let vm = new Vue({
         el: '#vueData',
         data: {
             imagePath: imagePath,
-            //tab切换
-            currentTab: 0,
             //获取屏幕分辨率高度
             winHeight: null,
             isShowOne: true,
-            activities: [{
-                currentPage: 1,
-                totalPage: 0,
-                arrayResult: []
-            }, {
-                currentPage: 1,
-                totalPage: 0,
-                arrayResult: []
-            }, {
-                currentPage: 1,
-                totalPage: 0,
-                arrayResult: []
-            }],
-            mescroll: null
+            currentTab: 0,
+            ds: []
         },
         mounted: function () {
             //获取屏幕分辨率高度
             this.winHeight = window.screen.height - 90;
             let that = this;
-            that.mescroll = new MeScroll("mescroll", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
+            mescroll = new MeScroll("mescroll", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
                 up: {
                     callback: that.upCallback, //上拉回调
                     auto: false,
@@ -421,20 +408,24 @@
         },
         methods: {
             upCallback() {
-                if (vm.activities[vm.currentTab].totalPage > vm.activities[vm.currentTab].currentPage) {
-                    vm.activities[vm.currentTab].currentPage += 1;
+                if (totalPage > currentPage) {
+                    currentPage++;
                     loadActivities(function () {
-                        vm.mescroll.endByPage(pageSize, vm.activities[vm.currentTab].totalPage);
+                        mescroll.endByPage(pageSize, totalPage);
+                    }, function () {
+                        mescroll.endErr();
                     });
                 } else {
-                    vm.mescroll.endByPage(pageSize, vm.activities[vm.currentTab].totalPage);
+                    mescroll.endErr();
                 }
             }
             ,
             downCallback() {
                 emptyData();
                 loadActivities(function () {
-                    vm.mescroll.endByPage(pageSize, vm.activities[vm.currentTab].totalPage);
+                    mescroll.endByPage(pageSize, totalPage);
+                }, function () {
+                    mescroll.endErr();
                 });
             }
             ,
@@ -452,6 +443,19 @@
             ,
             isShow() {
                 this.isShowOne = false
+            }, refreshActivity(activityId) {
+                $.get({
+                    url: host + 'jmoney/refreshactivity',
+                    data: {
+                        token: userInfo.token,
+                        activityId: activityId
+                    },
+                    success: function (res) {
+                        if (res.success()) {
+                            toast(res.result);
+                        }
+                    }
+                });
             }
             ,
             // 类别切换
@@ -460,7 +464,7 @@
                 if (vm.currentTab === selectId) {
                     return;
                 }
-                this.currentTab = classifyId;
+                vm.currentTab = classifyId;
                 $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
                 emptyData();
                 loadActivities();
@@ -534,19 +538,20 @@
     });
 
     function emptyData() {
-        let ary = vm.activities[vm.currentTab].arrayResult;
+        let ary = vm.ds;
         ary.splice(0, ary.length);
-        vm.activities[vm.currentTab].arrayResult = ary;
-        vm.activities[vm.currentTab].currentPage = 1;
-        vm.activities[vm.currentTab].totalpage = 0;
+        vm.ds = ary;
+        currentPage = 1;
+        totalPage = 0;
     }
 
-    function loadActivities(cb) {
+    function loadActivities(cbOk, cbErr) {
+        layer.open({type: 2});
         $.ajax({
             url: host + '/activity/showHotActivity',
             data: {
                 token: userInfo.token,
-                page: vm.activities[vm.currentTab].currentPage,
+                page: currentPage,
                 pageSize: pageSize,
                 lat: lat,
                 lon: lon,
@@ -556,10 +561,14 @@
             method: 'GET',
             success: function (res) {
                 if (res.success && res.result.list.length > 0) {
-                    vm.activities[vm.currentTab].totalpage = res.result.totalpage;
-                    vm.activities[vm.currentTab].arrayResult = vm.activities[vm.currentTab].arrayResult.concat(res.result.list);
+                    totalPage = res.result.totalpage;
+                    vm.ds = vm.ds.concat(res.result.list);
                 }
-                cb && cb();
+                cbOk && cbOk();
+            }, error: function () {
+                cbErr && cbErr();
+            }, complete: function () {
+                layer.closeAll();
             }
         })
     }

@@ -27,7 +27,7 @@
     <title>首页</title>
 </head>
 <body>
-<div id="vueData">
+<div id="vueData" class="mescroll">
     <!--头部-->
     <header>
         <div class="dis_flex">
@@ -48,7 +48,7 @@
         </div>
     </header>
     <!--主体-->
-    <div id="mescroll" class="body mescroll">
+    <div class="body">
         <!--活动，动态标签内容-->
         <div class="tab-content">
             <!--轮播图-->
@@ -57,9 +57,6 @@
                     <div class="swiper-slide" v-for="ad in advertise">
                         <img :src="imagePath+ad.picture">
                     </div>
-            <!--<div class="swiper-slide">
-                        <img src="img/bitmap_1.png">
-                    </div>-->
                 </div>
                 <!--分页器-->
                 <div class="swiper-pagination"></div>
@@ -89,20 +86,22 @@
                         <div class="tab-pane fade in active" id="Onehot">
                             <div class="hot_ul">
                                 <!--没有活动时-->
-                                <span v-if="activitys[currentTab1].arrayResult.length==0" class="dis_inli">没有活动</span>
-                                <div v-for="activityInfo in activitys[currentTab1].arrayResult" class="hot_ul_li">
+                                <span v-if="ds.length==0" class="dis_inli">没有活动</span>
+                                <div v-for="activityInfo in ds" class="hot_ul_li">
                                     <div class="hot_ul_li_header dis_flex">
                                         <!--活动发起人信息-->
                                         <div class="hot_ul_li_header_title dis_flex">
                                             <img :src="activityInfo.headPortraitId?imagePath+activityInfo.headPortraitId:'img/portrait.png'"
                                                  alt="">
                                             <div class="dis_flex">
-                                                <span>{{activityInfo.userName}}</span>
+                                                <!--dynamicInfo-->
+                                                <span v-if="userInfo&&userInfo.userId==activityInfo.userId">我</span>
+                                                <span v-else @click="gotoUserHomePage(activityInfo.userId)">{{activityInfo.userName}}</span>
                                                 <div class="dis_flex">
                                                     <div class="dis_inli text_sex">
                                                         <img :src="activityInfo.gender==1?'img/nan.png':'img/nv.png'"
                                                              alt="">
-                                                        <span>26</span>
+                                                        <span>{{activityInfo.age}}</span>
                                                     </div>
                                                     <div v-if="activityInfo.vipGrade>0">
                                                         <div v-if="activityInfo.vipGrade>8" class="dis_inli text_svip">
@@ -175,15 +174,16 @@
                         <div class="tab-pane fade" id="Onenearby">
                             <div class="hot_ul">
                                 <!--没有活动时-->
-                                <span v-if="activitys[currentTab1].arrayResult.length==0" class="dis_inli">没有活动</span>
-                                <div v-for="activityInfo in activitys[currentTab1].arrayResult" class="hot_ul_li">
+                                <span v-if="ds.length==0" class="dis_inli">没有活动</span>
+                                <div v-for="activityInfo in ds" class="hot_ul_li">
                                     <div class="hot_ul_li_header dis_flex">
                                         <!--活动发起人信息-->
                                         <div class="hot_ul_li_header_title dis_flex">
                                             <img :src="activityInfo.headPortraitId?imagePath+activityInfo.headPortraitId:'img/portrait.png'"
                                                  alt="">
                                             <div class="dis_flex">
-                                                <span>{{activityInfo.userName}}</span>
+                                                <span v-if="userInfo&&userInfo.userId==activityInfo.userId">我</span>
+                                                <span v-else @click="gotoUserHomePage(activityInfo.userId)">{{activityInfo.userName}}</span>
                                                 <div class="dis_flex">
                                                     <div class="dis_inli text_sex">
                                                         <img :src="activityInfo.gender==1?'img/nan.png':'img/nv.png'"
@@ -261,20 +261,21 @@
                         <div class="tab-pane fade" id="Onefriends">
                             <div v-if="isLogin" class="hot_ul">
                                 <!--没有活动时-->
-                                <span v-if="activitys[currentTab1].arrayResult.length==0" class="dis_inli">没有活动</span>
-                                <div v-for="activityInfo in activitys[currentTab1].arrayResult" class="hot_ul_li">
+                                <span v-if="ds.length==0" class="dis_inli">没有活动</span>
+                                <div v-for="activityInfo in ds" class="hot_ul_li">
                                     <div class="hot_ul_li_header dis_flex">
                                         <!--活动发起人信息-->
                                         <div class="hot_ul_li_header_title dis_flex">
                                             <img :src="activityInfo.headPortraitId?imagePath+activityInfo.headPortraitId:'img/portrait.png'"
                                                  alt="">
                                             <div class="dis_flex">
-                                                <span>{{activityInfo.userName}}</span>
+                                                <span v-if="userInfo&&userInfo.userId==activityInfo.userId">我</span>
+                                                <span v-else @click="gotoUserHomePage(activityInfo.userId)">{{activityInfo.userName}}</span>
                                                 <div class="dis_flex">
                                                     <div class="dis_inli text_sex">
                                                         <img :src="activityInfo.gender==1?'img/nan.png':'img/nv.png'"
                                                              alt="">
-                                                        <span>26</span>
+                                                        <span>{{activityInfo.age}}</span>
                                                     </div>
                                                     <div v-if="activityInfo.vipGrade>0">
                                                         <div v-if="activityInfo.vipGrade>8" class="dis_inli text_svip">
@@ -343,7 +344,7 @@
                                 </div>
                             </div>
                             <div class="hot_ul" v-else>
-                                <span class="dis_inli">登录后查看</span>
+                                <span class="dis_inli" @click="gotoLoginView">登录后查看</span>
                             </div>
                         </div>
                     </div>
@@ -370,8 +371,8 @@
                         <div class="tab-pane fade in active" id="Twonearby">
                             <div class="hot_ul">
                                 <!--没有活动时-->
-                                <span v-if="dynamics[currentTab2].arrayResult.length==0" class="dis_inli">没有动态</span>
-                                <div v-for="(dynamicInfo,key) in dynamics[currentTab2].arrayResult"
+                                <span v-if="ds.length==0" class="dis_inli">没有动态</span>
+                                <div v-for="(dynamicInfo,key) in ds"
                                      class="hot_ul_li">
                                     <div class="hot_ul_li_header dis_flex">
                                         <!--活动发起人信息-->
@@ -379,7 +380,8 @@
                                             <img :src="dynamicInfo.portraitId?imagePath+dynamicInfo.portraitId:'img/portrait.png'"
                                                  alt="">
                                             <div class="dis_flex">
-                                                <span>{{dynamicInfo.name}}</span>
+                                                <span v-if="userInfo&&dynamicInfo.userId==userInfo.userId">我</span>
+                                                <span v-else @click="gotoUserHomePage(dynamicInfo.userId)">{{dynamicInfo.name}}</span>
                                                 <div class="dis_flex">
                                                     <div class="dis_inli text_sex">
                                                         <img :src="dynamicInfo.gender==1?'img/nan.png':'img/nv.png'"
@@ -402,10 +404,11 @@
                                         </div>
                                         <!--位置-->
                                         <div class="hot_ul_li_header_time dis_flex">
-                                            <p class="col_lan bg_position">{{dynamicInfo.distance}}km</p>
+                                            {{dynamicInfo.location}}<p class="col_lan bg_position">
+                                            {{dynamicInfo.distance}}km</p>
                                         </div>
                                     </div>
-                                    <div class="hot_ul_li_body" @click="gotoDynamicDetails(key)">
+                                    <div class="hot_ul_li_body" @click="gotoDynamicDetails(dynamicInfo.id)">
                                         <!--动态内容-->
                                         <p class="dynamic_speak">{{dynamicInfo.content}}</p>
                                         <div class="dynamic_pic">
@@ -444,8 +447,8 @@
                             <div v-if="isLogin" class="hot_ul">
                                 <!--没有活动时-->
                                 <!--<span class="dis_inli">没有动态</span>-->
-                                <span v-if="dynamics[currentTab2].arrayResult.length==0" class="dis_inli">没有动态</span>
-                                <div v-for="(dynamicInfo,key) in dynamics[currentTab2].arrayResult"
+                                <span v-if="ds.length==0" class="dis_inli">没有动态</span>
+                                <div v-for="(dynamicInfo,key) in ds"
                                      class="hot_ul_li">
                                     <div class="hot_ul_li_header dis_flex">
                                         <!--活动发起人信息-->
@@ -453,7 +456,8 @@
                                             <img :src="dynamicInfo.portraitId?imagePath+dynamicInfo.portraitId:'img/portrait.png'"
                                                  alt="">
                                             <div class="dis_flex">
-                                                <span>{{dynamicInfo.name}}</span>
+                                                <span v-if="userInfo&&dynamicInfo.userId==userInfo.userId">我</span>
+                                                <span v-else @click="gotoUserHomePage(dynamicInfo.userId)">{{dynamicInfo.name}}</span>
                                                 <div class="dis_flex">
                                                     <div class="dis_inli text_sex">
                                                         <img :src="dynamicInfo.gender==1?'img/nan.png':'img/nv.png'"
@@ -476,10 +480,11 @@
                                         </div>
                                         <!--位置-->
                                         <div class="hot_ul_li_header_time dis_flex">
-                                            <p class="col_lan bg_position">{{dynamicInfo.distance}}km</p>
+                                            {{dynamicInfo.location}}<p class="col_lan bg_position">
+                                            {{dynamicInfo.distance}}km</p>
                                         </div>
                                     </div>
-                                    <div class="hot_ul_li_body" @click="gotoDynamicDetails(key)">
+                                    <div class="hot_ul_li_body" @click="gotoDynamicDetails(dynamicInfo.id)">
                                         <!--动态内容-->
                                         <p class="dynamic_speak">{{dynamicInfo.content}}</p>
                                         <div class="dynamic_pic">
@@ -513,7 +518,7 @@
                                 </div>
                             </div>
                             <div class="hot_ul" v-else>
-                                <span class="dis_inli">登录后查看</span>
+                                <span class="dis_inli" @click="gotoLoginView">登录后查看</span>
                             </div>
                         </div>
                     </div>
@@ -579,51 +584,29 @@
 <script type="text/javascript">
     let code = GetQueryString('code');
     let href = location.href.split('#')[0];
+    let currentPage = 1,
+        totalPage = 0,
+        pageSize = 20, lat = 0.00,
+        lon = 0.00,// 活动，动态切换
+        currentTab = 0,
+        // 活动内的切换
+        currentTab1 = 0,
+        // 动态内的切换
+        currentTab2 = 0, mescroll;
     let data = {
         imagePath: imagePath,
-        // 活动，动态切换
-        currentTab: 0,
-        // 活动内的切换
-        currentTab1: 0,
-        // 动态内的切换
-        currentTab2: 0,
         currentImg: null,
-        //定义活动数组
-        activitys: [{
-            currentPage: 1,
-            totalpage: 0,
-            arrayResult: []
-        }, {
-            currentPage: 1,
-            totalpage: 0,
-            arrayResult: []
-        }, {
-            currentPage: 1,
-            totalpage: 0,
-            arrayResult: []
-        }],
-        //定义动态数组
-        dynamics: [{
-            currentPage: 1,
-            totalpage: 0,
-            arrayResult: []
-        }, {
-            currentPage: 1,
-            totalpage: 0,
-            arrayResult: []
-        }],
-        lat: null,
-        lon: null,
-        host: null,
-        pageSize: 20,
-        advertise: null,
+        //定义数据集
+        ds: [],
+        advertise: [],
         isLogin: false,
-        mescroll: null
+        userInfo: null
     };
     let userInfo = localStorage.getItem('localUser');
     if (userInfo) {
         userInfo = JSON.parse(userInfo);
         data.isLogin = true;
+        data.userInfo = userInfo;
     } else {
         if (code) {
             gzhLonin(code, function () {
@@ -638,7 +621,7 @@
         data: data,
         mounted: function () {
             let that = this;
-            data.mescroll = new MeScroll("mescroll", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
+            mescroll = new MeScroll("vueData", { //请至少在vue的mounted生命周期初始化mescroll,以确保您配置的id能够被找到
                 up: {
                     callback: that.upCallback,
                     auto: false,
@@ -661,44 +644,53 @@
             });
         },
         methods: {
+            gotoLoginView() {
+                location.href = 'login.html';
+            },
             upCallback() {
-                if (data.currentTab === 0) {
-                    if (data.activitys[data.currentTab1].totalpage > data.activitys[data.currentTab1].currentPage) {
-                        data.activitys[data.currentTab1].currentPage += 1;
+                if (currentTab === 0) {
+                    if (totalPage > currentPage) {
+                        currentPage++;
                         loadActivityData(function () {
-                            data.mescroll.endByPage(data.pageSize, data.activitys[data.currentTab1].totalpage)
+                            mescroll.endByPage(pageSize, totalPage)
                         }, function () {
-                            data.mescroll.endErr();
+                            mescroll.endErr();
                         });
                     } else {
-                        data.mescroll.endErr();
+                        mescroll.endErr();
                     }
                 } else {
-                    if (data.dynamics[data.currentTab2].totalpage > data.dynamics[data.currentTab2].currentPage) {
-                        data.dynamics[data.currentTab2].currentPage += 1;
+                    if (totalPage > currentPage) {
+                        currentPage++;
                         loadDynamicData(function () {
-                            data.mescroll.endByPage(data.pageSize, data.dynamics[data.currentTab2].totalpage)
+                            mescroll.endByPage(pageSize, totalPage)
                         }, function () {
-                            data.mescroll.endErr();
+                            mescroll.endErr();
                         });
                     } else {
-                        data.mescroll.endErr();
+                        mescroll.endErr();
                     }
                 }
             }, downCallback() {
                 emptyData();
-                if (vm.currentTab === 0) {
+                if (currentTab === 0) {
                     loadActivityData(function () {
-                        data.mescroll.endByPage(data.pageSize, data.activitys[data.currentTab1].totalpage)
+                        mescroll.endByPage(pageSize, totalPage)
                     }, function () {
-                        data.mescroll.endErr();
+                        mescroll.endErr();
                     });
                 } else {
                     loadDynamicData(function () {
-                        data.mescroll.endByPage(data.pageSize, data.dynamics[data.currentTab2].totalpage)
+                        mescroll.endByPage(pageSize, totalPage)
                     }, function () {
-                        data.mescroll.endErr();
+                        mescroll.endErr();
                     });
+                }
+            }, gotoUserHomePage(userId) {
+                if (data.isLogin) {
+                    location.href = 'information.html?otherUserId=' + userId;
+                } else {
+                    toast('登录后操作');
                 }
             },
             adAutoplay: function (event) {
@@ -709,23 +701,22 @@
                         clickable: true, /*点击切换图*/
                     }, /*分页器*/
                     watchOverflow: true,//一个时不显示分页器，不滑动
-                    observer:true,
-                    observeParents:true,
-                    autoplay:{
+                    observer: true,
+                    observeParents: true,
+                    autoplay: {
                         delay: 3000,
                         disableOnInteraction: true,
                     }
                 })
             },
             imgShow(key, index) {
-                vm.currentImg = data.dynamics[data.currentTab2].arrayResult[key].picture[index].imgPath;
+                vm.currentImg = data.ds[key].picture[index].imgPath;
                 $('#outerdiv').fadeIn("fast");
             }, closeDiglog() {
                 $('#outerdiv').fadeOut("fast");
             }, forward(view) {
                 gotoReleaseView(view);
-            }, gotoDynamicDetails(key) {
-                let dynamicId = data.dynamics[data.currentTab2].arrayResult[key].id;
+            }, gotoDynamicDetails(dynamicId) {
                 location.href = 'dynamic.html?dynamicId=' + dynamicId;
             }, gotoCreditCenterView(userId) {
                 if (userInfo) {
@@ -743,7 +734,7 @@
         }
     });
     let onul = $('header>div>ul')
-    $(window).scroll(function(){
+    $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
             $('#OneTab').replaceWith(`<img src='img/icon__title_shanduo.png' id='OneTab'/>`);
         }
@@ -768,10 +759,10 @@
     //活动，动态切换
     $('#OneTab a').click(function (e) {
         let selectTab = $(this).parent().index();
-        if (selectTab === data.currentTab) {
+        if (selectTab === currentTab) {
             return;
         }
-        data.currentTab = selectTab;
+        currentTab = selectTab;
         emptyData();
         e.preventDefault();
         $(this).tab('show');
@@ -784,10 +775,10 @@
     //活动类别切换
     $('#TwoTab a').click(function (e) {
         let selectTab = $(this).parent().index();
-        if (selectTab === data.currentTab1) {
+        if (selectTab === currentTab1) {
             return;
         }
-        data.currentTab1 = selectTab;
+        currentTab1 = selectTab;
         emptyData();
         e.preventDefault();
         $(this).tab('show');
@@ -796,10 +787,10 @@
     //动态类别切换
     $('#ThreeTab a').click(function (e) {
         let selectTab = $(this).parent().index();
-        if (selectTab === data.currentTab2) {
+        if (selectTab === currentTab2) {
             return;
         }
-        data.currentTab2 = selectTab;
+        currentTab2 = selectTab;
         emptyData();
         e.preventDefault();
         $(this).tab('show');
@@ -818,17 +809,13 @@
                 timestamp: result.timestamp,
                 nonceStr: result.noncestr,
                 signature: result.signature,
-                jsApiList: ['getLocation', 'onMenuShareTimeline',
-                    'onMenuShareAppMessage',
-                    'onMenuShareQQ',
-                    'onMenuShareWeibo',
-                    'onMenuShareQZone', 'hideMenuItems']
+                jsApiList: ['getLocation', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'hideMenuItems']
             });
             wx.ready(function () {
                 wx.getLocation({
                     success: function (res) {
-                        data.lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                        data.lon = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        lon = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                         loadActivityData();
                     }
                 });
@@ -854,58 +841,53 @@
     });
 
     function emptyData() {
-        if (data.currentTab === 0) {
-            let ary = data.activitys[data.currentTab1].arrayResult;
-            ary.splice(0, ary.length);
-            data.activitys[data.currentTab1].arrayResult = ary;
-            data.activitys[data.currentTab1].currentPage = 1;
-            data.activitys[data.currentTab1].totalpage = 0;
-        } else {
-            let ary = data.dynamics[data.currentTab2].arrayResult;
-            ary.splice(0, ary.length);
-            data.dynamics[data.currentTab2].arrayResult = ary;
-            data.dynamics[data.currentTab2].currentPage = 1;
-            data.dynamics[data.currentTab2].totalpage = 0;
-        }
+        let ary = data.ds;
+        ary.splice(0, ary.length);
+        data.ds = ary;
+        currentPage = 1;
+        totalPage = 0;
     }
 
     function loadActivityData(cbOK, cbErr) {
+        layer.open({type: 2});
         let token = '';
         if (userInfo) {
             token = userInfo.token;
         }
         let req = {
             token: token,
-            type: data.currentTab1 + 1,
-            lon: data.lon,
-            lat: data.lat,
-            page: data.activitys[data.currentTab1].currentPage,
-            pageSize: data.pageSize
+            type: currentTab1 + 1,
+            lon: lon,
+            lat: lat,
+            page: currentPage,
+            pageSize: pageSize
         };
         getActivityData(req, function (res) {
             if (res.list.length > 0) {
-                data.activitys[data.currentTab1].arrayResult = data.activitys[data.currentTab1].arrayResult.concat(res.list);
-                data.activitys[data.currentTab1].totalpage = res.totalpage;
+                data.ds = data.ds.concat(res.list);
+                totalPage = res.totalpage;
             }
             cbOK && cbOK();
         }, function () {
             cbErr && cbErr();
         }, function () {
+            layer.closeAll();
         });
     }
 
     function loadDynamicData(cbOK, cbErr) {
+        layer.open({type: 2});
         let token = '';
         if (userInfo) {
             token = userInfo.token;
         }
         let req = {
             token: token,
-            typeId: data.currentTab2 + 1,
-            lon: data.lon,
-            lat: data.lat,
-            page: data.dynamics[data.currentTab2].currentPage,
-            pageSize: data.pageSize
+            typeId: currentTab2 + 1,
+            lon: lon,
+            lat: lat,
+            page: currentPage,
+            pageSize: pageSize
         };
         getDynamicData(req, function (res) {
             let newData = res.list;
@@ -922,15 +904,14 @@
                     }
                     newData[i].picture = newItem;
                 }
-                let array = data.dynamics[data.currentTab2].arrayResult;
-                data.dynamics[data.currentTab2].arrayResult = array.concat(newData);
-                data.dynamics[data.currentTab2].totalpage = res.totalPage;
+                data.ds = data.ds.concat(newData);
+                totalPage = res.totalPage;
             }
             cbOK && cbOK();
         }, function () {
             cbErr && cbErr();
         }, function () {
-
+            layer.closeAll();
         })
     }
 

@@ -276,7 +276,12 @@
     }
 
     function goBack() {
-        history.go(-1);
+        let pathName=window.document.location.pathname;
+        if (pathName.indexOf('yapingzh') > -1) {
+            history.go(-1);
+        } else {
+            location.href = 'index.html';
+        }
     }
 
     function localLoadCommentList(cbOK, cbErr) {

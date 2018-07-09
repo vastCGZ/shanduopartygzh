@@ -89,11 +89,19 @@
             </div>
         </div>
         <span class="inline">报名成员</span>
-        <div class="member_shell">
+        <div class="member_shell" v-if="participant.length>0">
             <div class="member_box play_flex">
                 <div v-for="item in participant" class="member play_flex">
                     <img :src="item.head_portrait_id?imagePath+item.head_portrait_id:'img/portrait.png'" alt="">
                     <span class="col_hui">{{item.user_name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="member_shell" v-else>
+            <div class="member_box play_flex">
+                <div class="member play_flex">
+                    <img src="img/com.png" alt="">
+                    <span class="col_hui">没有人报名</span>
                 </div>
             </div>
         </div>
@@ -111,13 +119,14 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
     let userInfo = localStorage.getItem('localUser');
+    let href = location.href.split('#')[0];
     if (userInfo) {
         userInfo = JSON.parse(userInfo);
     }
     let activityId = GetQueryString('activityId');
     let data = {
         imagePath: imagePath,
-        activityInfo: null,
+        activityInfo: {},
         participant: [],
         joinActivity: 0
     };
@@ -136,7 +145,6 @@
                         dataType: 'json',
                         url: host + '/activity/joinActivities',
                         success: (res) => {
-                            console.log(res);
                             if (res.data.success) {
                                 toast(res.data.result);
                                 setTimeout(function () {
@@ -155,6 +163,45 @@
     }
 
     $(function () {
+        init_wx_js_sdk(href, function (result) {
+            //初始化接口环境
+            wx.config({
+                appId: result.appid,
+                timestamp: result.timestamp,
+                nonceStr: result.noncestr,
+                signature: result.signature,
+                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'hideMenuItems']
+            });
+            wx.ready(function () {
+                wx.hideMenuItems({
+                    menuList: ['menuItem:copyUrl', 'menuItem:share:qq', 'menuItem:share:QZone', 'menuItem:openWithQQBrowser', 'menuItem:openWithSafari', 'menuItem:share:email', 'menuItem:readMode']
+                });
+                wx.onMenuShareTimeline({
+                    title: '找你一起来拼团！', // 分享标题
+                    desc: '闪多，一个和附近人拼团的应用！', // 分享描述
+                    link: 'http://lixinrong.vicp.io/yapingzh/shanduoWeb/signup.html?activityId=' + activityId, // 分享链接
+                    imgUrl: 'http://lixinrong.vicp.io/logo.png', // 分享图标
+                    success: function () {
+                        toast('分享成功')
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                wx.onMenuShareAppMessage({
+                    title: '找你一起来拼团！', // 分享标题
+                    desc: '闪多，一个和附近人拼团的应用！', // 分享描述
+                    link: 'http://lixinrong.vicp.io/yapingzh/shanduoWeb/signup.html?activityId=' + activityId, // 分享链接
+                    imgUrl: 'http://lixinrong.vicp.io/logo.png', // 分享图标
+                    success: function () {
+                        toast('分享成功')
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+        });
         if (activityId) {
             loadActivityDetail(activityId, function (res) {
                 data.activityInfo = res.activityInfo;

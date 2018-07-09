@@ -39,13 +39,14 @@
     </header>
     <!--主体-->
     <div class="body">
-        <div v-for="(item,index) in recentContact" class="dis_flex city_list_div" @click="gotoSessionView(index)">
+        <div v-if="recentContact.length>0" v-for="(item,index) in recentContact" class="dis_flex city_list_div" @click="gotoSessionView(index)">
             <div>
                 <img :src="item.Image?item.Image:'img/portrait.png'" alt="">
             </div>
             <div class="dis_flex">
                 <div>
                     <!--不是SVIP 去掉text_SVIP-->
+                    <span v-if="item.Nick==''">[临时会话]</span>
                     <span>{{item.Nick}}</span>
                     <!--性别为男 text_sex_off 变成 text_sex_on-->
                     <div :class="item.Gender=='男'?'dis_inli text_sex_on bg_red_vip':'dis_inli text_sex_off bg_red_vip'">
@@ -66,6 +67,7 @@
                 <span>{{item.UnreadMsgCount}}</span>
             </div>
         </div>
+        <div class="dis_flex city_list_div" v-else><span>没人撩你</span></div>
     </div>
     <!--尾部-->
     <footer>
@@ -180,13 +182,15 @@
                 Type: obj.Type
             });
             searchProfileByUserId([obj.fromAccount], function (res) {
-                for (let i = 0; i < vm.recentContact.length; i++) {
-                    if (res[0].To_Account === vm.recentContact[i].To_Account) {
-                        vm.recentContact[i].Nick = res[0].Nick;
-                        vm.recentContact[i].Gender = res[0].Gender;
-                        vm.recentContact[i].Image = res[0].Image;
+                $.each(vm.recentContact, function (i, item) {
+                    if (res[0].To_Account === item.To_Account) {
+                        item.Nick = res[0].Nick;
+                        item.Gender = res[0].Gender;
+                        item.Image = res[0].Image;
+                        vm.recentContact[i] = item;
+                        return false;
                     }
-                }
+                });
             });
         }
     }
@@ -206,13 +210,17 @@
                             vm.recentContact.push(item);
                         });
                         searchProfileByUserId(ids, function (res) {
+                            let newContact = [];
                             $.each(vm.recentContact, function (i, item) {
                                 if (res[i].To_Account === item.To_Account) {
-                                    vm.recentContact[i].Nick = res[i].Nick;
-                                    vm.recentContact[i].Gender = res[i].Gender;
-                                    vm.recentContact[i].Image = res[i].Image;
+                                    item.Nick = res[i].Nick;
+                                    item.Gender = res[i].Gender;
+                                    item.Image = res[i].Image;
+                                    newContact.push(item);
+                                    return true;
                                 }
                             });
+                            vm.recentContact = newContact;
                         });
                     }
                 });

@@ -110,6 +110,7 @@ function getDynamicData(req, cbOk, cbErr, done) {
         data: req,
         dataType: 'json',
         success: function (res) {
+            console.log(res);
             if (res.success) {
                 cbOk && cbOk(res.result);
             } else {

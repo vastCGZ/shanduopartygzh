@@ -51,7 +51,7 @@ header>div.title_header_Tag>ul>li.active>a{
 .city_list_div{
   position: relative;
 }
-.city_list_div>div:last-child{
+.city_list_div>div.bg_none{
   position: absolute;
   right: 10px;
   top: 25px;
