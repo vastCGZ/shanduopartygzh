@@ -31,7 +31,7 @@
                     <img src="img/icon-9.png">
                 </a>
             </div>
-            <div class="dis_flex">
+            <div class="dis_flex" @click="gotoBaseSettingView">
                 <img :src="userInfo.picture?imagePath+userInfo.picture:'img/portrait.png'" alt="">
                 <div class="dis_flex">
                     <div class="dis_flex">
@@ -55,22 +55,22 @@
         </div>
         <div class="my_head_class dis_flex">
             <a href="javascript:" class="dis_flex">
-                <span>18</span>
+                <span>{{userInfo.attention}}</span>
                 <span>好友</span>
             </a>
             <a href="javascript:" class="dis_flex">
-                <span>15</span>
+                <span>{{userInfo.activity}}</span>
                 <span>活动</span>
             </a>
             <a href="javascript:" class="dis_flex">
-                <span>12</span>
+                <span>{{userInfo.dynamic}}</span>
                 <span>动态</span>
             </a>
         </div>
     </header>
     <!--主体-->
     <div class="body">
-        <a href="javascript:" class="dis_flex">
+        <a href="javascript:" @click.prevent="gotoMydynamicView" class="dis_flex">
             <div>
                 <img src="img/icon-3.png" alt="">
                 <span>我的动态</span>
@@ -79,7 +79,7 @@
                 <img src="img/icon-1.png" alt="">
             </div>
         </a>
-        <a @click="gotoMyActivityView" class="dis_flex">
+        <a href="javascript:" @click.prevent="gotoMyActivityView" class="dis_flex">
             <div class="dis_flex">
                 <img src="img/icon-4.png" alt="">
                 <span>我的活动</span>
@@ -88,7 +88,7 @@
                 <img src="img/icon-1.png" alt="">
             </div>
         </a>
-        <a @click="gotoCreditCenterView" class="dis_flex">
+        <a href="javascript:" @click.prevent="gotoCreditCenterView" class="dis_flex">
             <div>
                 <img src="img/icon-5.png" alt="">
                 <span>信用中心</span>
@@ -106,7 +106,7 @@
                 <img src="img/icon-1.png" alt="">
             </div>
         </a>
-        <a href="javascript:" class="dis_flex">
+        <a href="javascript:" @click.prevent="gotoMemberCenterView" class="dis_flex">
             <div>
                 <img src="img/icon-7.png" alt="">
                 <span>会员中心</span>
@@ -188,8 +188,16 @@
                 location.href = 'setup.html';
             }, gotoCreditCenterView() {
                 location.href = 'credit.html?userId=' + localUser.userId;
-            },gotoMyActivityView(){
+            }, gotoMyActivityView() {
                 location.href = 'myactivity.html';
+            }, gotoBaseSettingView() {
+                location.href = 'edit.html';
+            },forward(view){
+                gotoReleaseView(view);
+            },gotoMemberCenterView(){
+                location.href = 'vipcore.html';
+            },gotoMydynamicView(){
+                location.href = 'mydynamic.html';
             }
         }
     });

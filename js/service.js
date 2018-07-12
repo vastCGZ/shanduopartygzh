@@ -131,3 +131,21 @@ function gotoReleaseView(view) {
         location.href = 'login.html';
     }
 }
+
+function loadProvinces(cb) {
+    $.getJSON('/yapingzh/getProvinces.do', function (res) {
+        cb && cb(res);
+    });
+}
+
+function loadCities(provinceID, cb) {
+    $.getJSON('/yapingzh/getCities.do', {"provinceID": provinceID}, function (res) {
+        cb && cb(res);
+    });
+}
+
+function loadAreas(cityID, cb) {
+    $.getJSON('/yapingzh/getAreas.do', {"cityID": cityID}, function (res) {
+        cb && cb(res);
+    });
+}

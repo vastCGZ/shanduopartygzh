@@ -195,6 +195,7 @@
                             if (res.success) {
                                 toast('发布成功');
                                 localStorage.removeItem('activity');
+                                vm.$destroy();
                                 setTimeout(function () {
                                     location.href = 'index.html';
                                 }, 1000)

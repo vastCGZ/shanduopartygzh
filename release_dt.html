@@ -154,7 +154,7 @@
                 vm.myStyle.splice(key, 1);
             }
             , cancel() {
-                location.href = 'index.html';
+                history.go(-1);
             }
             , launchDynamic() {
                 if (!checkInput(vm.dynamic.location)) {
@@ -259,9 +259,10 @@
                         localStorage.removeItem("avatarUrl");
                         localStorage.removeItem("myStyle");
                         toast('发布成功');
+                        vm.$destroy();
                         setTimeout(function () {
                             location.href = 'index.html';
-                        }, 1000)
+                        }, 1000);
                     }
                 }, fail: function () {
                     toast('发布错误');

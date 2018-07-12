@@ -2,128 +2,355 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <meta content="telephone=no,email=no" name="format-detection">
     <!--禁止自动识别电话号码和邮箱-->
     <meta content="yes" name="apple-mobile-web-app-capable">
     <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
-    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes"/>
     <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
     <link rel="stylesheet" href="css/edit.css">
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/mobileSelect.css">
     <script src="../js/jquery-3.3.1.js"></script>
-    <script src="js/mobileSelect.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="../js/layer.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/service.js"></script>
     <title>编辑资料</title>
 </head>
 <body>
-    <div id="vueData">
-        <header>
-            <div class="title_header dis_flex">
-                <div>
-                    <img src="img/return_1.png" alt="">
-                </div>
-                <div>
-                    <span>编辑资料</span>
-                </div>
-                <div>
-                    <span>保存</span>
-                </div>
-            </div>
-        </header>
-        <div class="body">
-            <div class="head dis_flex" style="background-image: url('img/nan_2.png')">
-                <img src="img/bottom_img.png">
-                <span>小猪佩奇</span>
-                <div class="dis_flex">
-                    <img src="img/photo.png">
-                    <span>更换背景</span>
-                </div>
+<div id="vueData">
+    <header>
+        <div class="title_header dis_flex">
+            <div @click="goBack">
+                <img src="img/return_1.png" alt="">
             </div>
             <div>
-                <div class="tr_div dis_flex">
-                    <span class="left_gan"></span>
-                    <span>基础资料</span>
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>闪多号</span>
-                    <span>10007</span>
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>性别</span>
-                    <span class="sex">女</span>
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>出生日期</span>
-                    <span class="date">1996-5-17</span>
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>情感状态</span>
-                    <span class="emotion">保密</span>
-                </div>
+                <span>编辑资料</span>
             </div>
             <div>
-                <div class="tr_div dis_flex">
-                    <span class="left_gan"></span>
-                    <span>个人信息</span>
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>个性签名</span>
-                    <span>&nbsp;</span>
-                    <!--输入后-->
-                    <!--<div>
-                        <span>hahahhaahhahahahahahahhahahaha</span>
-                    </div>-->
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>家乡</span>
-                    <span>&nbsp;</span>
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>职业</span>
-                    <span>&nbsp;</span>
-                </div>
-                <div class="tr_div_on dis_flex">
-                    <span>学校</span>
-                    <span>&nbsp;</span>
-                </div>
+                <span @click="updateUserInfo">保存</span>
             </div>
         </div>
+    </header>
+    <div class="body">
+        <div class="head dis_flex" style="backgroundImage: url(img/nan_2.png)">
+            <img :src="headImg?headImg:'img/bottom_img.png'">
+            <span></span>
+            <div class="dis_flex">
+                <img src="img/photo.png">
+                <span @click="chooseImage">更换头像</span>
+            </div>
+        </div>
+        <div>
+            <div class="tr_div dis_flex">
+                <span class="left_gan"></span>
+                <span>基础资料</span>
+            </div>
+            <div class="tr_div_on dis_flex">
+                <span>闪多号</span>
+                <span>{{userInfo.userId}}</span>
+            </div>
+            <div class="tr_div_on dis_flex">
+                <span>昵称</span>
+                <span @click="editNick(userInfo.name)">{{userInfo.name}}</span>
+            </div>
+            <div class="tr_div_on dis_flex">
+                <span>性别</span>
+                <select v-model="userInfo.gender" @change="selGender">
+                    <option selected="selected" value="-1">--选择--</option>
+                    <option v-for="(gn,key) in gender" :value="key">{{gn}}</option>
+                </select>
+            </div>
+            <div class="tr_div_on dis_flex">
+                <span>出生日期</span>
+                <input type='date' v-model="userInfo.birthday"/>
+            </div>
+            <div class="tr_div_on dis_flex">
+                <span>情感状态</span>
+                <select v-model="userInfo.emotion" @change="selEmotion">
+                    <option selected="selected" value="-1">--选择--</option>
+                    <option v-for="(item,key) in affectiveState" :value="key">{{item}}</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <div class="tr_div dis_flex">
+                <span class="left_gan"></span>
+                <span>个人信息</span>
+            </div>
+            <div class="tr_div_on dis_flex">
+                <span>个性签名</span>
+                <span @click="editSignature(userInfo.signature)">{{userInfo.signature}}</span>
+            </div>
+            <div id="myHometown" class="tr_div_on dis_flex">
+                <span>家乡</span>
+                <select v-model="provinceIndex" @change="selProvince">
+                    <option v-for="(item,key) in provinces" :value="key">{{item.province}}</option>
+                </select>
+                <select v-model="cityIndex" @change="selCity">
+                    <option v-for="(item,key) in cities" :value="key">{{item.city}}</option>
+                </select>
+                <select v-model="areaIndex" @change="selArea">
+                    <option v-for="(item,key) in areas" :value="key">{{item}}</option>
+                </select>
+            </div>
+            <div class="tr_div_on dis_flex">
+                <span>职业</span>
+                <select v-model="professionIndex" @change="selectProfession">
+                    <option selected="selected" value="-1">--选择--</option>
+                    <option v-for="(item,key) in profession" :value="key">{{item}}</option>
+                </select>
+            </div>
+            <!--<div class="tr_div_on dis_flex">
+                <span>学校</span>
+                <span>&nbsp;</span>
+            </div>-->
+        </div>
     </div>
+</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
-    let mobileSelect1 = new MobileSelect({
-        trigger: '.sex',
-        title: '性别',
-        wheels: [
-            {data:['保密','男','女']}
-        ],
-        position:[0] //Initialize positioning
-    });
-    let mobileSelect2 = new MobileSelect({
-        trigger: '.emotion',
-        title: '情感状态',
-        wheels: [
-        {data:['保密','单身','已婚']}
-    ],
-        position:[0] //Initialize positioning
-    });
-    $(".head").on("touchstart", touchStart);
-    $(".head").on("touchend", touchEnd);
-    $(".head").on("mouseover", touchStart);
-    $(".head").on("mouseout", touchEnd);
-
-    function touchStart(event) {
-        console.log(event)
-        $(this).addClass("hover");
+    let localUser = JSON.parse(localStorage.getItem('localUser'));
+    let href = location.href.split('#')[0];
+    let hometownAts = [];
+    if (localUser.hometown && checkInput(localUser.hometown)) {
+        hometownAts = localUser.hometown.split(',');
     }
-    function touchEnd(event) {
-        console.log(event)
-        $(this).removeClass("hover");
-    }
+    var vm = new Vue({
+        el: '#vueData',
+        data: {
+            userInfo: localUser,
+            headImg: imagePath + localUser.picture,
+            avatarUrl: null,
+            tmpUserInfo: {},
+            gender: ['女', '男'],
+            profession: ['计算机/互联网/通信', '生产/工艺/制造', '医疗/护理/制药', '金融/银行/投资/保险', '商业/服务业/个体经营', '文化/广告/传媒', '娱乐/艺术/表演', '律师/法务', '教育/培训', '公务员/行政/事业单位', '文员', '模特', '空姐', '学生', '家庭主妇'],
+            professionIndex: 0,
+            affectiveState: ['保密', '已婚', '未婚'],
+            provinces: [{province: '选择省份'}],
+            cities: [{city: '选择城市'}],
+            areas: ['选择区县'],
+            provinceIndex: 0,
+            cityIndex: 0,
+            areaIndex: 0
+        }, mounted: function () {
+            if (localUser.occupation && checkInput(localUser.occupation)) {
+                this.professionIndex = this.profession.indexOf(localUser.occupation);
+            }
+        }, watch: {
+            'userInfo.birthday': function (res) {
+                vm.tmpUserInfo.birthday = res;
+            }, 'avatarUrl': function (res) {
+                wx.uploadImage({
+                    localId: res, // 需要上传的图片的本地ID，由chooseImage接口获得
+                    success: function (res) {
+                        vm.tmpUserInfo.picture = res.serverId; // 返回图片的服务器端ID
+                    }
+                })
+            }
+        }, methods: {
+            goBack() {
+                history.go(-1);
+            }, chooseImage() {
+                wx.chooseImage({
+                    count: 1,
+                    sizeType: ['compressed'],
+                    success: function (res) {
+                        vm.avatarUrl = res.localIds[0];
+                        let u = navigator.userAgent;//手机类型android或ios
+                        if (u.indexOf('iPhone') > -1) {
+                            wx.getLocalImgData({
+                                localId: res.localIds[0], // 图片的localID
+                                success: function (ires) {
+                                    vm.headImg = ires.localData;
+                                }
+                            });
+                        } else if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
+                            vm.headImg = res.localIds[0];
+                        }
+                    }
+                });
+            }, selEmotion(e) {
+                let index = e.target.value;
+                if (index > -1) {
+                    vm.tmpUserInfo.emotion = index;
+                }
+            }, selGender(e) {
+                let index = e.target.value;
+                if (index > -1) {
+                    vm.tmpUserInfo.gender = index;
+                }
+            }, selectProfession(e) {
+                let index = e.target.value;
+                if (index > -1) {
+                    vm.tmpUserInfo.occupation = vm.profession[index];
+                }
+            }, selProvince(e) {
+                let index = e.target.value;
+                vm.cityIndex = 0;
+                vm.areaIndex = 0;
+                let ary3 = hometownAts;
+                ary3.splice(0, ary3.length);
+                hometownAts = ary3;
 
+                let ary = vm.cities;
+                ary.splice(1, ary.length);
+                vm.cities = ary;
+
+                let ary2 = vm.areas;
+                ary2.splice(1, ary2.length);
+                vm.areas = ary2;
+                if (index > 0) {
+                    let provinceInfo = vm.provinces[index];
+                    hometownAts.push(provinceInfo.province);
+                    vm.tmpUserInfo.hometown = hometownAts.join(',');
+                    loadCities(provinceInfo.provinceID, function (res) {
+                        vm.cities = vm.cities.concat(res.data);
+                    })
+                }
+            }, selCity(e) {
+                let index = e.target.value;
+                vm.areaIndex = 0;
+                let ary3 = hometownAts;
+                for (let i = 0; i < ary3.length; i++) {
+                    if (i === 1) {
+                        ary3.splice(1, ary3.length);
+                        hometownAts = ary3;
+                        break;
+                    }
+                }
+                let ary = vm.areas;
+                ary.splice(1, ary.length);
+                vm.areas = ary;
+                if (index > 0) {
+                    let cityInfo = vm.cities[index];
+                    hometownAts.push(cityInfo.city);
+                    vm.tmpUserInfo.hometown = hometownAts.join(',');
+                    loadAreas(cityInfo.cityID, function (res) {
+                        vm.areas = vm.areas.concat(res.data);
+                    });
+                }
+            }, selArea(e) {
+                let index = e.target.value;
+                let ary3 = hometownAts;
+                for (let i = 0; i < ary3.length; i++) {
+                    if (i === 2) {
+                        ary3.splice(2, ary3.length);
+                        hometownAts = ary3;
+                        break;
+                    }
+                }
+                if (index > 0) {
+                    hometownAts.push(vm.areas[index]);
+                    vm.tmpUserInfo.hometown = hometownAts.join(',');
+                }
+            }, editNick(nick) {
+                layer.open({
+                    content: '<label>修改昵称:<input id="nick" value="' + nick + '"></label>',
+                    btn: ['修改', '取消'],
+                    shadeClose: false,
+                    yes: function (index) {
+                        let val = $('#nick').val();
+                        if (checkInput(val) && vm.userInfo.name !== val) {
+                            vm.userInfo.name = val;
+                            vm.tmpUserInfo.name = val;
+                        }
+                        layer.close(index);
+                    }
+                });
+            }, editSignature(signature) {
+                layer.open({
+                    content: '<div>修改签名:<textarea rows="2" id="signature"  style="line-height:normal;">' + signature + '</textarea></div>',
+                    btn: ['修改', '取消'],
+                    shadeClose: false,
+                    yes: function (index) {
+                        let val = $('#signature').val();
+                        vm.userInfo.signature = val;
+                        vm.tmpUserInfo.signature = val;
+                        layer.close(index);
+                    }
+                });
+            }, updateUserInfo() {
+                if ($.isEmptyObject(vm.tmpUserInfo)) {
+                    return;
+                }
+                vm.tmpUserInfo.token = localUser.token;
+                $.ajax({
+                    url: "/yapingzh/editUserInformation.do",
+                    data: {"userInformation": JSON.stringify(vm.tmpUserInfo)},
+                    dataType: 'json',
+                    method: 'GET',
+                    success: function (res) {
+                        if (res.success) {
+                            for (let item in vm.tmpUserInfo) {
+                                localUser[item] = vm.tmpUserInfo[item];
+                            }
+                            if (vm.tmpUserInfo.hasOwnProperty("picture")) {
+                                localUser.picture = res.result;
+                            }
+                            localStorage.setItem('localUser', JSON.stringify(localUser));
+                            vm.$destroy();
+                            toast('修改成功');
+                            setTimeout(function () {
+                                location.href = 'personal.html';
+                            }, 1000);
+                        }
+                    }
+                });
+            }
+        }
+    });
+    $(function () {
+        loadProvinces(function (res) {
+            vm.provinces = vm.provinces.concat(res.data);
+            if (hometownAts.length > 0) {
+                $.each(vm.provinces, function (i, item) {
+                    if (item.province === hometownAts[0]) {
+                        vm.provinceIndex = i;
+                        return false;
+                    }
+                });
+                if (vm.provinceIndex > 0 && hometownAts.length > 1) {
+                    let province = vm.provinces[vm.provinceIndex];
+                    loadCities(province.provinceID, function (res) {
+                        vm.cities = vm.cities.concat(res.data);
+                        $.each(vm.cities, function (i, item) {
+                            if (item.city === hometownAts[1]) {
+                                vm.cityIndex = i;
+                                return false;
+                            }
+                        });
+                        if (vm.cityIndex > 0 && hometownAts.length > 2) {
+                            let city = vm.cities[vm.cityIndex];
+                            loadAreas(city.cityID, function (res) {
+                                vm.areas = vm.areas.concat(res.data);
+                                $.each(vm.areas, function (i, item) {
+                                    if (item === hometownAts[2]) {
+                                        vm.areaIndex = i;
+                                        return false;
+                                    }
+                                });
+                            });
+                        }
+                    })
+                }
+            }
+        });
+        init_wx_js_sdk(href, function (result) {
+            //初始化接口环境
+            wx.config({
+                appId: result.appid,
+                timestamp: result.timestamp,
+                nonceStr: result.noncestr,
+                signature: result.signature,
+                jsApiList: ['chooseImage', 'uploadImage']
+            });
+        });
+    });
 </script>
 </html>
