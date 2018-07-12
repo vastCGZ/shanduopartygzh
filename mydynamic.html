@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta content="telephone=no,email=no" name="format-detection">
+    <!--禁止自动识别电话号码和邮箱-->
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!--苹果手机：会删除默认的工具栏和菜单栏，网站开启对web app程序的支持-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--苹果手机：在web app应用下状态条（屏幕顶部条）的颜色,默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。-->
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <!--苹果手机：如果把一个web app添加到了主屏幕中，那么从主屏幕中打开这个web app则全屏显示-->
+    <link rel="stylesheet" href="css/mydynamic.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <title>我的活动</title>
+</head>
+<body>
+    <div id="vueData">
+        <header>
+            <div class="title_header dis_flex">
+                <div>
+                    <img src="img/return_1.png" alt="">
+                </div>
+                <div>
+                    <span>我的活动</span>
+                </div>
+                <div>
+                    <span>发布</span>
+                </div>
+            </div>
+        </header>
+        <div class="body">
+            <div class="hot_ul" :style="{minHeight: winHeight+'px'}">
+                <!--没有活动时-->
+<!--                <span v-if="dynamics[currentTab2].arrayResult.length==0" class="dis_inli">没有动态</span>-->
+                <div class="hot_ul_li">
+                    <div class="hot_ul_li_header dis_flex">
+                        <!--活动发起人信息-->
+                        <div class="hot_ul_li_header_title dis_flex">
+                            <img src="img/portrait.png">
+                            <div class="dis_flex">
+                                <span>小猪佩奇</span>
+                                <div class="dis_flex">
+                                    <div class="dis_inli text_sex_off">26</div>
+                                    <div class="dis_inli text_svip">
+                                        <span>SVIP8</span>
+                                    </div>
+                                    <div class="dis_inli text_level">
+                                        <span>LV90</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--位置-->
+                        <div class="hot_ul_li_header_time dis_flex">
+                            <p class="col_lan bg_position">1.6km</p>
+                        </div>
+                    </div>
+                    <div class="hot_ul_li_body">
+                        <!--动态内容-->
+                        <p class="dynamic_speak">hahahahahahahahahahah</p>
+                        <div class="dynamic_pic">
+                            <!--大于二张class里加  dynamic_pic_div -->
+                            <div class="dynamic_pic_div dis_inli">
+                                <div style="background-image: url('img/lbt.png')" @click="imgShow"></div>
+                                <img src="img/lbt.png">
+                            </div>
+                        </div>
+                        <span class="col_hui">2分钟前</span>
+                    </div>
+                    <div class="hot_ul_li_footer dis_flex">
+                        <!--评论，点赞数量-->
+                        <div class="dis_flex">
+                            <div>
+                                <img src="img/comment_1.png" alt="">
+                                <span>160</span>
+                            </div>
+                            <div>
+                                <img src="img/fabulous_1.png" alt="">
+                                <span>23</span>
+                            </div>
+                        </div>
+                        <!--其他-->
+                        <div class="dis_flex">
+                            <img src="img/copy.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--点击放大-->
+            <div id="outerdiv" @click="closeDiglog">
+                <img id="bigimg" :src="currentImg"/>
+            </div>
+        </div>
+        <footer></footer>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+    let vm = new Vue({
+        el: '#vueData',
+        data:{
+            currentImg:null,
+            winHeight:null
+        },
+        mounted: function () {
+            $("#outerdiv").hide();
+        },
+        methods: {
+            imgShow() {
+                $('#outerdiv').fadeIn("fast");
+            },
+            closeDiglog() {
+                $('#outerdiv').fadeOut("fast");
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,51 @@
+
+header{
+    height: 50px;
+}
+div.title_header>div:first-child{
+    padding: 0!important;
+}
+.title_header>div:last-child>span{
+    margin-right: 15px;
+    color: #3D59FF;
+}
+.text_sex_off, .text_sex_on{
+    width: 20px!important;
+    margin-right: 0.5rem;
+}
+.hot_ul{
+     background-color: #fff!important;
+ }
+/*iphone6 plus*/
+@media (min-width: 376px) and (max-width: 415px){
+    div.hot_ul{
+        height:674px!important;
+    }
+}
+/*iphone6*/
+@media (min-width: 321px) and (max-width: 376px){
+    div.hot_ul{
+        height:614px!important;
+    }
+}
+/*iphone5*/
+@media (max-width: 321px){
+    div.hot_ul{
+        height:526px!important;
+    }
+}
+/*iphoneX*/
+@media (min-height: 737px) and (max-height: 812px){
+    div.hot_ul{
+        height:759px!important;
+    }
+}
+div.hot_ul>div.hot_ul_li{
+    border-top: 5px solid #f7f8ff!important;
+}
+div.hot_ul>div.hot_ul_li:first-child{
+    border-top: 0!important;
+}
+.hot_ul_li_footer{
+    border-bottom: 1px solid #f7f8ff;
+}

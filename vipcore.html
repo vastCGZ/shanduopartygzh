@@ -14,12 +14,12 @@
     <link rel="stylesheet" href="css/vipcore.css">
     <link rel="stylesheet" href="css/common.css">
     <script src="../js/jquery-3.3.1.js"></script>
+    <script src="js/vipcore.js"></script>
     <title>会员中心</title>
 </head>
 <body>
     <div id="vueData">
         <header>
-
             <div class="title_header dis_flex">
                 <div>
                     <img src="img/return_1.png" alt="">
@@ -46,17 +46,99 @@
                     <span>开通/续费</span>
                 </div>
             </div>
-            <div>
-                <div>
-                    <div></div>
-                    <div></div>
+            <div class="head_div">
+                <div class="vip_div dis_flex">
+                    <!--竖条-->
+                    <div class="vertical dis_flex">
+                        <div>
+                            <span>0</span>
+                            <p></p>
+                            <span>VIP1</span>
+                        </div>
+                        <div>
+                            <span>300</span>
+                            <p></p>
+                            <span>VIP2</span>
+                        </div>
+                        <div>
+                            <span>900</span>
+                            <p></p>
+                            <span>VIP3</span>
+                        </div>
+                        <div>
+                            <span>1800</span>
+                            <p></p>
+                            <span>VIP4</span>
+                        </div>
+                        <div>
+                            <span>3600</span>
+                            <p></p>
+                            <span>VIP5</span>
+                        </div>
+                        <div>
+                            <span>7200</span>
+                            <p></p>
+                            <span>VIP6</span>
+                        </div>
+                        <div>
+                            <span>14400</span>
+                            <p></p>
+                            <span>VIP7</span>
+                        </div>
+                        <div>
+                            <span>28800</span>
+                            <p></p>
+                            <span>VIP8</span>
+                        </div>
+                        <div class="dis_flex pos_top">
+                            <div class="dis_flex">
+                                <span class="text_red">1.7</span>
+                                <span>倍</span>
+                                <img src="img/top.png">
+                            </div>
+                            <div>
+                                <span class="col_hui">成长速度</span>
+                            </div>
+                            <div>
+                                <span>总成长值</span>
+                                <span class="text_red">5000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--横条-->
+                    <div class="waic progress dis_flex"></div>
                 </div>
-                <div></div>
-                <span>查看详细特权></span>
+                <div class="dis_flex selector">
+                    <span class="active"></span>
+                    <span></span>
+                </div>
+                <span class="dis_inli">查看详细特权></span>
             </div>
-            <div></div>
         </div>
-        <footer></footer>
+        <footer class="dis_flex">
+            <h2>全部特权</h2>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+        </footer>
     </div>
 </body>
+
+<script type="text/javascript">
+    $(".progress").startProgress({
+        "nodes":[
+            {"name":"VIP1","money":0},
+            {"name":"VIP2","money":300},
+            {"name":"VIP3","money":900},
+            {"name":"VIP4","money":1800},
+            {"name":"VIP5","money":3600},
+            {"name":"VIP6","money":7200},
+            {"name":"VIP7","money":14400},
+            {"name":"VIP8","money":28800}
+        ],
+        "hasPay":5000
+    });
+</script>
+
 </html>

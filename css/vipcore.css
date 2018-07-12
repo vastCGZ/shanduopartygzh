@@ -1,6 +1,9 @@
 header{
     height: 50px;
 }
+.text_red{
+    color: #FE3F46;
+}
 .text_sex_off, .text_sex_on{
     width: 20px!important;
 }
@@ -34,4 +37,179 @@ header{
 }
 .body>div:first-child>div>div>div>div:first-child{
     margin-right: 5px;
+}
+.pos_top{
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: flex-start!important;
+    font-size: 14px;
+}
+.pos_top>div:first-child{
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 20px;
+}
+.pos_top>div:first-child>img{
+    width: 15px;
+    height: 26px;
+}
+.pos_top>div:not(:first-child){
+    font-size: 12px;
+    margin: 2px 0;
+}
+.pos_top>div:last-child>span:last-child{
+    margin-left: 2px;
+}
+.vip_div{
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 40px;
+    flex-direction: column;
+}
+.vertical{
+    width: 337.46px;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+.vertical>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 7px;
+}
+.vertical>div>p{
+    width: 10px;
+    background-color: #FE3F46;
+    border-radius: 20px;
+    margin: 5px 0;
+}
+.vertical>div:nth-child(1)>p{
+    height: 15px;
+}
+.vertical>div:nth-child(2)>p{
+    height: 25px;
+}
+.vertical>div:nth-child(3)>p{
+    height: 35px;
+}
+.vertical>div:nth-child(4)>p{
+    height: 50px;
+}
+.vertical>div:nth-child(5)>p{
+    height: 65px;
+}
+.vertical>div:nth-child(6)>p{
+    height: 80px;
+}
+.vertical>div:nth-child(7)>p{
+    height: 100px;
+}
+.vertical>div:nth-child(8)>p{
+    height: 120px;
+}
+
+/*进度条开始*/
+.hengxian{
+    width: 100%;
+    height: 1.5px;
+    background-color: #a0a0a0;
+}
+.hongxian{
+    width: 0;
+    height: 1.5px;
+    background-color: #FE3F46;
+}
+.yifen{
+    width: 40.02px;
+    /*            -webkit-box-flex: 1; !* OLD - iOS 6-, Safari 3.1-6 *!
+                -moz-box-flex: 1; !* OLD - Firefox 19- *!
+                width: 20%; !* For old syntax, otherwise collapses. *!
+                -webkit-flex: 1; !* Chrome *!
+                -ms-flex: 1; !* IE 10 *!
+                flex: 1; !* NEW, Spec - Opera 12.1, Firefox 20+ *!*/
+}
+.yifen:nth-child(4){
+    width: 40.71px;
+}
+.yifen:nth-child(5){
+    width: 40.71px;
+}
+.yifen:nth-child(6){
+    width: 40.71px;
+}
+.yifen:nth-child(7){
+    width: 47.38px;
+}
+.yifen:nth-child(8){
+    width: 47.38px;
+}
+.flexbox {
+    display: box; /* OLD - Android 4.4- */
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+.dengji{
+    text-align: center;
+    /*            font-size: 13px;
+                line-height: 20px;*/
+    float: left;
+}
+.dengji img{
+    width: 16px;
+}
+.djwai{
+    position: relative;
+    top: -8px;
+    height: 62px;
+}
+.gray {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+}
+/*进度条结束*/
+.waic{
+    justify-content: center;
+    width: 337.46px;
+    height: 25px;
+}
+/*选择器*/
+.selector{
+    justify-content: center;
+}
+.selector>span{
+    width: 8px;
+    height: 8px;
+    background-color: #FFF8D5;
+    border-radius: 50%;
+    margin-left: 2.5px;
+    margin-right: 2.5px;
+}
+.selector>span.active{
+    background-color: #FE3F46;
+}
+.head_div{
+    text-align: center;
+    border-bottom: 1px solid #F7F8FF;
+}
+.head_div>span{
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    color: #999999;
+}
+footer{
+    flex-direction: column;
+    align-items: center;
 }
