@@ -16,7 +16,7 @@ div.body div.head{
     background-repeat: no-repeat;
     background-size: cover;
 }
-div.body div.head>img{
+div.body div.head>div{
     width: 80px;
     height: 80px;
     border-radius: 50%;

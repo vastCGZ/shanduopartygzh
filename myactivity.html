@@ -460,7 +460,7 @@
                 if (vm.currentTab === selectId) {
                     return;
                 }
-                this.currentTab = classifyId;
+                vm.currentTab = classifyId;
                 $(event.currentTarget).addClass('active').parent().siblings('div').children().removeClass('active');
                 emptyData();
                 loadActivities();
